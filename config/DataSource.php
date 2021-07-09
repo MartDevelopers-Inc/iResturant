@@ -9,7 +9,7 @@
  * Though not mandatory, you are requested to attribute this URL in your code or website.
  */
 
-namespace DevLanDataAPI;
+namespace MartDevelopersAPI;
 
 /**
  * Generic datasource class for handling DB operations.
@@ -29,7 +29,7 @@ class DataSource
 
     const PASSWORD = '';
 
-    const DATABASENAME = 'iCollege';
+    const DATABASENAME = 'iResturant_ERP';
 
     private $conn;
 
