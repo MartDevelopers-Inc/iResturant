@@ -1,3 +1,4 @@
+<?php
 /*
 * Created on Fri Jul 09 2021
 *
@@ -18,35 +19,28 @@
 * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-
-<?php
-/*
- * Created on Thu May 27 2021
- *
- * Copyright (c) 2021 Devlan Inc
- */
 require_once('config.php');
 /* Mailer Configurations */
 require_once('../vendor/PHPMailer/src/SMTP.php');
 require_once('../vendor/PHPMailer/src/PHPMailer.php');
 require_once('../vendor/PHPMailer/src/Exception.php');
-$ret = "SELECT * FROM `JoBo_System_Settings`  ";
+$ret = "SELECT * FROM `iResturant_Mailer_Settings`  ";
 $stmt = $mysqli->prepare($ret);
 $stmt->execute(); //ok
 $res = $stmt->get_result();
-while ($sys = $res->fetch_object()) {
+while ($sys_mailer = $res->fetch_object()) {
     $mail = new PHPMailer\PHPMailer\PHPMailer();
     $mail->setFrom($sys->mail_from);
     $mail->addAddress($user_email);
-    $mail->FromName = 'Jobo Service Marketplace';
+    $mail->FromName = $sys_mailer->mail_from_name;
     $mail->isHTML(true);
     $mail->IsSMTP();
-    $mail->SMTPSecure = 'ssl';
-    $mail->Host = $sys->mail_host;
+    $mail->SMTPSecure = $sys_mailer->protocol;
+    $mail->Host = $sys_mailer->host;
     $mail->SMTPAuth = true;
-    $mail->Port = $sys->mail_port;
-    $mail->Username = $sys->mail_username;
-    $mail->Password = $sys->mail_password;
+    $mail->Port = $sys_mailer->port;
+    $mail->Username = $sys_mailer->mail_username;
+    $mail->Password = $sys_mailer->mail_password;
     $mail->Subject = 'Password Reset';
     /* Custom Mail Body */
     $mail->Body = '
@@ -73,13 +67,13 @@ while ($sys = $res->fetch_object()) {
                         <tr>
                             <td style="height:80px;">&nbsp;</td>
                         </tr>
-                        <tr>
+                        <!--<tr>
                             <td style="text-align:center;">
                               <a href="https://jobo.wcf.co.ke" title="logo" target="_blank">
                                 <img width="200" src="http://jobo.wcf.co.ke/public/images/resources/background.png" title="logo" alt=" Jobo Logo">
                               </a>
                             </td>
-                        </tr>
+                        </tr> -->
                         <tr>
                             <td style="height:20px;">&nbsp;</td>
                         </tr>
@@ -97,7 +91,7 @@ while ($sys = $res->fetch_object()) {
                                                 style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
                                             <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
                                                 Hi there, <br>
-                                                You recently requested to reset the password for your Jobo Service Marketplace  account.
+                                                You recently requested to reset the password for your account.
                                             </p>
                                             <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
                                                This is your new password: <br>
@@ -107,8 +101,8 @@ while ($sys = $res->fetch_object()) {
                                                <br>
                                                <br>
                                                Kind Regards<br>
-                                               <b>Jobo Team </b> <br>
-                                               <i>Hire the perfect freelancer service provider for your organization & business.</i>
+                                               <b>iResturant ERP</b> <br>
+                                               <i>Instilling Innovation In Resturant Management Operations</i>
                                             </p>
                                         </td>
                                     </tr>
@@ -122,7 +116,7 @@ while ($sys = $res->fetch_object()) {
                         </tr>
                         <tr>
                             <td style="text-align:center;">
-                                <p style="font-size:14px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;">&copy; ' . date('Y') . ' <strong> Jobo Service MarketPlace. A <a href="https://devlan.martdev.info/"> Devlan </a> Production</strong></p>
+                                <p style="font-size:14px; color:rgba(69, 80, 86, 0.7411764705882353); line-height:18px; margin:0 0 0;">&copy; ' . date('Y') . ' <strong> iResturant ERP. A <a href="https://martdev.info/"> MartDevelopers Inc </a> Production</strong></p>
                             </td>
                         </tr>
                         <tr>
