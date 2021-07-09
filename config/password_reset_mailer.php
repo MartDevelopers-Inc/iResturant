@@ -21,17 +21,18 @@
 */
 require_once('config.php');
 /* Mailer Configurations */
-require_once('../vendor/PHPMailer/src/SMTP.php');
-require_once('../vendor/PHPMailer/src/PHPMailer.php');
-require_once('../vendor/PHPMailer/src/Exception.php');
+require '../vendor/autoload.php';
+
+/* Initiate Mailer */
+$mail = new PHPMailer\PHPMailer\PHPMailer();
+
 $ret = "SELECT * FROM `iResturant_Mailer_Settings`  ";
 $stmt = $mysqli->prepare($ret);
 $stmt->execute(); //ok
 $res = $stmt->get_result();
 while ($sys_mailer = $res->fetch_object()) {
-    $mail = new PHPMailer\PHPMailer\PHPMailer();
-    $mail->setFrom($sys->mail_from);
-    $mail->addAddress($user_email);
+    $mail->setFrom($sys_mailer->mail_from);
+    $mail->addAddress($email);
     $mail->FromName = $sys_mailer->mail_from_name;
     $mail->isHTML(true);
     $mail->IsSMTP();
@@ -39,8 +40,8 @@ while ($sys_mailer = $res->fetch_object()) {
     $mail->Host = $sys_mailer->host;
     $mail->SMTPAuth = true;
     $mail->Port = $sys_mailer->port;
-    $mail->Username = $sys_mailer->mail_username;
-    $mail->Password = $sys_mailer->mail_password;
+    $mail->Username = $sys_mailer->username;
+    $mail->Password = $sys_mailer->password;
     $mail->Subject = 'Password Reset';
     /* Custom Mail Body */
     $mail->Body = '
