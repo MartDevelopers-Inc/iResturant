@@ -40,7 +40,7 @@ if (isset($_POST['change_password'])) {
         $err = "New Password Cannot Be Empty";
     }
     if (isset($_POST['email']) && !empty($_POST['email'])) {
-        $email = mysqli_real_escape_string($mysqli, trim(sha1(md5($_POST['email']))));
+        $email = mysqli_real_escape_string($mysqli, trim((($_POST['email']))));
     } else {
         $error = 1;
         $err = "New Password Cannot Be Empty";
@@ -65,7 +65,7 @@ if (isset($_POST['change_password'])) {
             } else {
                 $id = $_SESSION['id'];
                 $new_password  = sha1(md5($_POST['new_password']));
-                $query = "UPDATE ezanaLMS_Admins SET  email = ? , password =? WHERE id =?";
+                $query = "UPDATE iResturant_Admin_Login SET  email = ?, password =? WHERE id =?";
                 $stmt = $mysqli->prepare($query);
                 $rc = $stmt->bind_param('sss', $email, $new_password, $id);
                 $stmt->execute();
