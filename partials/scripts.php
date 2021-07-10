@@ -8,6 +8,19 @@
 <script src="../public/js/feather.min.js"></script>
 <!-- Simple Bar -->
 <script src="../public/js/simplebar.min.js"></script>
+<!-- Moment Js -->
+<script src="../public/js/moment.js"></script>
+<!-- Date Picker Js -->
+<script src="../plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Apex Charts Js -->
+<script src="../public/plugins/apex-charts/apexcharts.min.js"></script>
+<!-- Vector Map -->
+<script src="../public/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
+<script src="../public/plugins/jvectormap/jquery-jvectormap-us-aea-en.js"></script>
+<!-- Analytics Dashboard Init -->
+<script src="../public/pages/jquery.analytics_dashboard.init.js"></script>
+<!-- App js -->
+<script src="../public/js/app.js"></script>
 <!-- Izi Toast Js -->
 <script src="../public/plugins/iziToast/iziToast.min.js"></script>
 <!-- Init Izi Toast -->

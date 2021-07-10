@@ -50,6 +50,10 @@ while ($sys = $res->fetch_object()) {
         <link href="../public/css/app.min.css" rel="stylesheet" type="text/css" />
         <!-- IziAlerts -->
         <link rel="stylesheet" type="text/css" href="../public/plugins/iziToast/iziToast.min.css">
+        <!-- Mentis Menu -->
+        <link href="../public/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+        <!-- Date Range Picker -->
+        <link href="../public/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
 
     </head>
 <?php
