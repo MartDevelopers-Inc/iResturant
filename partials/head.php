@@ -41,7 +41,6 @@ while ($sys = $res->fetch_object()) {
 
         <!-- App favicon -->
         <link rel="shortcut icon" href="../public/uploads/sys_logo/<?php echo $sys->logo; ?>">
-
         <!-- Bootstrap CSS -->
         <link href="../public/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- Icons CSS -->
@@ -49,7 +48,13 @@ while ($sys = $res->fetch_object()) {
         <!-- Application CSS -->
         <link href="../public/css/app.min.css" rel="stylesheet" type="text/css" />
         <!-- IziAlerts -->
-        <link rel="stylesheet" type="text/css" href="../public/plugins/iziToast/iziToast.min.css">
+        <link href="../public/plugins/iziToast/iziToast.min.css" rel="stylesheet" type="text/css">
+        <!-- Mentis Menu -->
+        <link href="../public/css/metisMenu.min.css" rel="stylesheet" type="text/css" />
+        <!-- Date Range Picker -->
+        <link href="../public/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
+        <!-- Vector Map  -->
+        <link href="../public/plugins/jvectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet">
 
     </head>
 <?php
