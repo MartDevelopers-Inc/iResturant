@@ -11,7 +11,7 @@
 <!-- Moment Js -->
 <script src="../public/js/moment.js"></script>
 <!-- Date Picker Js -->
-<script src="../plugins/daterangepicker/daterangepicker.js"></script>
+<script src="../public/plugins/daterangepicker/daterangepicker.js"></script>
 <!-- Apex Charts Js -->
 <script src="../public/plugins/apex-charts/apexcharts.min.js"></script>
 <!-- Vector Map -->
