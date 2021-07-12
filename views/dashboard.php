@@ -46,9 +46,9 @@ require_once('../partials/head.php');
                         <div class="page-title-box">
                             <div class="row">
                                 <div class="col">
-                                    <h4 class="page-title">Analytics</h4>
+                                    <h4 class="page-title">Administrator Dashboard</h4>
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="javascript:void(0);">Dastone</a></li>
+                                        <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
                                         <li class="breadcrumb-item active">Dashboard</li>
                                     </ol>
                                 </div>
@@ -58,9 +58,6 @@ require_once('../partials/head.php');
                                         <span class="ay-name" id="Day_Name">Today:</span>&nbsp;
                                         <span class="" id="Select_date">Jan 11</span>
                                         <i data-feather="calendar" class="align-self-center icon-xs ms-1"></i>
-                                    </a>
-                                    <a href="#" class="btn btn-sm btn-outline-primary">
-                                        <i data-feather="download" class="align-self-center icon-xs"></i>
                                     </a>
                                 </div>
                                 <!--end col-->
