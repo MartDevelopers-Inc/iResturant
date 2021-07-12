@@ -38,6 +38,7 @@ while ($currency = $res->fetch_object()) {
     $stmt->bind_result($rooms_revenue);
     $stmt->fetch();
     $stmt->close();
+    $rr = $currency->code . " " . $rooms_revenue;
 
 
     /* Hotel Sales Revenue */
@@ -47,6 +48,7 @@ while ($currency = $res->fetch_object()) {
     $stmt->bind_result($sales_revenue);
     $stmt->fetch();
     $stmt->close();
+    $hsr = $currency->code . " " . $sales_revenue;
 
     /* Supplier Expenes */
     $query = "SELECT SUM(amount)  FROM `iResturant_Expenses` ";
@@ -55,6 +57,7 @@ while ($currency = $res->fetch_object()) {
     $stmt->bind_result($supplier_expenses);
     $stmt->fetch();
     $stmt->close();
+    $se = $currency->code . "" . $supplier_expenses;
 
     /* Payroll Expenses */
     $query = "SELECT SUM(amount)  FROM `iResturant_Payroll` ";
@@ -63,4 +66,5 @@ while ($currency = $res->fetch_object()) {
     $stmt->bind_result($payroll_expenses);
     $stmt->fetch();
     $stmt->close();
+    $pe = $currency->code . "" . $payroll_expenses;
 }
