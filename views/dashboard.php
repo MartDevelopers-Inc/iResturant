@@ -156,7 +156,7 @@ require_once('../partials/head.php');
                                         <div class="row d-flex justify-content-center">
                                             <div class="col">
                                                 <p class="text-dark mb-0 fw-semibold">Rooms</p>
-                                                <h3 class="m-0"><?php echo $rr; ?> </h3>
+                                                <h3 class="m-0"><?php echo $tr; ?> </h3>
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
@@ -176,7 +176,7 @@ require_once('../partials/head.php');
                                         <div class="row d-flex justify-content-center">
                                             <div class="col">
                                                 <p class="text-dark mb-0 fw-semibold">Reserved Rooms</p>
-                                                <h3 class="m-0"><?php echo $hsr; ?></h3>
+                                                <h3 class="m-0"><?php echo $resr; ?></h3>
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
@@ -196,7 +196,7 @@ require_once('../partials/head.php');
                                         <div class="row d-flex justify-content-center">
                                             <div class="col">
                                                 <p class="text-dark mb-0 fw-semibold">Vacant Rooms</p>
-                                                <h3 class="m-0"><?php echo $se; ?></h3>
+                                                <h3 class="m-0"><?php echo $vr; ?></h3>
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
@@ -216,7 +216,7 @@ require_once('../partials/head.php');
                                         <div class="row d-flex justify-content-center">
                                             <div class="col">
                                                 <p class="text-dark mb-0 fw-semibold">On Renovation Rooms</p>
-                                                <h3 class="m-0"><?php echo $pe; ?></h3>
+                                                <h3 class="m-0"><?php echo $urr; ?></h3>
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">

@@ -68,3 +68,36 @@ while ($currency = $res->fetch_object()) {
     $stmt->close();
     $pe = $currency->code . "" . $payroll_expenses;
 }
+
+/* Total Rooms */
+$query = "SELECT COUNT(*)  FROM `iResturant_Room` ";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($tr);
+$stmt->fetch();
+$stmt->close();
+
+/* Vacant Rooms */
+$query = "SELECT COUNT(*)  FROM `iResturant_Room` WHERE status = 'Vacant' ";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($vr);
+$stmt->fetch();
+$stmt->close();
+
+/* Reserved Rooms */
+$query = "SELECT COUNT(*)  FROM `iResturant_Room` WHERE status = 'Reserved' ";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($resr);
+$stmt->fetch();
+$stmt->close();
+
+
+/* Under Mantainance Rooms */
+$query = "SELECT COUNT(*)  FROM `iResturant_Room` WHERE status = 'Under Repair' ";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($urr);
+$stmt->fetch();
+$stmt->close();
