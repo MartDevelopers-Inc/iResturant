@@ -101,3 +101,36 @@ $stmt->execute();
 $stmt->bind_result($urr);
 $stmt->fetch();
 $stmt->close();
+
+/* Staffs */
+$query = "SELECT COUNT(*)  FROM `iResturant_Staff` ";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($sff);
+$stmt->fetch();
+$stmt->close();
+
+/* Customers */
+$query = "SELECT COUNT(*)  FROM `iResturant_Customer` ";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($cus);
+$stmt->fetch();
+$stmt->close();
+
+/* Suppliers */
+$query = "SELECT COUNT(*)  FROM `iResturant_Suppliers` ";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($sp);
+$stmt->fetch();
+$stmt->close();
+
+
+/* Company Assets / Equipments */
+$query = "SELECT SUM(how_many)  FROM `iResturant_Machines` ";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($ce);
+$stmt->fetch();
+$stmt->close();

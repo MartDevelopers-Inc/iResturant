@@ -149,7 +149,7 @@ require_once('../partials/head.php');
                         </div>
 
                         <div class="row justify-content-center">
-                            <!-- Revenues And Expenses -->
+                            <!-- Rooms -->
                             <div class="col-md-6 col-lg-3">
                                 <div class="card report-card">
                                     <div class="card-body">
@@ -230,6 +230,89 @@ require_once('../partials/head.php');
                                 <!--end card-->
                             </div>
                         </div>
+                        <div class="row justify-content-center">
+                            <!-- Staffs And Others -->
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card report-card">
+                                    <div class="card-body">
+                                        <div class="row d-flex justify-content-center">
+                                            <div class="col">
+                                                <p class="text-dark mb-0 fw-semibold">Staffs</p>
+                                                <h3 class="m-0"><?php echo $sff; ?> </h3>
+                                            </div>
+                                            <div class="col-auto align-self-center">
+                                                <div class="report-main-icon bg-light-alt">
+                                                    <i data-feather="users" class="align-self-center text-muted icon-sm"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end card-body-->
+                                </div>
+                                <!--end card-->
+                            </div>
+                            <!--end col-->
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card report-card">
+                                    <div class="card-body">
+                                        <div class="row d-flex justify-content-center">
+                                            <div class="col">
+                                                <p class="text-dark mb-0 fw-semibold">Customers</p>
+                                                <h3 class="m-0"><?php echo $cus; ?></h3>
+                                            </div>
+                                            <div class="col-auto align-self-center">
+                                                <div class="report-main-icon bg-light-alt">
+                                                    <i data-feather="clock" class="align-self-center text-muted icon-sm"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end card-body-->
+                                </div>
+                                <!--end card-->
+                            </div>
+                            <!--end col-->
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card report-card">
+                                    <div class="card-body">
+                                        <div class="row d-flex justify-content-center">
+                                            <div class="col">
+                                                <p class="text-dark mb-0 fw-semibold">Suppliers</p>
+                                                <h3 class="m-0"><?php echo $sp; ?></h3>
+                                            </div>
+                                            <div class="col-auto align-self-center">
+                                                <div class="report-main-icon bg-light-alt">
+                                                    <i data-feather="activity" class="align-self-center text-muted icon-sm"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end card-body-->
+                                </div>
+                                <!--end card-->
+                            </div>
+                            <!--end col-->
+                            <div class="col-md-6 col-lg-3">
+                                <div class="card report-card">
+                                    <div class="card-body">
+                                        <div class="row d-flex justify-content-center">
+                                            <div class="col">
+                                                <p class="text-dark mb-0 fw-semibold">Corp. Equipments</p>
+                                                <h3 class="m-0"><?php echo $ce; ?></h3>
+                                            </div>
+                                            <div class="col-auto align-self-center">
+                                                <div class="report-main-icon bg-light-alt">
+                                                    <i data-feather="briefcase" class="align-self-center text-muted icon-sm"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--end card-body-->
+                                </div>
+                                <!--end card-->
+                            </div>
+                        </div>
+
                         <!--end row-->
                         <div class="card">
                             <div class="card-header">
