@@ -42,27 +42,27 @@ while ($sys = $res->fetch_object()) {
         <div class="menu-content h-100" data-simplebar>
             <ul class="metismenu left-sidenav-menu">
                 <li>
-                    <a href="dashboard"><i data-feather="layers" class="align-self-center menu-icon"></i><span>Dashboard</span></a>
+                    <a href="dashboard"><i data-feather="home" class="align-self-center menu-icon"></i><span>Dashboard</span></a>
                 </li>
                 <li>
-                    <a href="rooms"><i data-feather="layers" class="align-self-center menu-icon"></i><span>Rooms</span></a>
+                    <a href="rooms"><i data-feather="activity" class="align-self-center menu-icon"></i><span>Rooms</span></a>
                 </li>
                 <li>
-                    <a href="javascript: void(0);"> <i data-feather="home" class="align-self-center menu-icon"></i><span>Reservations</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+                    <a href="javascript: void(0);"> <i data-feather="user-check" class="align-self-center menu-icon"></i><span>Reservations</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="nav-second-level" aria-expanded="false">
                         <li class="nav-item"><a class="nav-link" href="reservations_manage"><i class="ti-control-record"></i>Manage</a></li>
                         <li class="nav-item"><a class="nav-link" href="reservations_payments"><i class="ti-control-record"></i>Payments</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="javascript: void(0);"> <i data-feather="home" class="align-self-center menu-icon"></i><span>Resturant Management</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+                    <a href="javascript: void(0);"> <i data-feather="layers" class="align-self-center menu-icon"></i><span>Resturant Management</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="nav-second-level" aria-expanded="false">
                         <li class="nav-item"><a class="nav-link" href="resturant_meals"><i class="ti-control-record"></i>Meals Categories </a></li>
                         <li class="nav-item"><a class="nav-link" href="resturan-menus"><i class="ti-control-record"></i>Menus</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="javascript: void(0);"> <i data-feather="home" class="align-self-center menu-icon"></i><span>HRM</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+                    <a href="javascript: void(0);"> <i data-feather="users" class="align-self-center menu-icon"></i><span>HRM</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="nav-second-level" aria-expanded="false">
                         <li class="nav-item"><a class="nav-link" href="hrm_staffs"><i class="ti-control-record"></i>Staffs </a></li>
                         <li class="nav-item"><a class="nav-link" href="hrm_payrolls"><i class="ti-control-record"></i>Payrolls </a></li>
@@ -71,33 +71,43 @@ while ($sys = $res->fetch_object()) {
                     </ul>
                 </li>
                 <li>
-                    <a href="javascript: void(0);"> <i data-feather="home" class="align-self-center menu-icon"></i><span>Orders Engine</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+                    <a href="javascript: void(0);"> <i data-feather="file-plus" class="align-self-center menu-icon"></i><span>Orders Engine</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="nav-second-level" aria-expanded="false">
                         <li class="nav-item"><a class="nav-link" href="order_customer"><i class="ti-control-record"></i>Customer Orders </a></li>
                         <li class="nav-item"><a class="nav-link" href="order_resturant"><i class="ti-control-record"></i>Resturant Orders </a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="javascript: void(0);"> <i data-feather="home" class="align-self-center menu-icon"></i><span>Inventory</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+                    <a href="javascript: void(0);"> <i data-feather="check" class="align-self-center menu-icon"></i><span>Inventory</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="nav-second-level" aria-expanded="false">
                         <li class="nav-item"><a class="nav-link" href="inventory_assets"><i class="ti-control-record"></i>Assets </a></li>
                         <li class="nav-item"><a class="nav-link" href="inventory_rooms"><i class="ti-control-record"></i>Rooms</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="javascript: void(0);"> <i data-feather="home" class="align-self-center menu-icon"></i><span>Reports</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+                    <a href="javascript: void(0);"> <i data-feather="file" class="align-self-center menu-icon"></i><span>Reports</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="nav-second-level" aria-expanded="false">
-                        <li class="nav-item"><a class="nav-link" href="inventory_assets"><i class="ti-control-record"></i>Rooms </a></li>
-                        <li class="nav-item"><a class="nav-link" href="inventory_rooms"><i class="ti-control-record"></i>Reservations</a></li>
-                        <li class="nav-item"><a class="nav-link" href="inventory_rooms"><i class="ti-control-record"></i>Revenue</a></li>
-                        <li class="nav-item"><a class="nav-link" href="inventory_rooms"><i class="ti-control-record"></i>Menus</a></li>
-                        <li class="nav-item"><a class="nav-link" href="inventory_rooms"><i class="ti-control-record"></i>Customer Orders</a></li>
-                        <li class="nav-item"><a class="nav-link" href="inventory_rooms"><i class="ti-control-record"></i>Suppliers</a></li>
-                        <li class="nav-item"><a class="nav-link" href="inventory_rooms"><i class="ti-control-record"></i>Staffs</a></li>
-                        <li class="nav-item"><a class="nav-link" href="inventory_rooms"><i class="ti-control-record"></i>Equipments</a></li>
-                        <li class="nav-item"><a class="nav-link" href="inventory_rooms"><i class="ti-control-record"></i>Resturant Orders</a></li>
+                        <li class="nav-item"><a class="nav-link" href="reports_rooms"><i class="ti-control-record"></i>Rooms </a></li>
+                        <li class="nav-item"><a class="nav-link" href="reports_reservations"><i class="ti-control-record"></i>Reservations</a></li>
+                        <li class="nav-item"><a class="nav-link" href="reports_revenue"><i class="ti-control-record"></i>Revenue</a></li>
+                        <li class="nav-item"><a class="nav-link" href="reports_menus"><i class="ti-control-record"></i>Menus</a></li>
+                        <li class="nav-item"><a class="nav-link" href="reports_customer_orders"><i class="ti-control-record"></i>Customer Orders</a></li>
+                        <li class="nav-item"><a class="nav-link" href="reports_suppliers"><i class="ti-control-record"></i>Suppliers</a></li>
+                        <li class="nav-item"><a class="nav-link" href="reports_staffs"><i class="ti-control-record"></i>Staffs</a></li>
+                        <li class="nav-item"><a class="nav-link" href="reports_equipments"><i class="ti-control-record"></i>Equipments</a></li>
+                        <li class="nav-item"><a class="nav-link" href="reports_resturant_orders"><i class="ti-control-record"></i>Resturant Orders</a></li>
 
                     </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);"> <i data-feather="settings" class="align-self-center menu-icon"></i><span>System Settings</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li class="nav-item"><a class="nav-link" href="settings_landing_pages"><i class="ti-control-record"></i>Landing Pages </a></li>
+                        <li class="nav-item"><a class="nav-link" href="settings_mailer"><i class="ti-control-record"></i>Mailer Settings </a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="logout"><i data-feather="log-out" class="align-self-center menu-icon"></i><span>End Session</span></a>
                 </li>
             </ul>
         </div>
