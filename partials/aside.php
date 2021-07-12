@@ -102,6 +102,7 @@ while ($sys = $res->fetch_object()) {
                 <li>
                     <a href="javascript: void(0);"> <i data-feather="settings" class="align-self-center menu-icon"></i><span>System Settings</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="nav-second-level" aria-expanded="false">
+                        <li class="nav-item"><a class="nav-link" href="settings_currency"><i class="ti-control-record"></i>Currencies </a></li>
                         <li class="nav-item"><a class="nav-link" href="settings_landing_pages"><i class="ti-control-record"></i>Landing Pages </a></li>
                         <li class="nav-item"><a class="nav-link" href="settings_mailer"><i class="ti-control-record"></i>Mailer Settings </a></li>
                     </ul>

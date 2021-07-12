@@ -53,14 +53,6 @@ require_once('../partials/head.php');
                                     </ol>
                                 </div>
                                 <!--end col-->
-                                <div class="col-auto align-self-center">
-                                    <a href="#" class="btn btn-sm btn-outline-primary" id="Dash_Date">
-                                        <span class="ay-name" id="Day_Name">Today:</span>&nbsp;
-                                        <span class="" id="Select_date">Jan 11</span>
-                                        <i data-feather="calendar" class="align-self-center icon-xs ms-1"></i>
-                                    </a>
-                                </div>
-                                <!--end col-->
                             </div>
                             <!--end row-->
                         </div>
@@ -78,9 +70,8 @@ require_once('../partials/head.php');
                                     <div class="card-body">
                                         <div class="row d-flex justify-content-center">
                                             <div class="col">
-                                                <p class="text-dark mb-0 fw-semibold">Sessions</p>
+                                                <p class="text-dark mb-0 fw-semibold">Rooms Revenue</p>
                                                 <h3 class="m-0">24k</h3>
-                                                <p class="mb-0 text-truncate text-muted"><span class="text-success"><i class="mdi mdi-trending-up"></i>8.5%</span> New Sessions Today</p>
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
@@ -99,9 +90,8 @@ require_once('../partials/head.php');
                                     <div class="card-body">
                                         <div class="row d-flex justify-content-center">
                                             <div class="col">
-                                                <p class="text-dark mb-0 fw-semibold">Avg.Sessions</p>
+                                                <p class="text-dark mb-0 fw-semibold">Hotel Sales Revenue</p>
                                                 <h3 class="m-0">00:18</h3>
-                                                <p class="mb-0 text-truncate text-muted"><span class="text-success"><i class="mdi mdi-trending-up"></i>1.5%</span> Weekly Avg.Sessions</p>
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
@@ -120,9 +110,8 @@ require_once('../partials/head.php');
                                     <div class="card-body">
                                         <div class="row d-flex justify-content-center">
                                             <div class="col">
-                                                <p class="text-dark mb-0 fw-semibold">Bounce Rate</p>
+                                                <p class="text-dark mb-0 fw-semibold">Supplier Expenses</p>
                                                 <h3 class="m-0">$2400</h3>
-                                                <p class="mb-0 text-truncate text-muted"><span class="text-danger"><i class="mdi mdi-trending-down"></i>35%</span> Bounce Rate Weekly</p>
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
@@ -141,9 +130,8 @@ require_once('../partials/head.php');
                                     <div class="card-body">
                                         <div class="row d-flex justify-content-center">
                                             <div class="col">
-                                                <p class="text-dark mb-0 fw-semibold">Goal Completions</p>
+                                                <p class="text-dark mb-0 fw-semibold">Payrolls Expenses</p>
                                                 <h3 class="m-0">85000</h3>
-                                                <p class="mb-0 text-truncate text-muted"><span class="text-success"><i class="mdi mdi-trending-up"></i>10.5%</span> Completions Weekly</p>
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
