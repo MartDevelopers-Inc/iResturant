@@ -25,6 +25,14 @@ $stmt = $mysqli->prepare($ret);
 $stmt->execute(); //ok
 $res = $stmt->get_result();
 while ($logged_in_user = $res->fetch_object()) {
+    /* Count Notifications */
+    $query = "SELECT COUNT(*)  FROM `iResturant_Notification`  WHERE user_id = '$id' && status = 'UnRead'";
+    $stmt = $mysqli->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($notification_count);
+    $stmt->fetch();
+    $stmt->close();
+
 ?>
     <div class="topbar">
         <!-- Navbar -->
@@ -66,10 +74,10 @@ while ($logged_in_user = $res->fetch_object()) {
                             ?>
                                 <!-- item-->
                                 <a href="notifications" class="dropdown-item py-3">
-                                    <small class="float-end text-muted ps-2"><?php echo date('d-M-Y g:ia', strtotime($notification->crated_at)); ?></small>
+                                    <small class="float-end text-muted ps-2"><?php echo date('d-M-Y g:ia', strtotime($notification->created_at)); ?></small>
                                     <div class="media">
                                         <div class="avatar-md bg-soft-primary">
-                                            <i data-feather="bell" class="align-self-center icon-xs"></i>
+                                            <i data-feather="<?php echo $notification->icon; ?>" class="align-self-center icon-xs"></i>
                                         </div>
                                         <div class="media-body align-self-center ms-2 text-truncate">
                                             <h6 class="my-0 fw-normal text-dark"><?php echo $notification->title; ?></h6>
