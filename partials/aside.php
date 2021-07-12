@@ -41,12 +41,21 @@ while ($sys = $res->fetch_object()) {
         <!--end logo-->
         <div class="menu-content h-100" data-simplebar>
             <ul class="metismenu left-sidenav-menu">
-                <li class="menu-label mt-0">Main</li>
                 <li>
-                    <a href="javascript: void(0);"> <i data-feather="home" class="align-self-center menu-icon"></i><span>Dashboard</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+                    <a href="dashboard"><i data-feather="layers" class="align-self-center menu-icon"></i><span>Dashboard</span></a>
+                </li>
+                <li>
+                    <a href="rooms"><i data-feather="layers" class="align-self-center menu-icon"></i><span>Rooms</span></a>
+                </li>
+
+                <li>
+                    <a href="reservations"><i data-feather="layers" class="align-self-center menu-icon"></i><span>Widgets</span></a>
+                </li>
+                <li>
+                    <a href="javascript: void(0);"> <i data-feather="home" class="align-self-center menu-icon"></i><span>Reservations</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="nav-second-level" aria-expanded="false">
-                        <li class="nav-item"><a class="nav-link" href="index.html"><i class="ti-control-record"></i>Analytics</a></li>
-                        <li class="nav-item"><a class="nav-link" href="sales-index.html"><i class="ti-control-record"></i>Sales</a></li>
+                        <li class="nav-item"><a class="nav-link" href="reservations_manage"><i class="ti-control-record"></i>Manage</a></li>
+                        <li class="nav-item"><a class="nav-link" href="reservations_payments"><i class="ti-control-record"></i>Payments</a></li>
                     </ul>
                 </li>
 
