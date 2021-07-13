@@ -25,7 +25,7 @@ require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 admin_check_login();
 /* Add Room Category */
-if (isset($_POST['add_category'])) {
+if (isset($_POST['add_room_category'])) {
     $error = 0;
     if (isset($_POST['id']) && !empty($_POST['id'])) {
         $id = mysqli_real_escape_string($mysqli, trim($_POST['id']));
@@ -220,7 +220,7 @@ require_once('../partials/head.php');
                                                         <tr>
                                                             <td><?php echo $rooms_categories->name; ?></td>
                                                             <td>
-
+                                                                <span data-bs-toggle="modal" data-bs-target="#update-<?php echo $rooms_categories->id; ?>" class="badge badge-warning">Update</a>
                                                             </td>
 
                                                         </tr>
