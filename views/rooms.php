@@ -67,10 +67,51 @@ require_once('../partials/head.php');
 
                 <div class="row">
                     <div class="col-lg-12 col-sm-12">
-                        <div class="card">
-                            <div class="card-header">
-
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalPrimary">Add Room Category</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalPrimary">Manage Room Categories</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalPrimary">Add Room</button>
+                        </div>
+                        <!-- Add Room Category Modal -->
+                        <div class="modal fade" id="add_room_category">
+                            <div class="modal-dialog  modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Fill All Values</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="post" enctype="multipart/form-data" role="form">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="">Room Category Name</label>
+                                                        <input type="text" required name="name" class="form-control" id="exampleInputEmail1">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="text-right">
+                                                <button type="submit" name="add_category" class="btn btn-primary">Add Category</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
+                        </div>
+                        <!-- End Add Room Categor -->
+
+                        <!-- Manage Room Category Modal -->
+
+                        <!-- End Manage Room Category Modal -->
+
+
+                        <!-- Add Room Category Modal -->
+
+                        <!-- End Add Room Category Modal -->
+                        <hr>
+                        <div class="card">
                             <!--end card-header-->
                             <div class="card-body table-responsive">
                                 <div class="">
@@ -119,6 +160,7 @@ require_once('../partials/head.php');
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <!--end row-->
