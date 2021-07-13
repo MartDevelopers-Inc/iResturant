@@ -55,12 +55,9 @@ while ($sys = $res->fetch_object()) {
         <link href="../public/plugins/daterangepicker/daterangepicker.css" rel="stylesheet" type="text/css" />
         <!-- Vector Map  -->
         <link href="../public/plugins/jvectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet">
-        <!-- Data Table Plug In Css -->
-        <!-- DataTables -->
-        <link href="../public/plugins/datatables/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-        <link href="../public/plugins/datatables/buttons.bootstrap5.min.css" rel="stylesheet" type="text/css" />
-        <!-- Responsive datatable examples -->
-        <link href="../public/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+        <!-- Data Table CDNS -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css" />
     </head>
 <?php
 } ?>

@@ -23,21 +23,30 @@
 <script src="../public/pages/jquery.analytics_dashboard.init.js"></script>
 <!-- App js -->
 <script src="../public/js/app.js"></script>
-<!-- Required datatable js -->
-<script src="../public/plugins/datatables/jquery.dataTables.min.js"></script>
-<script src="../public/plugins/datatables/dataTables.bootstrap5.min.js"></script>
-<!-- Buttons examples -->
-<script src="../public/plugins/datatables/dataTables.buttons.min.js"></script>
-<script src="../public/plugins/datatables/buttons.bootstrap5.min.js"></script>
-<script src="../public/plugins/datatables/jszip.min.js"></script>
-<script src="../public/plugins/datatables/pdfmake.min.js"></script>
-<script src="../public/plugins/datatables/vfs_fonts.js"></script>
-<script src="../public/plugins/datatables/buttons.html5.min.js"></script>
-<script src="../public/plugins/datatables/buttons.print.min.js"></script>
-<script src="../public/plugins/datatables/buttons.colVis.min.js"></script>
-<!-- Responsive examples -->
-<script src="../public/plugins/datatables/dataTables.responsive.min.js"></script>
-<script src="../public/plugins/datatables/responsive.bootstrap4.min.js"></script>
+<!-- datatable js  cdns-->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+
+<!-- Init Js -->
+<script>
+    $(document).ready(function() {
+        $('.table').DataTable();
+    });
+
+    $(document).ready(function() {
+        $('#export-data-table').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+    });
+</script>
 <!-- Izi Toast Js -->
 <script src="../public/plugins/iziToast/iziToast.min.js"></script>
 <!-- Init Izi Toast -->
