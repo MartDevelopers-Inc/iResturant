@@ -23,6 +23,21 @@
 <script src="../public/pages/jquery.analytics_dashboard.init.js"></script>
 <!-- App js -->
 <script src="../public/js/app.js"></script>
+<!-- Required datatable js -->
+<script src="../public/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="../public/plugins/datatables/dataTables.bootstrap5.min.js"></script>
+<!-- Buttons examples -->
+<script src="../public/plugins/datatables/dataTables.buttons.min.js"></script>
+<script src="../public/plugins/datatables/buttons.bootstrap5.min.js"></script>
+<script src="../public/plugins/datatables/jszip.min.js"></script>
+<script src="../public/plugins/datatables/pdfmake.min.js"></script>
+<script src="../public/plugins/datatables/vfs_fonts.js"></script>
+<script src="../public/plugins/datatables/buttons.html5.min.js"></script>
+<script src="../public/plugins/datatables/buttons.print.min.js"></script>
+<script src="../public/plugins/datatables/buttons.colVis.min.js"></script>
+<!-- Responsive examples -->
+<script src="../public/plugins/datatables/dataTables.responsive.min.js"></script>
+<script src="../public/plugins/datatables/responsive.bootstrap4.min.js"></script>
 <!-- Izi Toast Js -->
 <script src="../public/plugins/iziToast/iziToast.min.js"></script>
 <!-- Init Izi Toast -->
