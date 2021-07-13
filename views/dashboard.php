@@ -77,7 +77,7 @@ require_once('../partials/head.php');
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="users" class="align-self-center text-muted icon-sm"></i>
+                                                    <i data-feather="dollar-sign" class="align-self-center text-muted icon-sm"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -97,7 +97,7 @@ require_once('../partials/head.php');
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="clock" class="align-self-center text-muted icon-sm"></i>
+                                                    <i data-feather="dollar-sign" class="align-self-center text-muted icon-sm"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -117,7 +117,7 @@ require_once('../partials/head.php');
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="activity" class="align-self-center text-muted icon-sm"></i>
+                                                    <i data-feather="dollar-sign" class="align-self-center text-muted icon-sm"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -137,7 +137,7 @@ require_once('../partials/head.php');
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="briefcase" class="align-self-center text-muted icon-sm"></i>
+                                                    <i data-feather="dollar-sign" class="align-self-center text-muted icon-sm"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -160,7 +160,7 @@ require_once('../partials/head.php');
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="users" class="align-self-center text-muted icon-sm"></i>
+                                                    <i data-feather="airplay" class="align-self-center text-muted icon-sm"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -180,7 +180,7 @@ require_once('../partials/head.php');
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="clock" class="align-self-center text-muted icon-sm"></i>
+                                                    <i data-feather="file-plus" class="align-self-center text-muted icon-sm"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -200,7 +200,7 @@ require_once('../partials/head.php');
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="activity" class="align-self-center text-muted icon-sm"></i>
+                                                    <i data-feather="file-minus" class="align-self-center text-muted icon-sm"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -220,7 +220,7 @@ require_once('../partials/head.php');
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="briefcase" class="align-self-center text-muted icon-sm"></i>
+                                                    <i data-feather="tool" class="align-self-center text-muted icon-sm"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -242,7 +242,7 @@ require_once('../partials/head.php');
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="users" class="align-self-center text-muted icon-sm"></i>
+                                                    <i data-feather="user-check" class="align-self-center text-muted icon-sm"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -262,7 +262,7 @@ require_once('../partials/head.php');
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="clock" class="align-self-center text-muted icon-sm"></i>
+                                                    <i data-feather="users" class="align-self-center text-muted icon-sm"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -282,7 +282,7 @@ require_once('../partials/head.php');
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="activity" class="align-self-center text-muted icon-sm"></i>
+                                                    <i data-feather="users" class="align-self-center text-muted icon-sm"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -302,7 +302,7 @@ require_once('../partials/head.php');
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="briefcase" class="align-self-center text-muted icon-sm"></i>
+                                                    <i data-feather="sliders" class="align-self-center text-muted icon-sm"></i>
                                                 </div>
                                             </div>
                                         </div>
