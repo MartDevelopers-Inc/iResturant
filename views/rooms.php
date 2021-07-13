@@ -24,6 +24,88 @@ require_once('../config/config.php');
 require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 admin_check_login();
+/* Add Room Category */
+if (isset($_POST['add_category'])) {
+    $error = 0;
+    if (isset($_POST['id']) && !empty($_POST['id'])) {
+        $id = mysqli_real_escape_string($mysqli, trim($_POST['id']));
+    } else {
+        $error = 1;
+        $err = "Room Category ID Cannot Be Empty";
+    }
+    if (isset($_POST['name']) && !empty($_POST['name'])) {
+        $name = mysqli_real_escape_string($mysqli, trim($_POST['name']));
+    } else {
+        $error = 1;
+        $err = "Room Category Name Cannot Be Empty";
+    }
+
+    if (!$error) {
+        $sql = "SELECT * FROM  iResturant_Room_Category WHERE  (name='$name')  ";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if ($name == $row['name']) {
+                $err =  "Category With This  Name Already Exists";
+            }
+        } else
+
+            $query = "INSERT INTO iResturant_Room_Category (id, name) VALUES(?,?)";
+        $stmt = $mysqli->prepare($query);
+        $rc = $stmt->bind_param('ss', $id, $name);
+        $stmt->execute();
+        if ($stmt) {
+            $success = "$name  Added";
+        } else {
+            $info = "Please Try Again Or Try Later";
+        }
+    }
+}
+
+
+/* Update Room Category */
+if (isset($_POST['add_category'])) {
+    $error = 0;
+    if (isset($_POST['id']) && !empty($_POST['id'])) {
+        $id = mysqli_real_escape_string($mysqli, trim($_POST['id']));
+    } else {
+        $error = 1;
+        $err = "Room Category ID Cannot Be Empty";
+    }
+    if (isset($_POST['name']) && !empty($_POST['name'])) {
+        $name = mysqli_real_escape_string($mysqli, trim($_POST['name']));
+    } else {
+        $error = 1;
+        $err = "Room Category Name Cannot Be Empty";
+    }
+
+    if (!$error) {
+        $query = "UPDATE  iResturant_Room_Category SET  name =? WHERE id = ?";
+        $stmt = $mysqli->prepare($query);
+        $rc = $stmt->bind_param('ss', $name, $id);
+        $stmt->execute();
+        if ($stmt) {
+            $success = "$name  Updated";
+        } else {
+            $info = "Please Try Again Or Try Later";
+        }
+    }
+}
+
+/* Delete Room Category */
+if (isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+    $adn = 'DELETE FROM iResturant_Room_Category WHERE id=?';
+    $stmt = $conn->prepare($adn);
+    $stmt->bind_param('s', $id);
+    $stmt->execute();
+    $stmt->close();
+    if ($stmt) {
+        $success = 'Category Deleted' && header('refresh:1; url=rooms');;
+    } else {
+        $info = 'Please Try Again Or Try Later';
+    }
+}
 require_once('../partials/head.php');
 ?>
 
@@ -106,11 +188,56 @@ require_once('../partials/head.php');
                             </div>
                             <!--end modal-dialog-->
                         </div>
-                        <!--end modal-->
                         <!-- End Add Room Categor -->
 
                         <!-- Manage Room Category Modal -->
+                        <div class="modal fade" id="manage_room_category" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+                            <div class="modal-dialog modal-xl" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-primary">
+                                        <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Manage Room Categories</h6>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <!--end modal-header-->
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <table class="table dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Category Name</th>
+                                                        <th>Manage Room Category</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $ret = "SELECT * FROM  iResturant_Room_Category ";
+                                                    $stmt = $mysqli->prepare($ret);
+                                                    $stmt->execute(); //ok
+                                                    $res = $stmt->get_result();
+                                                    while ($rooms_categories = $res->fetch_object()) {
 
+                                                    ?>
+                                                        <tr>
+                                                            <td><?php echo $rooms_categories->name; ?></td>
+                                                            <td>
+
+                                                            </td>
+
+                                                        </tr>
+                                                    <?php
+                                                    }
+                                                    ?>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <!--end row-->
+                                    </div>
+                                </div>
+                                <!--end modal-content-->
+                            </div>
+                            <!--end modal-dialog-->
+                        </div>
                         <!-- End Manage Room Category Modal -->
 
 
