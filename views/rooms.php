@@ -22,6 +22,7 @@
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
+require_once('../config/codeGen.php');
 admin_check_login();
 require_once('../partials/head.php');
 ?>
@@ -68,38 +69,44 @@ require_once('../partials/head.php');
                 <div class="row">
                     <div class="col-lg-12 col-sm-12">
                         <div class="text-center">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalPrimary">Add Room Category</button>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalPrimary">Manage Room Categories</button>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalPrimary">Add Room</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_room_category">Add Room Category</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#manage_room_category">Manage Room Categories</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_room">Add Room</button>
                         </div>
                         <!-- Add Room Category Modal -->
-                        <div class="modal fade" id="add_room_category">
-                            <div class="modal-dialog  modal-xl">
+                        <div class="modal fade" id="add_room_category" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Fill All Values</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                                    <div class="modal-header bg-primary">
+                                        <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Add Room Category</h6>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
+                                    <!--end modal-header-->
                                     <div class="modal-body">
-                                        <form method="post" enctype="multipart/form-data" role="form">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="form-group col-md-6">
-                                                        <label for="">Room Category Name</label>
-                                                        <input type="text" required name="name" class="form-control" id="exampleInputEmail1">
+                                        <div class="row">
+                                            <form method="post" enctype="multipart/form-data" role="form">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="form-group col-md-12">
+                                                            <label for="">Category Name</label>
+                                                            <input type="text" required name="name" class="form-control" id="exampleInputEmail1">
+                                                            <input type="hidden" required name="id" value="<?php echo $sys_gen_id; ?>" class="form-control">
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="text-right">
-                                                <button type="submit" name="add_category" class="btn btn-primary">Add Category</button>
-                                            </div>
-                                        </form>
+                                                <div class="text-right">
+                                                    <button type="submit" name="add_room_category" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <!--end row-->
                                     </div>
                                 </div>
+                                <!--end modal-content-->
                             </div>
+                            <!--end modal-dialog-->
                         </div>
+                        <!--end modal-->
                         <!-- End Add Room Categor -->
 
                         <!-- Manage Room Category Modal -->
