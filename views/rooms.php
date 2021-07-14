@@ -501,7 +501,7 @@ require_once('../partials/head.php');
 
                                                         <div class="form-group col-md-6">
                                                             <label for="">Room Category</label>
-                                                            <select id="RoomCategoryName" style="width: 100%;" class="custom-select form-control" onchange="GetRoomCategoryID(this.value);">
+                                                            <select id="RoomCategoryName"  class="form-control" onchange="GetRoomCategoryID(this.value);">
                                                                 <option>Select Room Category</option>
                                                                 <?php
                                                                 $ret = "SELECT * FROM  iResturant_Room_Category ";

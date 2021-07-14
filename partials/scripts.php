@@ -103,3 +103,18 @@
 
 <?php }
 ?>
+<script>
+    /* Ajax Scripts */
+    function GetRoomCategoryID(val) {
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'RoomCategoryName=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#RoomCategoryID').val(data);
+            }
+        });
+
+    }
+</script>
