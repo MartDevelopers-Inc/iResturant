@@ -64,7 +64,7 @@ if (isset($_POST['add_room_category'])) {
 
 
 /* Update Room Category */
-if (isset($_POST['add_category'])) {
+if (isset($_POST['update_room_category'])) {
     $error = 0;
     if (isset($_POST['id']) && !empty($_POST['id'])) {
         $id = mysqli_real_escape_string($mysqli, trim($_POST['id']));
@@ -220,9 +220,40 @@ require_once('../partials/head.php');
                                                         <tr>
                                                             <td><?php echo $rooms_categories->name; ?></td>
                                                             <td>
-                                                                <span data-bs-toggle="modal" data-bs-target="#update-<?php echo $rooms_categories->id; ?>" class="badge badge-warning">Update</a>
+                                                                <a href="#edit-<?php echo $rooms_categories->id; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $rooms_categories->id; ?>" class="btn btn-sm btn-outline-primary">
+                                                                    <i data-feather="edit" class="align-self-center icon-xs ms-1"></i> Edit
+                                                                </a>
+                                                                <!-- Edit Room Category Modal -->
+                                                                <div class="modal fade" id="edit-<?php echo $rooms_categories->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header bg-warning">
+                                                                                <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Edit Room Category</h6>
+                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div class="row">
+                                                                                    <form method="post" enctype="multipart/form-data" role="form">
+                                                                                        <div class="card-body">
+                                                                                            <div class="row">
+                                                                                                <div class="form-group col-md-12">
+                                                                                                    <label for="">Category Name</label>
+                                                                                                    <input type="text" required name="name" class="form-control" value="<?php echo $rooms_categories->name; ?>" id="exampleInputEmail1">
+                                                                                                    <input type="hidden" required name="id" value="<?php echo $rooms_categories->id; ?>" class="form-control">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="text-right">
+                                                                                            <button type="submit" name="update_room_category" class="btn btn-primary">Submit</button>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- End Edit Modal -->
                                                             </td>
-
                                                         </tr>
                                                     <?php
                                                     }
