@@ -96,7 +96,7 @@ if (isset($_POST['update_room_category'])) {
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
     $adn = 'DELETE FROM iResturant_Room_Category WHERE id=?';
-    $stmt = $conn->prepare($adn);
+    $stmt = $mysqli->prepare($adn);
     $stmt->bind_param('s', $id);
     $stmt->execute();
     $stmt->close();
@@ -220,8 +220,11 @@ require_once('../partials/head.php');
                                                         <tr>
                                                             <td><?php echo $rooms_categories->name; ?></td>
                                                             <td>
-                                                                <a href="#edit-<?php echo $rooms_categories->id; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $rooms_categories->id; ?>" class="btn btn-sm btn-outline-primary">
+                                                                <a href="#edit-<?php echo $rooms_categories->id; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $rooms_categories->id; ?>" class="btn btn-sm btn-outline-warning">
                                                                     <i data-feather="edit" class="align-self-center icon-xs ms-1"></i> Edit
+                                                                </a>
+                                                                <a href="#delete-<?php echo $rooms_categories->id; ?>" data-bs-toggle="modal" data-bs-target="#delete-<?php echo $rooms_categories->id; ?>" class="btn btn-sm btn-outline-danger">
+                                                                    <i data-feather="trash" class="align-self-center icon-xs ms-1"></i> Delete
                                                                 </a>
                                                                 <!-- Edit Room Category Modal -->
                                                                 <div class="modal fade" id="edit-<?php echo $rooms_categories->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
@@ -243,7 +246,7 @@ require_once('../partials/head.php');
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <div class="text-right">
+                                                                                        <div class="text-left">
                                                                                             <button type="submit" name="update_room_category" class="btn btn-primary">Submit</button>
                                                                                         </div>
                                                                                     </form>
@@ -253,12 +256,32 @@ require_once('../partials/head.php');
                                                                     </div>
                                                                 </div>
                                                                 <!-- End Edit Modal -->
+
+                                                                <!-- Delete Room Category Modal -->
+                                                                <div class="modal fade" id="delete-<?php echo $rooms_categories->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title" id="exampleModalLabel">CONFIRM</h5>
+                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                                                                            </div>
+                                                                            <div class="modal-body text-center text-danger">
+                                                                                <h4>Delete <?php echo $rooms_categories->name; ?> ?</h4>
+                                                                                <br>
+                                                                                <p>Heads Up, You are about to delete <?php echo $rooms_categories->name; ?>. This action is irrevisble.</p>
+                                                                                <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
+                                                                                <a href="rooms?delete=<?php echo $rooms_categories->id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- End Delete Modal -->
                                                             </td>
                                                         </tr>
                                                     <?php
                                                     }
                                                     ?>
-
                                                 </tbody>
                                             </table>
                                         </div>
