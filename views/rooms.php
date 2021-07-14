@@ -192,12 +192,6 @@ if (isset($_POST['update_room'])) {
         $err = "Room Number Cannot Be Empty";
     }
 
-    if (isset($_POST['room_category_id']) && !empty($_POST['room_category_id'])) {
-        $room_category_id = mysqli_real_escape_string($mysqli, trim($_POST['room_category_id']));
-    } else {
-        $error = 1;
-        $err = "Room Category ID Cannot Be Empty";
-    }
 
     if (isset($_POST['price']) && !empty($_POST['price'])) {
         $price = mysqli_real_escape_string($mysqli, trim($_POST['price']));
@@ -206,12 +200,6 @@ if (isset($_POST['update_room'])) {
         $err = "Room Price Cannot Be Empty";
     }
 
-    if (isset($_POST['status']) && !empty($_POST['status'])) {
-        $status = mysqli_real_escape_string($mysqli, trim($_POST['status']));
-    } else {
-        $error = 1;
-        $err = "Room Status Cannot Be Empty";
-    }
 
     if (isset($_POST['details']) && !empty($_POST['details'])) {
         $details = ($_POST['details']);
@@ -222,9 +210,9 @@ if (isset($_POST['update_room'])) {
 
     if (!$error) {
 
-        $query = "UPDATE iResturant_Room SET  number =?,  price =?, status =?, details =? WHERE  id = ?";
+        $query = "UPDATE iResturant_Room SET  number =?,  price =?, details =? WHERE  id = ?";
         $stmt = $mysqli->prepare($query);
-        $rc = $stmt->bind_param('sssss', $number, $price,  $status, $details, $id);
+        $rc = $stmt->bind_param('ssss', $number, $price, $details, $id);
         $stmt->execute();
         if ($stmt) {
             $success = "Room $number  Updated";
@@ -235,8 +223,8 @@ if (isset($_POST['update_room'])) {
 }
 
 /* Delete Room */
-if (isset($_GET['delete'])) {
-    $id = $_GET['delete'];
+if (isset($_GET['delete_room'])) {
+    $id = $_GET['delete_room'];
     $adn = 'DELETE FROM iResturant_Room WHERE id=?';
     $stmt = $mysqli->prepare($adn);
     $stmt->bind_param('s', $id);
@@ -452,7 +440,7 @@ require_once('../partials/head.php');
                                             $stmt->execute(); //ok
                                             $res = $stmt->get_result();
                                             while ($currency = $res->fetch_object()) {
-                                                $ret = "SELECT iResturant_Room_Category.name, iResturant_Room.number, iResturant_Room.id, iResturant_Room.price, iResturant_Room.status FROM iResturant_Room_Category INNER JOIN iResturant_Room ON iResturant_Room.room_category_id = iResturant_Room_Category.id;  ";
+                                                $ret = "SELECT iResturant_Room_Category.name, iResturant_Room.number, iResturant_Room.id, iResturant_Room.details, iResturant_Room.price, iResturant_Room.status FROM iResturant_Room_Category INNER JOIN iResturant_Room ON iResturant_Room.room_category_id = iResturant_Room_Category.id;  ";
                                                 $stmt = $mysqli->prepare($ret);
                                                 $stmt->execute(); //ok
                                                 $res = $stmt->get_result();
@@ -464,15 +452,75 @@ require_once('../partials/head.php');
                                                         <td><?php echo $currency->code . " " . $rooms->price; ?></td>
                                                         <td><?php echo $rooms->status; ?></td>
                                                         <td>
-                                                            <a href="room?view=<?php echo $rooms->id; ?>" class="btn btn-sm btn-outline-warning">
+                                                            <a href="room?view=<?php echo $rooms->id; ?>" class="btn btn-sm btn-outline-success">
                                                                 <i data-feather="eye" class="align-self-center icon-xs ms-1"></i> View
                                                             </a>
+
                                                             <a href="#edit-<?php echo $rooms->id; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $rooms->id; ?>" class="btn btn-sm btn-outline-warning">
                                                                 <i data-feather="edit" class="align-self-center icon-xs ms-1"></i> Edit
                                                             </a>
+                                                            <!-- Update Modal -->
+                                                            <div class="modal fade" id="edit-<?php echo $rooms->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header bg-warning">
+                                                                            <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Edit Room</h6>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="row">
+                                                                                <form method="post" enctype="multipart/form-data" role="form">
+                                                                                    <div class="card-body">
+                                                                                        <div class="row">
+                                                                                            <div class="form-group col-md-6">
+                                                                                                <label for="">Room Number</label>
+                                                                                                <input type="text" required name="number" value="<?php echo $rooms->number; ?>" class="form-control" id="exampleInputEmail1">
+                                                                                                <input type="hidden" required name="id" value="<?php echo $rooms->id; ?>" class="form-control">
+                                                                                            </div>
+
+                                                                                            <div class="form-group col-md-6">
+                                                                                                <label for="">Room Price (Per Night / Day)</label>
+                                                                                                <input type="number" required name="price" value="<?php echo $rooms->price; ?>" class="form-control">
+                                                                                            </div>
+                                                                                            <div class="form-group col-md-12">
+                                                                                                <label for="">Room Details</label>
+                                                                                                <textarea required name="details" class="form-control" rows="5"><?php echo $rooms->details; ?></textarea>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="text-right">
+                                                                                        <button type="submit" name="update_room" class="btn btn-primary">Submit</button>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- End Update Modal -->
                                                             <a href="#delete-<?php echo $rooms->id; ?>" data-bs-toggle="modal" data-bs-target="#delete-<?php echo $rooms->id; ?>" class="btn btn-sm btn-outline-danger">
                                                                 <i data-feather="trash" class="align-self-center icon-xs ms-1"></i> Delete
                                                             </a>
+                                                            <!-- Delete Modal -->
+                                                            <div class="modal fade" id="delete-<?php echo $rooms->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLabel">CONFIRM</h5>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                                                                        </div>
+                                                                        <div class="modal-body text-center text-danger">
+                                                                            <h4>Delete <?php echo $rooms->number; ?> ?</h4>
+                                                                            <br>
+                                                                            <p>Heads Up, You are about to delete <?php echo $rooms->number; ?>. This action is irrevisble.</p>
+                                                                            <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
+                                                                            <a href="rooms?delete_room=<?php echo $rooms->id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- End Delete Modal -->
                                                         </td>
                                                     </tr>
                                             <?php
