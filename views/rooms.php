@@ -176,7 +176,7 @@ if (isset($_POST['add_room'])) {
 }
 
 /* Update Room */
-if (isset($_POST['add_room'])) {
+if (isset($_POST['update_room'])) {
     $error = 0;
     if (isset($_POST['id']) && !empty($_POST['id'])) {
         $id = mysqli_real_escape_string($mysqli, trim($_POST['id']));
@@ -444,26 +444,25 @@ require_once('../partials/head.php');
                                                 <th>Manage Room</th>
                                             </tr>
                                         </thead>
-
-
                                         <tbody>
                                             <?php
-                                            $ret = "SELECT iResturant_Room.number, iResturant_Room.price, iResturant_Room.status, iResturant_Room_Category.name FROM iResturant_Room LEFT JOIN iResturant_Room_Category ON iResturant_Room.room_category_id; ";
+                                            /* Load Currency */
+                                            $ret = "SELECT * FROM `iResturant_Currencies` WHERE status = 'Active'  ";
                                             $stmt = $mysqli->prepare($ret);
                                             $stmt->execute(); //ok
                                             $res = $stmt->get_result();
-                                            while ($rooms = $res->fetch_object()) {
-                                                /* Load Currency */
-                                                $ret = "SELECT * FROM `iResturant_Currencies` WHERE status = 'Active'  ";
+                                            while ($currency = $res->fetch_object()) {
+                                                $ret = "SELECT iResturant_Room_Category.name, iResturant_Room.number, iResturant_Room.price, iResturant_Room.status FROM iResturant_Room_Category INNER JOIN iResturant_Room ON iResturant_Room.room_category_id = iResturant_Room_Category.id;  ";
                                                 $stmt = $mysqli->prepare($ret);
                                                 $stmt->execute(); //ok
                                                 $res = $stmt->get_result();
-                                                while ($currency = $res->fetch_object()) {
+                                                while ($rooms = $res->fetch_object()) {
+
                                             ?>
                                                     <tr>
                                                         <td><?php echo $rooms->number; ?></td>
                                                         <td><?php echo $rooms->name; ?></td>
-                                                        <td><?php echo $currency->code . "" . $rooms->price; ?></td>
+                                                        <td><?php echo $currency->code . " " . $rooms->price; ?></td>
                                                         <td><?php echo $rooms->status; ?></td>
                                                         <td>
                                                         </td>
@@ -501,7 +500,7 @@ require_once('../partials/head.php');
 
                                                         <div class="form-group col-md-6">
                                                             <label for="">Room Category</label>
-                                                            <select id="RoomCategoryName"  class="form-control" onchange="GetRoomCategoryID(this.value);">
+                                                            <select id="RoomCategoryName" class="form-control" onchange="GetRoomCategoryID(this.value);">
                                                                 <option>Select Room Category</option>
                                                                 <?php
                                                                 $ret = "SELECT * FROM  iResturant_Room_Category ";
@@ -519,7 +518,7 @@ require_once('../partials/head.php');
                                                     </div>
                                                     <div class="row">
                                                         <div class="form-group col-md-12">
-                                                            <label for="">Room Price</label>
+                                                            <label for="">Room Price (Per Night / Day)</label>
                                                             <input type="number" required name="price" class="form-control">
                                                         </div>
                                                         <div class="form-group col-md-12">
