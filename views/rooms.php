@@ -24,6 +24,7 @@ require_once('../config/config.php');
 require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 admin_check_login();
+
 /* Add Room Category */
 if (isset($_POST['add_room_category'])) {
     $error = 0;
@@ -48,20 +49,19 @@ if (isset($_POST['add_room_category'])) {
             if ($name == $row['name']) {
                 $err =  "Category With This  Name Already Exists";
             }
-        } else
-
-            $query = "INSERT INTO iResturant_Room_Category (id, name) VALUES(?,?)";
-        $stmt = $mysqli->prepare($query);
-        $rc = $stmt->bind_param('ss', $id, $name);
-        $stmt->execute();
-        if ($stmt) {
-            $success = "$name  Added";
         } else {
-            $info = "Please Try Again Or Try Later";
+            $query = "INSERT INTO iResturant_Room_Category (id, name) VALUES(?,?)";
+            $stmt = $mysqli->prepare($query);
+            $rc = $stmt->bind_param('ss', $id, $name);
+            $stmt->execute();
+            if ($stmt) {
+                $success = "$name  Added";
+            } else {
+                $info = "Please Try Again Or Try Later";
+            }
         }
     }
 }
-
 
 /* Update Room Category */
 if (isset($_POST['update_room_category'])) {
@@ -102,6 +102,148 @@ if (isset($_GET['delete'])) {
     $stmt->close();
     if ($stmt) {
         $success = 'Category Deleted' && header('refresh:1; url=rooms');;
+    } else {
+        $info = 'Please Try Again Or Try Later';
+    }
+}
+
+
+/* Add Room */
+if (isset($_POST['add_room'])) {
+    $error = 0;
+    if (isset($_POST['id']) && !empty($_POST['id'])) {
+        $id = mysqli_real_escape_string($mysqli, trim($_POST['id']));
+    } else {
+        $error = 1;
+        $err = "Room  ID Cannot Be Empty";
+    }
+
+    if (isset($_POST['number']) && !empty($_POST['number'])) {
+        $number = mysqli_real_escape_string($mysqli, trim($_POST['number']));
+    } else {
+        $error = 1;
+        $err = "Room Number Cannot Be Empty";
+    }
+
+    if (isset($_POST['room_category_id']) && !empty($_POST['room_category_id'])) {
+        $room_category_id = mysqli_real_escape_string($mysqli, trim($_POST['room_category_id']));
+    } else {
+        $error = 1;
+        $err = "Room Category ID Cannot Be Empty";
+    }
+
+    if (isset($_POST['price']) && !empty($_POST['price'])) {
+        $price = mysqli_real_escape_string($mysqli, trim($_POST['price']));
+    } else {
+        $error = 1;
+        $err = "Room Price Cannot Be Empty";
+    }
+
+    if (isset($_POST['status']) && !empty($_POST['status'])) {
+        $status = mysqli_real_escape_string($mysqli, trim($_POST['status']));
+    } else {
+        $error = 1;
+        $err = "Room Status Cannot Be Empty";
+    }
+
+    if (isset($_POST['details']) && !empty($_POST['details'])) {
+        $details = ($_POST['details']);
+    } else {
+        $error = 1;
+        $err = "Room Details Cannot Be Empty";
+    }
+
+    if (!$error) {
+        $sql = "SELECT * FROM  iResturant_Room WHERE  (number='$number')  ";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if ($number == $row['number']) {
+                $err =  "A Room With This Number Already Exists";
+            }
+        } else {
+            $query = "INSERT INTO iResturant_Room (id, number, room_category_id, price, status, details) VALUES(?,?,?,?,?,?)";
+            $stmt = $mysqli->prepare($query);
+            $rc = $stmt->bind_param('ssssss', $id, $number, $room_category_id, $price, $status, $details);
+            $stmt->execute();
+            if ($stmt) {
+                $success = "Room $number  Added";
+            } else {
+                $info = "Please Try Again Or Try Later";
+            }
+        }
+    }
+}
+
+/* Update Room */
+if (isset($_POST['add_room'])) {
+    $error = 0;
+    if (isset($_POST['id']) && !empty($_POST['id'])) {
+        $id = mysqli_real_escape_string($mysqli, trim($_POST['id']));
+    } else {
+        $error = 1;
+        $err = "Room  ID Cannot Be Empty";
+    }
+
+    if (isset($_POST['number']) && !empty($_POST['number'])) {
+        $number = mysqli_real_escape_string($mysqli, trim($_POST['number']));
+    } else {
+        $error = 1;
+        $err = "Room Number Cannot Be Empty";
+    }
+
+    if (isset($_POST['room_category_id']) && !empty($_POST['room_category_id'])) {
+        $room_category_id = mysqli_real_escape_string($mysqli, trim($_POST['room_category_id']));
+    } else {
+        $error = 1;
+        $err = "Room Category ID Cannot Be Empty";
+    }
+
+    if (isset($_POST['price']) && !empty($_POST['price'])) {
+        $price = mysqli_real_escape_string($mysqli, trim($_POST['price']));
+    } else {
+        $error = 1;
+        $err = "Room Price Cannot Be Empty";
+    }
+
+    if (isset($_POST['status']) && !empty($_POST['status'])) {
+        $status = mysqli_real_escape_string($mysqli, trim($_POST['status']));
+    } else {
+        $error = 1;
+        $err = "Room Status Cannot Be Empty";
+    }
+
+    if (isset($_POST['details']) && !empty($_POST['details'])) {
+        $details = ($_POST['details']);
+    } else {
+        $error = 1;
+        $err = "Room Details Cannot Be Empty";
+    }
+
+    if (!$error) {
+
+        $query = "UPDATE iResturant_Room SET  number =?,  price =?, status =?, details =? WHERE  id = ?";
+        $stmt = $mysqli->prepare($query);
+        $rc = $stmt->bind_param('sssss', $number, $price,  $status, $details, $id);
+        $stmt->execute();
+        if ($stmt) {
+            $success = "Room $number  Updated";
+        } else {
+            $info = "Please Try Again Or Try Later";
+        }
+    }
+}
+
+/* Delete Room */
+if (isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+    $adn = 'DELETE FROM iResturant_Room WHERE id=?';
+    $stmt = $mysqli->prepare($adn);
+    $stmt->bind_param('s', $id);
+    $stmt->execute();
+    $stmt->close();
+    if ($stmt) {
+        $success = 'Room Deleted' && header('refresh:1; url=rooms');;
     } else {
         $info = 'Please Try Again Or Try Later';
     }
@@ -163,7 +305,6 @@ require_once('../partials/head.php');
                                         <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Add Room Category</h6>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <!--end modal-header-->
                                     <div class="modal-body">
                                         <div class="row">
                                             <form method="post" enctype="multipart/form-data" role="form">
@@ -181,12 +322,9 @@ require_once('../partials/head.php');
                                                 </div>
                                             </form>
                                         </div>
-                                        <!--end row-->
                                     </div>
                                 </div>
-                                <!--end modal-content-->
                             </div>
-                            <!--end modal-dialog-->
                         </div>
                         <!-- End Add Room Categor -->
 
@@ -198,7 +336,6 @@ require_once('../partials/head.php');
                                         <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Manage Room Categories</h6>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <!--end modal-header-->
                                     <div class="modal-body">
                                         <div class="row">
                                             <table class="table dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -288,9 +425,7 @@ require_once('../partials/head.php');
                                         <!--end row-->
                                     </div>
                                 </div>
-                                <!--end modal-content-->
                             </div>
-                            <!--end modal-dialog-->
                         </div>
                         <!-- End Manage Room Category Modal -->
 
