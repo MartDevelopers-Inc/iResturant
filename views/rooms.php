@@ -429,10 +429,6 @@ require_once('../partials/head.php');
                         </div>
                         <!-- End Manage Room Category Modal -->
 
-
-                        <!-- Add Room Category Modal -->
-
-                        <!-- End Add Room Category Modal -->
                         <hr>
                         <div class="card">
                             <!--end card-header-->
@@ -483,6 +479,65 @@ require_once('../partials/head.php');
                                 </div>
                             </div>
                         </div>
+                        <!-- Add Room Modal -->
+                        <div class="modal fade" id="add_room" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-primary">
+                                        <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Add Room</h6>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <form method="post" enctype="multipart/form-data" role="form">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="form-group col-md-6">
+                                                            <label for="">Room Number</label>
+                                                            <input type="text" required name="number" class="form-control" id="exampleInputEmail1">
+                                                            <input type="hidden" required name="id" value="<?php echo $sys_gen_id_alt_1; ?>" class="form-control">
+                                                            <input type="hidden" required name="status" value="Vacant" class="form-control">
+                                                        </div>
+
+                                                        <div class="form-group col-md-6">
+                                                            <label for="">Room Category</label>
+                                                            <select id="RoomCategoryName" style="width: 100%;" class="custom-select form-control" onchange="GetRoomCategoryID(this.value);">
+                                                                <option>Select Room Category</option>
+                                                                <?php
+                                                                $ret = "SELECT * FROM  iResturant_Room_Category ";
+                                                                $stmt = $mysqli->prepare($ret);
+                                                                $stmt->execute(); //ok
+                                                                $res = $stmt->get_result();
+                                                                while ($rooms_categories = $res->fetch_object()) {
+                                                                ?>
+                                                                    <option><?php echo $rooms_categories->name; ?></option>
+                                                                <?php
+                                                                } ?>
+                                                            </select>
+                                                            <input type="hidden" required name="room_category_id" id="RoomCategoryID" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group col-md-12">
+                                                            <label for="">Room Price</label>
+                                                            <input type="number" required name="price" class="form-control">
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <label for="">Room Details</label>
+                                                            <textarea required name="details" class="form-control" rows="5"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="text-right">
+                                                    <button type="submit" name="add_room" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Add Room Modal -->
 
                     </div>
                 </div>
