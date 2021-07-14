@@ -24,6 +24,7 @@ require_once('../config/config.php');
 require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 admin_check_login();
+
 /* Add Room Category */
 if (isset($_POST['add_room_category'])) {
     $error = 0;
@@ -48,23 +49,22 @@ if (isset($_POST['add_room_category'])) {
             if ($name == $row['name']) {
                 $err =  "Category With This  Name Already Exists";
             }
-        } else
-
-            $query = "INSERT INTO iResturant_Room_Category (id, name) VALUES(?,?)";
-        $stmt = $mysqli->prepare($query);
-        $rc = $stmt->bind_param('ss', $id, $name);
-        $stmt->execute();
-        if ($stmt) {
-            $success = "$name  Added";
         } else {
-            $info = "Please Try Again Or Try Later";
+            $query = "INSERT INTO iResturant_Room_Category (id, name) VALUES(?,?)";
+            $stmt = $mysqli->prepare($query);
+            $rc = $stmt->bind_param('ss', $id, $name);
+            $stmt->execute();
+            if ($stmt) {
+                $success = "$name  Added";
+            } else {
+                $info = "Please Try Again Or Try Later";
+            }
         }
     }
 }
 
-
 /* Update Room Category */
-if (isset($_POST['add_category'])) {
+if (isset($_POST['update_room_category'])) {
     $error = 0;
     if (isset($_POST['id']) && !empty($_POST['id'])) {
         $id = mysqli_real_escape_string($mysqli, trim($_POST['id']));
@@ -96,12 +96,142 @@ if (isset($_POST['add_category'])) {
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
     $adn = 'DELETE FROM iResturant_Room_Category WHERE id=?';
-    $stmt = $conn->prepare($adn);
+    $stmt = $mysqli->prepare($adn);
     $stmt->bind_param('s', $id);
     $stmt->execute();
     $stmt->close();
     if ($stmt) {
         $success = 'Category Deleted' && header('refresh:1; url=rooms');;
+    } else {
+        $info = 'Please Try Again Or Try Later';
+    }
+}
+
+
+/* Add Room */
+if (isset($_POST['add_room'])) {
+    $error = 0;
+    if (isset($_POST['id']) && !empty($_POST['id'])) {
+        $id = mysqli_real_escape_string($mysqli, trim($_POST['id']));
+    } else {
+        $error = 1;
+        $err = "Room  ID Cannot Be Empty";
+    }
+
+    if (isset($_POST['number']) && !empty($_POST['number'])) {
+        $number = mysqli_real_escape_string($mysqli, trim($_POST['number']));
+    } else {
+        $error = 1;
+        $err = "Room Number Cannot Be Empty";
+    }
+
+    if (isset($_POST['room_category_id']) && !empty($_POST['room_category_id'])) {
+        $room_category_id = mysqli_real_escape_string($mysqli, trim($_POST['room_category_id']));
+    } else {
+        $error = 1;
+        $err = "Room Category ID Cannot Be Empty";
+    }
+
+    if (isset($_POST['price']) && !empty($_POST['price'])) {
+        $price = mysqli_real_escape_string($mysqli, trim($_POST['price']));
+    } else {
+        $error = 1;
+        $err = "Room Price Cannot Be Empty";
+    }
+
+    if (isset($_POST['status']) && !empty($_POST['status'])) {
+        $status = mysqli_real_escape_string($mysqli, trim($_POST['status']));
+    } else {
+        $error = 1;
+        $err = "Room Status Cannot Be Empty";
+    }
+
+    if (isset($_POST['details']) && !empty($_POST['details'])) {
+        $details = ($_POST['details']);
+    } else {
+        $error = 1;
+        $err = "Room Details Cannot Be Empty";
+    }
+
+    if (!$error) {
+        $sql = "SELECT * FROM  iResturant_Room WHERE  (number='$number')  ";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if ($number == $row['number']) {
+                $err =  "A Room With This Number Already Exists";
+            }
+        } else {
+            $query = "INSERT INTO iResturant_Room (id, number, room_category_id, price, status, details) VALUES(?,?,?,?,?,?)";
+            $stmt = $mysqli->prepare($query);
+            $rc = $stmt->bind_param('ssssss', $id, $number, $room_category_id, $price, $status, $details);
+            $stmt->execute();
+            if ($stmt) {
+                $success = "Room $number  Added";
+            } else {
+                $info = "Please Try Again Or Try Later";
+            }
+        }
+    }
+}
+
+/* Update Room */
+if (isset($_POST['update_room'])) {
+    $error = 0;
+    if (isset($_POST['id']) && !empty($_POST['id'])) {
+        $id = mysqli_real_escape_string($mysqli, trim($_POST['id']));
+    } else {
+        $error = 1;
+        $err = "Room  ID Cannot Be Empty";
+    }
+
+    if (isset($_POST['number']) && !empty($_POST['number'])) {
+        $number = mysqli_real_escape_string($mysqli, trim($_POST['number']));
+    } else {
+        $error = 1;
+        $err = "Room Number Cannot Be Empty";
+    }
+
+
+    if (isset($_POST['price']) && !empty($_POST['price'])) {
+        $price = mysqli_real_escape_string($mysqli, trim($_POST['price']));
+    } else {
+        $error = 1;
+        $err = "Room Price Cannot Be Empty";
+    }
+
+
+    if (isset($_POST['details']) && !empty($_POST['details'])) {
+        $details = ($_POST['details']);
+    } else {
+        $error = 1;
+        $err = "Room Details Cannot Be Empty";
+    }
+
+    if (!$error) {
+
+        $query = "UPDATE iResturant_Room SET  number =?,  price =?, details =? WHERE  id = ?";
+        $stmt = $mysqli->prepare($query);
+        $rc = $stmt->bind_param('ssss', $number, $price, $details, $id);
+        $stmt->execute();
+        if ($stmt) {
+            $success = "Room $number  Updated";
+        } else {
+            $info = "Please Try Again Or Try Later";
+        }
+    }
+}
+
+/* Delete Room */
+if (isset($_GET['delete_room'])) {
+    $id = $_GET['delete_room'];
+    $adn = 'DELETE FROM iResturant_Room WHERE id=?';
+    $stmt = $mysqli->prepare($adn);
+    $stmt->bind_param('s', $id);
+    $stmt->execute();
+    $stmt->close();
+    if ($stmt) {
+        $success = 'Room Deleted' && header('refresh:1; url=rooms');;
     } else {
         $info = 'Please Try Again Or Try Later';
     }
@@ -163,7 +293,6 @@ require_once('../partials/head.php');
                                         <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Add Room Category</h6>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <!--end modal-header-->
                                     <div class="modal-body">
                                         <div class="row">
                                             <form method="post" enctype="multipart/form-data" role="form">
@@ -181,12 +310,9 @@ require_once('../partials/head.php');
                                                 </div>
                                             </form>
                                         </div>
-                                        <!--end row-->
                                     </div>
                                 </div>
-                                <!--end modal-content-->
                             </div>
-                            <!--end modal-dialog-->
                         </div>
                         <!-- End Add Room Categor -->
 
@@ -198,7 +324,6 @@ require_once('../partials/head.php');
                                         <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Manage Room Categories</h6>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-                                    <!--end modal-header-->
                                     <div class="modal-body">
                                         <div class="row">
                                             <table class="table dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
@@ -220,30 +345,78 @@ require_once('../partials/head.php');
                                                         <tr>
                                                             <td><?php echo $rooms_categories->name; ?></td>
                                                             <td>
-                                                                <span data-bs-toggle="modal" data-bs-target="#update-<?php echo $rooms_categories->id; ?>" class="badge badge-warning">Update</a>
-                                                            </td>
+                                                                <a href="#edit-<?php echo $rooms_categories->id; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $rooms_categories->id; ?>" class="btn btn-sm btn-outline-warning">
+                                                                    <i data-feather="edit" class="align-self-center icon-xs ms-1"></i> Edit
+                                                                </a>
+                                                                <a href="#delete-<?php echo $rooms_categories->id; ?>" data-bs-toggle="modal" data-bs-target="#delete-<?php echo $rooms_categories->id; ?>" class="btn btn-sm btn-outline-danger">
+                                                                    <i data-feather="trash" class="align-self-center icon-xs ms-1"></i> Delete
+                                                                </a>
+                                                                <!-- Edit Room Category Modal -->
+                                                                <div class="modal fade" id="edit-<?php echo $rooms_categories->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header bg-warning">
+                                                                                <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Edit Room Category</h6>
+                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div class="row">
+                                                                                    <form method="post" enctype="multipart/form-data" role="form">
+                                                                                        <div class="card-body">
+                                                                                            <div class="row">
+                                                                                                <div class="form-group col-md-12">
+                                                                                                    <label for="">Category Name</label>
+                                                                                                    <input type="text" required name="name" class="form-control" value="<?php echo $rooms_categories->name; ?>" id="exampleInputEmail1">
+                                                                                                    <input type="hidden" required name="id" value="<?php echo $rooms_categories->id; ?>" class="form-control">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="text-left">
+                                                                                            <button type="submit" name="update_room_category" class="btn btn-primary">Submit</button>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- End Edit Modal -->
 
+                                                                <!-- Delete Room Category Modal -->
+                                                                <div class="modal fade" id="delete-<?php echo $rooms_categories->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                        <div class="modal-content">
+                                                                            <div class="modal-header">
+                                                                                <h5 class="modal-title" id="exampleModalLabel">CONFIRM</h5>
+                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                                                                            </div>
+                                                                            <div class="modal-body text-center text-danger">
+                                                                                <h4>Delete <?php echo $rooms_categories->name; ?> ?</h4>
+                                                                                <br>
+                                                                                <p>Heads Up, You are about to delete <?php echo $rooms_categories->name; ?>. This action is irrevisble.</p>
+                                                                                <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
+                                                                                <a href="rooms?delete=<?php echo $rooms_categories->id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- End Delete Modal -->
+                                                            </td>
                                                         </tr>
                                                     <?php
                                                     }
                                                     ?>
-
                                                 </tbody>
                                             </table>
                                         </div>
                                         <!--end row-->
                                     </div>
                                 </div>
-                                <!--end modal-content-->
                             </div>
-                            <!--end modal-dialog-->
                         </div>
                         <!-- End Manage Room Category Modal -->
 
-
-                        <!-- Add Room Category Modal -->
-
-                        <!-- End Add Room Category Modal -->
                         <hr>
                         <div class="card">
                             <!--end card-header-->
@@ -259,30 +432,96 @@ require_once('../partials/head.php');
                                                 <th>Manage Room</th>
                                             </tr>
                                         </thead>
-
-
                                         <tbody>
                                             <?php
-                                            $ret = "SELECT iResturant_Room.number, iResturant_Room.price, iResturant_Room.status, iResturant_Room_Category.name FROM iResturant_Room LEFT JOIN iResturant_Room_Category ON iResturant_Room.room_category_id; ";
+                                            /* Load Currency */
+                                            $ret = "SELECT * FROM `iResturant_Currencies` WHERE status = 'Active'  ";
                                             $stmt = $mysqli->prepare($ret);
                                             $stmt->execute(); //ok
                                             $res = $stmt->get_result();
-                                            while ($rooms = $res->fetch_object()) {
-                                                /* Load Currency */
-                                                $ret = "SELECT * FROM `iResturant_Currencies` WHERE status = 'Active'  ";
+                                            while ($currency = $res->fetch_object()) {
+                                                $ret = "SELECT iResturant_Room_Category.name, iResturant_Room.number, iResturant_Room.id, iResturant_Room.details, iResturant_Room.price, iResturant_Room.status FROM iResturant_Room_Category INNER JOIN iResturant_Room ON iResturant_Room.room_category_id = iResturant_Room_Category.id;  ";
                                                 $stmt = $mysqli->prepare($ret);
                                                 $stmt->execute(); //ok
                                                 $res = $stmt->get_result();
-                                                while ($currency = $res->fetch_object()) {
+                                                while ($rooms = $res->fetch_object()) {
                                             ?>
                                                     <tr>
                                                         <td><?php echo $rooms->number; ?></td>
                                                         <td><?php echo $rooms->name; ?></td>
-                                                        <td><?php echo $currency->code . "" . $rooms->price; ?></td>
+                                                        <td><?php echo $currency->code . " " . $rooms->price; ?></td>
                                                         <td><?php echo $rooms->status; ?></td>
                                                         <td>
-                                                        </td>
+                                                            <a href="room?view=<?php echo $rooms->id; ?>" class="btn btn-sm btn-outline-success">
+                                                                <i data-feather="eye" class="align-self-center icon-xs ms-1"></i> View
+                                                            </a>
 
+                                                            <a href="#edit-<?php echo $rooms->id; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $rooms->id; ?>" class="btn btn-sm btn-outline-warning">
+                                                                <i data-feather="edit" class="align-self-center icon-xs ms-1"></i> Edit
+                                                            </a>
+                                                            <!-- Update Modal -->
+                                                            <div class="modal fade" id="edit-<?php echo $rooms->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header bg-warning">
+                                                                            <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Edit Room</h6>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="row">
+                                                                                <form method="post" enctype="multipart/form-data" role="form">
+                                                                                    <div class="card-body">
+                                                                                        <div class="row">
+                                                                                            <div class="form-group col-md-6">
+                                                                                                <label for="">Room Number</label>
+                                                                                                <input type="text" required name="number" value="<?php echo $rooms->number; ?>" class="form-control" id="exampleInputEmail1">
+                                                                                                <input type="hidden" required name="id" value="<?php echo $rooms->id; ?>" class="form-control">
+                                                                                            </div>
+
+                                                                                            <div class="form-group col-md-6">
+                                                                                                <label for="">Room Price (Per Night / Day)</label>
+                                                                                                <input type="number" required name="price" value="<?php echo $rooms->price; ?>" class="form-control">
+                                                                                            </div>
+                                                                                            <div class="form-group col-md-12">
+                                                                                                <label for="">Room Details</label>
+                                                                                                <textarea required name="details" class="form-control" rows="5"><?php echo $rooms->details; ?></textarea>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="text-right">
+                                                                                        <button type="submit" name="update_room" class="btn btn-primary">Submit</button>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- End Update Modal -->
+                                                            <a href="#delete-<?php echo $rooms->id; ?>" data-bs-toggle="modal" data-bs-target="#delete-<?php echo $rooms->id; ?>" class="btn btn-sm btn-outline-danger">
+                                                                <i data-feather="trash" class="align-self-center icon-xs ms-1"></i> Delete
+                                                            </a>
+                                                            <!-- Delete Modal -->
+                                                            <div class="modal fade" id="delete-<?php echo $rooms->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLabel">CONFIRM</h5>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                                                                        </div>
+                                                                        <div class="modal-body text-center text-danger">
+                                                                            <h4>Delete <?php echo $rooms->number; ?> ?</h4>
+                                                                            <br>
+                                                                            <p>Heads Up, You are about to delete <?php echo $rooms->number; ?>. This action is irrevisble.</p>
+                                                                            <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
+                                                                            <a href="rooms?delete_room=<?php echo $rooms->id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- End Delete Modal -->
+                                                        </td>
                                                     </tr>
                                             <?php
                                                 }
@@ -294,6 +533,65 @@ require_once('../partials/head.php');
                                 </div>
                             </div>
                         </div>
+                        <!-- Add Room Modal -->
+                        <div class="modal fade" id="add_room" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-primary">
+                                        <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Add Room</h6>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <form method="post" enctype="multipart/form-data" role="form">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="form-group col-md-6">
+                                                            <label for="">Room Number</label>
+                                                            <input type="text" required name="number" class="form-control" id="exampleInputEmail1">
+                                                            <input type="hidden" required name="id" value="<?php echo $sys_gen_id_alt_1; ?>" class="form-control">
+                                                            <input type="hidden" required name="status" value="Vacant" class="form-control">
+                                                        </div>
+
+                                                        <div class="form-group col-md-6">
+                                                            <label for="">Room Category</label>
+                                                            <select id="RoomCategoryName" class="form-control" onchange="GetRoomCategoryID(this.value);">
+                                                                <option>Select Room Category</option>
+                                                                <?php
+                                                                $ret = "SELECT * FROM  iResturant_Room_Category ";
+                                                                $stmt = $mysqli->prepare($ret);
+                                                                $stmt->execute(); //ok
+                                                                $res = $stmt->get_result();
+                                                                while ($rooms_categories = $res->fetch_object()) {
+                                                                ?>
+                                                                    <option><?php echo $rooms_categories->name; ?></option>
+                                                                <?php
+                                                                } ?>
+                                                            </select>
+                                                            <input type="hidden" required name="room_category_id" id="RoomCategoryID" class="form-control">
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="form-group col-md-12">
+                                                            <label for="">Room Price (Per Night / Day)</label>
+                                                            <input type="number" required name="price" class="form-control">
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <label for="">Room Details</label>
+                                                            <textarea required name="details" class="form-control" rows="5"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="text-right">
+                                                    <button type="submit" name="add_room" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Add Room Modal -->
 
                     </div>
                 </div>
