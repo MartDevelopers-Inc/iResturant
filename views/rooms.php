@@ -452,12 +452,11 @@ require_once('../partials/head.php');
                                             $stmt->execute(); //ok
                                             $res = $stmt->get_result();
                                             while ($currency = $res->fetch_object()) {
-                                                $ret = "SELECT iResturant_Room_Category.name, iResturant_Room.number, iResturant_Room.price, iResturant_Room.status FROM iResturant_Room_Category INNER JOIN iResturant_Room ON iResturant_Room.room_category_id = iResturant_Room_Category.id;  ";
+                                                $ret = "SELECT iResturant_Room_Category.name, iResturant_Room.number, iResturant_Room.id, iResturant_Room.price, iResturant_Room.status FROM iResturant_Room_Category INNER JOIN iResturant_Room ON iResturant_Room.room_category_id = iResturant_Room_Category.id;  ";
                                                 $stmt = $mysqli->prepare($ret);
                                                 $stmt->execute(); //ok
                                                 $res = $stmt->get_result();
                                                 while ($rooms = $res->fetch_object()) {
-
                                             ?>
                                                     <tr>
                                                         <td><?php echo $rooms->number; ?></td>
@@ -465,8 +464,16 @@ require_once('../partials/head.php');
                                                         <td><?php echo $currency->code . " " . $rooms->price; ?></td>
                                                         <td><?php echo $rooms->status; ?></td>
                                                         <td>
+                                                            <a href="room?view=<?php echo $rooms->id; ?>" class="btn btn-sm btn-outline-warning">
+                                                                <i data-feather="eye" class="align-self-center icon-xs ms-1"></i> View
+                                                            </a>
+                                                            <a href="#edit-<?php echo $rooms->id; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $rooms->id; ?>" class="btn btn-sm btn-outline-warning">
+                                                                <i data-feather="edit" class="align-self-center icon-xs ms-1"></i> Edit
+                                                            </a>
+                                                            <a href="#delete-<?php echo $rooms->id; ?>" data-bs-toggle="modal" data-bs-target="#delete-<?php echo $rooms->id; ?>" class="btn btn-sm btn-outline-danger">
+                                                                <i data-feather="trash" class="align-self-center icon-xs ms-1"></i> Delete
+                                                            </a>
                                                         </td>
-
                                                     </tr>
                                             <?php
                                                 }
