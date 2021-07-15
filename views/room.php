@@ -24,6 +24,62 @@ require_once('../config/config.php');
 require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 admin_check_login();
+
+/* Update Hotel Room */
+if (isset($_POST['Update_Room'])) {
+    $error = 0;
+    if (isset($_POST['id']) && !empty($_POST['id'])) {
+        $id = mysqli_real_escape_string($mysqli, trim($_POST['id']));
+    } else {
+        $error = 1;
+        $err = "Room  ID Cannot Be Empty";
+    }
+
+    if (isset($_POST['number']) && !empty($_POST['number'])) {
+        $number = mysqli_real_escape_string($mysqli, trim($_POST['number']));
+    } else {
+        $error = 1;
+        $err = "Room Number Cannot Be Empty";
+    }
+
+
+    if (isset($_POST['price']) && !empty($_POST['price'])) {
+        $price = mysqli_real_escape_string($mysqli, trim($_POST['price']));
+    } else {
+        $error = 1;
+        $err = "Room Price Cannot Be Empty";
+    }
+
+    if (isset($_POST['room_category_id']) && !empty($_POST['room_category_id'])) {
+        $room_category_id = mysqli_real_escape_string($mysqli, trim($_POST['room_category_id']));
+    } else {
+        $error = 1;
+        $err = "Room Category ID  Cannot Be Empty";
+    }
+
+
+    if (isset($_POST['details']) && !empty($_POST['details'])) {
+        $details = ($_POST['details']);
+    } else {
+        $error = 1;
+        $err = "Room Details Cannot Be Empty";
+    }
+
+    if (!$error) {
+        $query = "UPDATE iResturant_Room SET  number =?,  price =?, room_category_id =?,  details =? WHERE  id = ?";
+        $stmt = $mysqli->prepare($query);
+        $rc = $stmt->bind_param('sssss', $number, $price, $room_category_id, $details, $id);
+        $stmt->execute();
+        if ($stmt) {
+            $success = "Room $number Updated";
+        } else {
+            $info = "Please Try Again Or Try Later";
+        }
+    }
+}
+
+/* Add Hotel Images */
+
 require_once('../partials/head.php');
 ?>
 
@@ -248,7 +304,7 @@ require_once('../partials/head.php');
                                                     <div class="card-header">
                                                         <div class="row align-items-center">
                                                             <div class="col">
-                                                                <h4 class="card-title">Personal Information</h4>
+                                                                <h4 class="card-title">Room Information</h4>
                                                             </div>
                                                             <!--end col-->
                                                         </div>
@@ -256,71 +312,52 @@ require_once('../partials/head.php');
                                                     </div>
                                                     <!--end card-header-->
                                                     <div class="card-body">
-                                                        <div class="form-group row">
-                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">First Name</label>
-                                                            <div class="col-lg-9 col-xl-8">
-                                                                <input class="form-control" type="text" value="Rosa">
+                                                        <form method="POST">
+                                                            <div class="form-group row">
+                                                                <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Room Number</label>
+                                                                <div class="col-lg-9 col-xl-8">
+                                                                    <input class="form-control" type="text" name="number" value="<?php echo $room->number; ?>">
+                                                                    <input class="form-control" type="hidden" name="id" value="<?php echo $room->id; ?>">
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Last Name</label>
-                                                            <div class="col-lg-9 col-xl-8">
-                                                                <input class="form-control" type="text" value="Dodson">
+                                                            <div class="form-group row">
+                                                                <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Room Price</label>
+                                                                <div class="col-lg-9 col-xl-8">
+                                                                    <input class="form-control" type="number" name="price" value="<?php echo $room->price; ?>">
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Company Name</label>
-                                                            <div class="col-lg-9 col-xl-8">
-                                                                <input class="form-control" type="text" value="MannatThemes">
-                                                                <span class="form-text text-muted font-12">We'll never share your email with anyone else.</span>
+                                                            <div class="form-group row">
+                                                                <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Room Category</label>
+                                                                <div class="col-lg-9 col-xl-8">
+                                                                    <select id="RoomCategoryName" class="form-control" onchange="GetRoomCategoryID(this.value);">
+                                                                        <option>Select Room Category</option>
+                                                                        <?php
+                                                                        $ret = "SELECT * FROM  iResturant_Room_Category ";
+                                                                        $stmt = $mysqli->prepare($ret);
+                                                                        $stmt->execute(); //ok
+                                                                        $res = $stmt->get_result();
+                                                                        while ($rooms_categories = $res->fetch_object()) {
+                                                                        ?>
+                                                                            <option><?php echo $rooms_categories->name; ?></option>
+                                                                        <?php
+                                                                        } ?>
+                                                                    </select>
+                                                                    <input type="hidden" required name="room_category_id" id="RoomCategoryID" class="form-control">
+                                                                </div>
                                                             </div>
-                                                        </div>
 
-                                                        <div class="form-group row">
-                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Contact Phone</label>
-                                                            <div class="col-lg-9 col-xl-8">
-                                                                <div class="input-group">
-                                                                    <span class="input-group-text"><i class="las la-phone"></i></span>
-                                                                    <input type="text" class="form-control" value="+123456789" placeholder="Phone" aria-describedby="basic-addon1">
+                                                            <div class="form-group row">
+                                                                <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Room Details</label>
+                                                                <div class="col-lg-9 col-xl-8">
+                                                                    <textarea name="details" rows="5" class="form-control"><?php echo $room->details; ?></textarea>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Email Address</label>
-                                                            <div class="col-lg-9 col-xl-8">
-                                                                <div class="input-group">
-                                                                    <span class="input-group-text"><i class="las la-at"></i></span>
-                                                                    <input type="text" class="form-control" value="rosa.dodson@demo.com" placeholder="Email" aria-describedby="basic-addon1">
+                                                            <div class="form-group text-center row">
+                                                                <div class="col-lg-9 col-xl-8 offset-lg-3">
+                                                                    <button type="submit" name="Update_Room" class="btn btn-sm btn-outline-primary">Submit</button>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Website Link</label>
-                                                            <div class="col-lg-9 col-xl-8">
-                                                                <div class="input-group">
-                                                                    <span class="input-group-text"><i class="la la-globe"></i></span>
-                                                                    <input type="text" class="form-control" value=" https://mannatthemes.com/" placeholder="Email" aria-describedby="basic-addon1">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">USA</label>
-                                                            <div class="col-lg-9 col-xl-8">
-                                                                <select class="form-select">
-                                                                    <option>London</option>
-                                                                    <option>India</option>
-                                                                    <option>USA</option>
-                                                                    <option>Canada</option>
-                                                                    <option>Thailand</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <div class="col-lg-9 col-xl-8 offset-lg-3">
-                                                                <button type="submit" class="btn btn-sm btn-outline-primary">Submit</button>
-                                                                <button type="button" class="btn btn-sm btn-outline-danger">Cancel</button>
-                                                            </div>
-                                                        </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -328,68 +365,27 @@ require_once('../partials/head.php');
                                             <div class="col-lg-6 col-xl-6">
                                                 <div class="card">
                                                     <div class="card-header">
-                                                        <h4 class="card-title">Change Password</h4>
+                                                        <h4 class="card-title">Room Images</h4>
                                                     </div>
                                                     <!--end card-header-->
                                                     <div class="card-body">
-                                                        <div class="form-group row">
-                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Current Password</label>
-                                                            <div class="col-lg-9 col-xl-8">
-                                                                <input class="form-control" type="password" placeholder="Password">
-                                                                <a href="#" class="text-primary font-12">Forgot password ?</a>
+                                                        <form method="POST" enctype="multipart/form-data">
+                                                            <div class="form-group row">
+                                                                <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Upload 5 Room Images</label>
+                                                                <div class="col-lg-9 col-xl-8">
+                                                                    <input class="form-control" type="file" name="files[]" multiple>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">New Password</label>
-                                                            <div class="col-lg-9 col-xl-8">
-                                                                <input class="form-control" type="password" placeholder="New Password">
+                                                            <div class="form-group text-center row">
+                                                                <div class="col-lg-9 col-xl-8 offset-lg-3">
+                                                                    <button type="submit" name="Upload_Images" class="btn btn-sm btn-outline-primary">Submit</button>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Confirm Password</label>
-                                                            <div class="col-lg-9 col-xl-8">
-                                                                <input class="form-control" type="password" placeholder="Re-Password">
-                                                                <span class="form-text text-muted font-12">Never share your password.</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="form-group row">
-                                                            <div class="col-lg-9 col-xl-8 offset-lg-3">
-                                                                <button type="submit" class="btn btn-sm btn-outline-primary">Change Password</button>
-                                                                <button type="button" class="btn btn-sm btn-outline-danger">Cancel</button>
-                                                            </div>
-                                                        </div>
+                                                        </form>
                                                     </div>
-                                                    <!--end card-body-->
                                                 </div>
-                                                <!--end card-->
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h4 class="card-title">Other Settings</h4>
-                                                    </div>
-                                                    <!--end card-header-->
-                                                    <div class="card-body">
-
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="" id="Email_Notifications" checked>
-                                                            <label class="form-check-label" for="Email_Notifications">
-                                                                Email Notifications
-                                                            </label>
-                                                            <span class="form-text text-muted font-12 mt-0">Do you need them?</span>
-                                                        </div>
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value="" id="API_Access">
-                                                            <label class="form-check-label" for="API_Access">
-                                                                API Access
-                                                            </label>
-                                                            <span class="form-text text-muted font-12 mt-0">Enable/Disable access</span>
-                                                        </div>
-                                                    </div>
-                                                    <!--end card-body-->
-                                                </div>
-                                                <!--end card-->
-                                            </div> <!-- end col -->
+                                            </div>
                                         </div>
-                                        <!--end row-->
                                     </div>
                                 </div>
                             </div>
