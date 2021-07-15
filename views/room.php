@@ -79,7 +79,29 @@ if (isset($_POST['Update_Room'])) {
 }
 
 /* Add Hotel Images */
+if (isset($_POST['Upload_Images'])) {
+    // Count total uploaded files
+    $totalfiles = count($_FILES['file']['name']);
+    $room_id = $_POST['room_id'];
 
+    // Looping over all files
+    for ($i = 0; $i < $totalfiles; $i++) {
+        $filename = time() . $_FILES['file']['name'][$i];
+
+        // Upload files and store in database
+        if (move_uploaded_file($_FILES["file"]["tmp_name"][$i], '../public/uploads/sys_data/rooms/' .$filename)) {
+            // Image db insert sql
+            $insert = "INSERT INTO iResturant_Room_Images(room_id ,image ) values('$room_id','$filename')";
+            if (mysqli_query($mysqli, $insert)) {
+                $success =  'Room Images Updated';
+            } else {
+                $info =  'Error: ' . mysqli_error($mysqli);
+            }
+        } else {
+            $err = 'Error in uploading file - ' . $_FILES['file']['name'][$i] . '<br/>';
+        }
+    }
+}
 require_once('../partials/head.php');
 ?>
 
@@ -371,33 +393,10 @@ require_once('../partials/head.php');
                                                     <div class="card-body">
                                                         <form method="POST" enctype="multipart/form-data">
                                                             <div class="form-group row">
-                                                                <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Room Image 1</label>
+                                                                <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Upload Multiple Room Images</label>
                                                                 <div class="col-lg-9 col-xl-8">
-                                                                    <input class="form-control" type="file" name="image1">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Room Image 2</label>
-                                                                <div class="col-lg-9 col-xl-8">
-                                                                    <input class="form-control" type="file" name="image2">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Room Image 3</label>
-                                                                <div class="col-lg-9 col-xl-8">
-                                                                    <input class="form-control" type="file" name="image3">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Room Image 4</label>
-                                                                <div class="col-lg-9 col-xl-8">
-                                                                    <input class="form-control" type="file" name="image4">
-                                                                </div>
-                                                            </div>
-                                                            <div class="form-group row">
-                                                                <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Room Image 5</label>
-                                                                <div class="col-lg-9 col-xl-8">
-                                                                    <input class="form-control" type="file" name="image5">
+                                                                    <input class="form-control" id="file" type="file" name="file[]" multiple>
+                                                                    <input class="form-control" type="hidden" name="room_id" value="<?php echo $view; ?>">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group text-center row">
