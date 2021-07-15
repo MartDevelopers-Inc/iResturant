@@ -321,7 +321,7 @@ require_once('../partials/head.php');
                                                                 </div>
                                                             </div>
                                                             <div class="form-group row">
-                                                                <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Room Price</label>
+                                                                <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center"> Room Price (<?php echo $currency->code; ?>)</label>
                                                                 <div class="col-lg-9 col-xl-8">
                                                                     <input class="form-control" type="number" name="price" value="<?php echo $room->price; ?>">
                                                                 </div>
@@ -371,9 +371,33 @@ require_once('../partials/head.php');
                                                     <div class="card-body">
                                                         <form method="POST" enctype="multipart/form-data">
                                                             <div class="form-group row">
-                                                                <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Upload 5 Room Images</label>
+                                                                <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Room Image 1</label>
                                                                 <div class="col-lg-9 col-xl-8">
-                                                                    <input class="form-control" type="file" name="files[]" multiple>
+                                                                    <input class="form-control" type="file" name="image1">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Room Image 2</label>
+                                                                <div class="col-lg-9 col-xl-8">
+                                                                    <input class="form-control" type="file" name="image2">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Room Image 3</label>
+                                                                <div class="col-lg-9 col-xl-8">
+                                                                    <input class="form-control" type="file" name="image3">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Room Image 4</label>
+                                                                <div class="col-lg-9 col-xl-8">
+                                                                    <input class="form-control" type="file" name="image4">
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group row">
+                                                                <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Room Image 5</label>
+                                                                <div class="col-lg-9 col-xl-8">
+                                                                    <input class="form-control" type="file" name="image5">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group text-center row">
