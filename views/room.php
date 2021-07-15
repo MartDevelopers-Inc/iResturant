@@ -123,16 +123,51 @@ require_once('../partials/head.php');
                             </div>
                         </div>
                         <!--end row-->
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="card">
+                                            <div class="card-body  report-card">
+                                                <div class="row d-flex justify-content-center">
+                                                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                                                        <div class="carousel-inner">
+                                                            <?php
+                                                            $ret = "SELECT * FROM `iResturant_Room_Images` WHERE room_id = '$view'  ";
+                                                            $stmt = $mysqli->prepare($ret);
+                                                            $stmt->execute(); //ok
+                                                            $res = $stmt->get_result();
+                                                            while ($images = $res->fetch_object()) {
+                                                            ?>
+                                                                <div class="carousel-item active">
+                                                                    <img src="../public/uploads/sys_data/rooms/<?php echo $images->image; ?>" class="d-block w-100" alt="Hotel Room Image">
+                                                                </div>
+                                                            <?php
+                                                            } ?>
+                                                        </div>
+                                                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
+                                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                            <span class="visually-hidden">Previous</span>
+                                                        </a>
+                                                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
+                                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                            <span class="visually-hidden">Next</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="pb-4">
                             <ul class="nav-border nav nav-pills mb-0" id="pills-tab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="Profile_Project_tab" data-bs-toggle="pill" href="#Profile_Project">Room Distinct Features</a>
+                                    <a class="nav-link active" id="Profile_Project_tab" data-bs-toggle="pill" href="#Profile_Project">Distinct Features</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link " id="Profile_Post_tab" data-bs-toggle="pill" href="#Profile_Post">Room Images</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="portfolio_detail_tab" data-bs-toggle="pill" href="#Profile_Portfolio">Previous Reservations</a>
+                                    <a class="nav-link " id="Profile_Post_tab" data-bs-toggle="pill" href="#Profile_Post">Reservation History</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="settings_detail_tab" data-bs-toggle="pill" href="#Profile_Settings">Settings</a>
@@ -143,464 +178,236 @@ require_once('../partials/head.php');
                         <div class="row">
                             <div class="col-12">
                                 <div class="tab-content" id="pills-tabContent">
-                                    <div class="tab-pane fade show active" id="Profile_Project" role="tabpanel" aria-labelledby="Profile_Project_tab">
+                                    <!-- Distinct Room Features -->
+                                    <div class="tab-pane fade show active " id="Profile_Project" role="tabpanel" aria-labelledby="Profile_Project_tab">
 
                                         <!--end row-->
                                         <div class="row">
                                             <div class="col-12">
+                                                <div class="text-center">
+                                                    <h4 class="m-0 fw-semibold text-dark font-16 mt-3">
+                                                        <?php echo $room->details; ?>
+                                                    </h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Previous Room Reservations -->
+                                    <div class="tab-pane fade " id="Profile_Post" role="tabpanel" aria-labelledby="Profile_Post_tab">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <table class="table mb-0">
+                                                    <thead class="table-light">
+                                                        <tr>
+                                                            <th class="border-top-0">Reservation Code</th>
+                                                            <th class="border-top-0">Customer Details</th>
+                                                            <th class="border-top-0">Arrival</th>
+                                                            <th class="border-top-0">Departure</th>
+                                                            <th class="border-top-0">Date</th>
+                                                        </tr>
+                                                        <!--end tr-->
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        $ret = "SELECT * FROM iResturant_Customer c
+                                                        INNER JOIN iResturant_Room_Reservation r ON c.id = r.client_id
+                                                        INNER JOIN iResturant_Room rm
+                                                        ON r.room_id = rm.id
+                                                        WHERE r.room_id = '$view'
+                                                         ";
+                                                        $stmt = $mysqli->prepare($ret);
+                                                        $stmt->execute(); //ok
+                                                        $res = $stmt->get_result();
+                                                        while ($reservations = $res->fetch_object()) {
+                                                        ?>
+                                                            <tr>
+                                                                <td><?php echo $reservations->code; ?></td>
+                                                                <td>
+                                                                    Name:<?php echo $reservations->means; ?>
+                                                                    Phone:<?php echo $reservations->phone; ?>
+                                                                    Email:<?php echo $reservations->email; ?>
+                                                                </td>
+                                                                <td><?php echo $reservations->arrival; ?></td>
+                                                                <td><?php echo $reservations->departure; ?></td>
+                                                                <td><?php echo date('d-M-Y', strtotime($reservations->reserved_on)); ?></td>
+                                                            </tr>
+                                                        <?php
+                                                        } ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Room Settings -->
+                                    <div class="tab-pane fade" id="Profile_Settings" role="tabpanel" aria-labelledby="settings_detail_tab">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-xl-6">
                                                 <div class="card">
-                                                    <div class="card-body ">
-                                                        <div class="text-center">
-                                                            <h3><?php echo $room->details; ?></h3>
+                                                    <div class="card-header">
+                                                        <div class="row align-items-center">
+                                                            <div class="col">
+                                                                <h4 class="card-title">Personal Information</h4>
+                                                            </div>
+                                                            <!--end col-->
+                                                        </div>
+                                                        <!--end row-->
+                                                    </div>
+                                                    <!--end card-header-->
+                                                    <div class="card-body">
+                                                        <div class="form-group row">
+                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">First Name</label>
+                                                            <div class="col-lg-9 col-xl-8">
+                                                                <input class="form-control" type="text" value="Rosa">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Last Name</label>
+                                                            <div class="col-lg-9 col-xl-8">
+                                                                <input class="form-control" type="text" value="Dodson">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Company Name</label>
+                                                            <div class="col-lg-9 col-xl-8">
+                                                                <input class="form-control" type="text" value="MannatThemes">
+                                                                <span class="form-text text-muted font-12">We'll never share your email with anyone else.</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group row">
+                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Contact Phone</label>
+                                                            <div class="col-lg-9 col-xl-8">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text"><i class="las la-phone"></i></span>
+                                                                    <input type="text" class="form-control" value="+123456789" placeholder="Phone" aria-describedby="basic-addon1">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Email Address</label>
+                                                            <div class="col-lg-9 col-xl-8">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text"><i class="las la-at"></i></span>
+                                                                    <input type="text" class="form-control" value="rosa.dodson@demo.com" placeholder="Email" aria-describedby="basic-addon1">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Website Link</label>
+                                                            <div class="col-lg-9 col-xl-8">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-text"><i class="la la-globe"></i></span>
+                                                                    <input type="text" class="form-control" value=" https://mannatthemes.com/" placeholder="Email" aria-describedby="basic-addon1">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">USA</label>
+                                                            <div class="col-lg-9 col-xl-8">
+                                                                <select class="form-select">
+                                                                    <option>London</option>
+                                                                    <option>India</option>
+                                                                    <option>USA</option>
+                                                                    <option>Canada</option>
+                                                                    <option>Thailand</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <div class="col-lg-9 col-xl-8 offset-lg-3">
+                                                                <button type="submit" class="btn btn-sm btn-outline-primary">Submit</button>
+                                                                <button type="button" class="btn btn-sm btn-outline-danger">Cancel</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--end col-->
+                                            <div class="col-lg-6 col-xl-6">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h4 class="card-title">Change Password</h4>
+                                                    </div>
+                                                    <!--end card-header-->
+                                                    <div class="card-body">
+                                                        <div class="form-group row">
+                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Current Password</label>
+                                                            <div class="col-lg-9 col-xl-8">
+                                                                <input class="form-control" type="password" placeholder="Password">
+                                                                <a href="#" class="text-primary font-12">Forgot password ?</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">New Password</label>
+                                                            <div class="col-lg-9 col-xl-8">
+                                                                <input class="form-control" type="password" placeholder="New Password">
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Confirm Password</label>
+                                                            <div class="col-lg-9 col-xl-8">
+                                                                <input class="form-control" type="password" placeholder="Re-Password">
+                                                                <span class="form-text text-muted font-12">Never share your password.</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group row">
+                                                            <div class="col-lg-9 col-xl-8 offset-lg-3">
+                                                                <button type="submit" class="btn btn-sm btn-outline-primary">Change Password</button>
+                                                                <button type="button" class="btn btn-sm btn-outline-danger">Cancel</button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <!--end card-body-->
                                                 </div>
                                                 <!--end card-->
-                                            </div>
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        <h4 class="card-title">Other Settings</h4>
+                                                    </div>
+                                                    <!--end card-header-->
+                                                    <div class="card-body">
+
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="" id="Email_Notifications" checked>
+                                                            <label class="form-check-label" for="Email_Notifications">
+                                                                Email Notifications
+                                                            </label>
+                                                            <span class="form-text text-muted font-12 mt-0">Do you need them?</span>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="" id="API_Access">
+                                                            <label class="form-check-label" for="API_Access">
+                                                                API Access
+                                                            </label>
+                                                            <span class="form-text text-muted font-12 mt-0">Enable/Disable access</span>
+                                                        </div>
+                                                    </div>
+                                                    <!--end card-body-->
+                                                </div>
+                                                <!--end card-->
+                                            </div> <!-- end col -->
                                         </div>
                                         <!--end row-->
                                     </div>
-                                    <!--end tab-pane-->
-                                    <div class="tab-pane fade " id="Profile_Post" role="tabpanel" aria-labelledby="Profile_Post_tab">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="row">
-                                                    <div class="col-lg-12">
-                                                        <div class="card">
-                                                            <div class="card-body  report-card">
-                                                                <div class="row d-flex justify-content-center">
-                                                                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                                                                        <div class="carousel-inner">
-                                                                            <?php
-                                                                            $ret = "SELECT * FROM `iResturant_Room_Images` WHERE room_id = '$view'  ";
-                                                                            $stmt = $mysqli->prepare($ret);
-                                                                            $stmt->execute(); //ok
-                                                                            $res = $stmt->get_result();
-                                                                            while ($images = $res->fetch_object()) {
-                                                                            ?>
-                                                                                <div class="carousel-item active">
-                                                                                    <img src="../public/uploads/sys_data/rooms/<?php echo $images->image; ?>" class="d-block w-100" alt="Hotel Room Image">
-                                                                                </div>
-                                                                            <?php
-                                                                            } ?>
-                                                                        </div>
-                                                                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
-                                                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                                            <span class="visually-hidden">Previous</span>
-                                                                        </a>
-                                                                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
-                                                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                                            <span class="visually-hidden">Next</span>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--end row-->
-                                </div>
-
-                                <div class="tab-pane fade" id="Profile_Portfolio" role="tabpanel" aria-labelledby="portfolio_detail_tab">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="ribbon4 rib4-primary">
-                                                        <span class="ribbon4-band ribbon4-band-primary text-white text-center">50% off</span>
-                                                    </div>
-                                                    <!--end ribbon-->
-                                                    <div class="row">
-                                                        <div class="col-auto">
-                                                            <img src="assets/images/dashboards/dastyle.jpg" alt="user" height="150" class="align-self-center mb-3 mb-lg-0">
-                                                        </div>
-                                                        <!--end col-->
-                                                        <div class="col align-self-center">
-                                                            <p class="font-18 fw-semibold mb-2">Dastyle - Admin & Dashboard Template</p>
-                                                            <p class="text-muted">Dastyle is a Bootstrap 4 admin dashboard,
-                                                                It is fully responsive and included awesome
-                                                                features to help build web applications fast and easy.
-                                                            </p>
-                                                            <a href="#" class="btn btn-soft-primary btn-sm">Live Priview</a>
-                                                            <a href="#" class="btn btn-soft-primary btn-sm">Download Now</a>
-                                                        </div>
-                                                        <!--end col-->
-                                                    </div>
-                                                    <!--end row-->
-                                                </div>
-                                                <!--end card-body-->
-                                            </div>
-                                            <!--end card-->
-                                        </div>
-                                        <!--end col-->
-                                        <div class="col-md-6">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-auto">
-                                                            <img src="assets/images/dashboards/metrica.jpg" alt="user" height="150" class="align-self-center mb-3 mb-lg-0">
-                                                        </div>
-                                                        <!--end col-->
-                                                        <div class="col align-self-center">
-                                                            <p class="font-18 fw-semibold mb-2">Metrica - Admin & Dashboard Template</p>
-                                                            <p class="text-muted">Metrica is a Bootstrap 4 admin dashboard,
-                                                                It is fully responsive and included awesome
-                                                                features to help build web applications fast and easy.
-                                                            </p>
-                                                            <a href="#" class="btn btn-soft-primary btn-sm">Live Priview</a>
-                                                            <a href="#" class="btn btn-soft-primary btn-sm">Download Now</a>
-                                                        </div>
-                                                        <!--end col-->
-                                                    </div>
-                                                    <!--end row-->
-                                                </div>
-                                                <!--end card-body-->
-                                            </div>
-                                            <!--end card-->
-                                        </div>
-                                        <!--end col-->
-                                    </div>
-                                    <!--end row-->
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-auto">
-                                                            <img src="assets/images/dashboards/crovex.jpg" alt="user" height="150" class="align-self-center mb-3 mb-lg-0">
-                                                        </div>
-                                                        <!--end col-->
-                                                        <div class="col align-self-center">
-                                                            <p class="font-18 fw-semibold mb-2">Crovex - Admin & Dashboard Template</p>
-                                                            <p class="text-muted">Crovex is a Bootstrap 4 admin dashboard,
-                                                                It is fully responsive and included awesome
-                                                                features to help build web applications fast and easy.
-                                                            </p>
-                                                            <a href="#" class="btn btn-soft-primary btn-sm">Live Priview</a>
-                                                            <a href="#" class="btn btn-soft-primary btn-sm">Download Now</a>
-                                                        </div>
-                                                        <!--end col-->
-                                                    </div>
-                                                    <!--end row-->
-                                                </div>
-                                                <!--end card-body-->
-                                            </div>
-                                            <!--end card-->
-                                        </div>
-                                        <!--end col-->
-                                        <div class="col-md-6">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-auto">
-                                                            <img src="assets/images/dashboards/frogetor.jpg" alt="user" height="150" class="align-self-center mb-3 mb-lg-0">
-                                                        </div>
-                                                        <!--end col-->
-                                                        <div class="col align-self-center">
-                                                            <p class="font-18 fw-semibold mb-2">Frogetor - Admin & Dashboard Template</p>
-                                                            <p class="text-muted">Frogetor is a Bootstrap 4 admin dashboard,
-                                                                It is fully responsive and included awesome
-                                                                features to help build web applications fast and easy.
-                                                            </p>
-                                                            <a href="#" class="btn btn-soft-primary btn-sm">Live Priview</a>
-                                                            <a href="#" class="btn btn-soft-primary btn-sm">Download Now</a>
-                                                        </div>
-                                                        <!--end col-->
-                                                    </div>
-                                                    <!--end row-->
-                                                </div>
-                                                <!--end card-body-->
-                                            </div>
-                                            <!--end card-->
-                                        </div>
-                                        <!--end col-->
-                                    </div>
-                                    <!--end row-->
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-auto">
-                                                            <img src="assets/images/dashboards/metrica.jpg" alt="user" height="150" class="align-self-center mb-3 mb-lg-0">
-                                                        </div>
-                                                        <!--end col-->
-                                                        <div class="col align-self-center">
-                                                            <p class="font-18 fw-semibold mb-2">Metrica - Admin & Dashboard Template</p>
-                                                            <p class="text-muted">Metrica is a Bootstrap 4 admin dashboard,
-                                                                It is fully responsive and included awesome
-                                                                features to help build web applications fast and easy.
-                                                            </p>
-                                                            <a href="#" class="btn btn-soft-primary btn-sm">Live Priview</a>
-                                                            <a href="#" class="btn btn-soft-primary btn-sm">Download Now</a>
-                                                        </div>
-                                                        <!--end col-->
-                                                    </div>
-                                                    <!--end row-->
-                                                </div>
-                                                <!--end card-body-->
-                                            </div>
-                                            <!--end card-->
-                                        </div>
-                                        <!--end col-->
-                                        <div class="col-md-6">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-auto">
-                                                            <img src="assets/images/dashboards/dastyle.jpg" alt="user" height="150" class="align-self-center mb-3 mb-lg-0">
-                                                        </div>
-                                                        <!--end col-->
-                                                        <div class="col align-self-center">
-                                                            <p class="font-18 fw-semibold mb-2">Dastyle - Admin & Dashboard Template</p>
-                                                            <p class="text-muted">Dastyle is a Bootstrap 4 admin dashboard,
-                                                                It is fully responsive and included awesome
-                                                                features to help build web applications fast and easy.
-                                                            </p>
-                                                            <a href="#" class="btn btn-soft-primary btn-sm">Live Priview</a>
-                                                            <a href="#" class="btn btn-soft-primary btn-sm">Download Now</a>
-                                                        </div>
-                                                        <!--end col-->
-                                                    </div>
-                                                    <!--end row-->
-                                                </div>
-                                                <!--end card-body-->
-                                            </div>
-                                            <!--end card-->
-                                        </div>
-                                        <!--end col-->
-                                    </div>
-                                    <!--end row-->
-
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-auto">
-                                                            <img src="assets/images/dashboards/frogetor.jpg" alt="user" height="150" class="align-self-center mb-3 mb-lg-0">
-                                                        </div>
-                                                        <!--end col-->
-                                                        <div class="col align-self-center">
-                                                            <p class="font-18 fw-semibold mb-2">Frogetor - Admin & Dashboard Template</p>
-                                                            <p class="text-muted">Frogetor is a Bootstrap 4 admin dashboard,
-                                                                It is fully responsive and included awesome
-                                                                features to help build web applications fast and easy.
-                                                            </p>
-                                                            <a href="#" class="btn btn-soft-primary btn-sm">Live Priview</a>
-                                                            <a href="#" class="btn btn-soft-primary btn-sm">Download Now</a>
-                                                        </div>
-                                                        <!--end col-->
-                                                    </div>
-                                                    <!--end row-->
-                                                </div>
-                                                <!--end card-body-->
-                                            </div>
-                                            <!--end card-->
-                                        </div>
-                                        <!--end col-->
-                                        <div class="col-md-6">
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <div class="row">
-                                                        <div class="col-auto">
-                                                            <img src="assets/images/dashboards/crovex.jpg" alt="user" height="150" class="align-self-center mb-3 mb-lg-0">
-                                                        </div>
-                                                        <!--end col-->
-                                                        <div class="col align-self-center">
-                                                            <p class="font-18 fw-semibold mb-2">Crovex - Admin & Dashboard Template</p>
-                                                            <p class="text-muted">Crovex is a Bootstrap 4 admin dashboard,
-                                                                It is fully responsive and included awesome
-                                                                features to help build web applications fast and easy.
-                                                            </p>
-                                                            <a href="#" class="btn btn-soft-primary btn-sm">Live Priview</a>
-                                                            <a href="#" class="btn btn-soft-primary btn-sm">Download Now</a>
-                                                        </div>
-                                                        <!--end col-->
-                                                    </div>
-                                                    <!--end row-->
-                                                </div>
-                                                <!--end card-body-->
-                                            </div>
-                                            <!--end card-->
-                                        </div>
-                                        <!--end col-->
-                                    </div>
-                                    <!--end row-->
-                                </div>
-
-                                <div class="tab-pane fade" id="Profile_Settings" role="tabpanel" aria-labelledby="settings_detail_tab">
-                                    <div class="row">
-                                        <div class="col-lg-6 col-xl-6">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <div class="row align-items-center">
-                                                        <div class="col">
-                                                            <h4 class="card-title">Personal Information</h4>
-                                                        </div>
-                                                        <!--end col-->
-                                                    </div>
-                                                    <!--end row-->
-                                                </div>
-                                                <!--end card-header-->
-                                                <div class="card-body">
-                                                    <div class="form-group row">
-                                                        <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">First Name</label>
-                                                        <div class="col-lg-9 col-xl-8">
-                                                            <input class="form-control" type="text" value="Rosa">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Last Name</label>
-                                                        <div class="col-lg-9 col-xl-8">
-                                                            <input class="form-control" type="text" value="Dodson">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Company Name</label>
-                                                        <div class="col-lg-9 col-xl-8">
-                                                            <input class="form-control" type="text" value="MannatThemes">
-                                                            <span class="form-text text-muted font-12">We'll never share your email with anyone else.</span>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group row">
-                                                        <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Contact Phone</label>
-                                                        <div class="col-lg-9 col-xl-8">
-                                                            <div class="input-group">
-                                                                <span class="input-group-text"><i class="las la-phone"></i></span>
-                                                                <input type="text" class="form-control" value="+123456789" placeholder="Phone" aria-describedby="basic-addon1">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Email Address</label>
-                                                        <div class="col-lg-9 col-xl-8">
-                                                            <div class="input-group">
-                                                                <span class="input-group-text"><i class="las la-at"></i></span>
-                                                                <input type="text" class="form-control" value="rosa.dodson@demo.com" placeholder="Email" aria-describedby="basic-addon1">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Website Link</label>
-                                                        <div class="col-lg-9 col-xl-8">
-                                                            <div class="input-group">
-                                                                <span class="input-group-text"><i class="la la-globe"></i></span>
-                                                                <input type="text" class="form-control" value=" https://mannatthemes.com/" placeholder="Email" aria-describedby="basic-addon1">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">USA</label>
-                                                        <div class="col-lg-9 col-xl-8">
-                                                            <select class="form-select">
-                                                                <option>London</option>
-                                                                <option>India</option>
-                                                                <option>USA</option>
-                                                                <option>Canada</option>
-                                                                <option>Thailand</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <div class="col-lg-9 col-xl-8 offset-lg-3">
-                                                            <button type="submit" class="btn btn-sm btn-outline-primary">Submit</button>
-                                                            <button type="button" class="btn btn-sm btn-outline-danger">Cancel</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--end col-->
-                                        <div class="col-lg-6 col-xl-6">
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <h4 class="card-title">Change Password</h4>
-                                                </div>
-                                                <!--end card-header-->
-                                                <div class="card-body">
-                                                    <div class="form-group row">
-                                                        <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Current Password</label>
-                                                        <div class="col-lg-9 col-xl-8">
-                                                            <input class="form-control" type="password" placeholder="Password">
-                                                            <a href="#" class="text-primary font-12">Forgot password ?</a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">New Password</label>
-                                                        <div class="col-lg-9 col-xl-8">
-                                                            <input class="form-control" type="password" placeholder="New Password">
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <label class="col-xl-3 col-lg-3 text-end mb-lg-0 align-self-center">Confirm Password</label>
-                                                        <div class="col-lg-9 col-xl-8">
-                                                            <input class="form-control" type="password" placeholder="Re-Password">
-                                                            <span class="form-text text-muted font-12">Never share your password.</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group row">
-                                                        <div class="col-lg-9 col-xl-8 offset-lg-3">
-                                                            <button type="submit" class="btn btn-sm btn-outline-primary">Change Password</button>
-                                                            <button type="button" class="btn btn-sm btn-outline-danger">Cancel</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--end card-body-->
-                                            </div>
-                                            <!--end card-->
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <h4 class="card-title">Other Settings</h4>
-                                                </div>
-                                                <!--end card-header-->
-                                                <div class="card-body">
-
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="" id="Email_Notifications" checked>
-                                                        <label class="form-check-label" for="Email_Notifications">
-                                                            Email Notifications
-                                                        </label>
-                                                        <span class="form-text text-muted font-12 mt-0">Do you need them?</span>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox" value="" id="API_Access">
-                                                        <label class="form-check-label" for="API_Access">
-                                                            API Access
-                                                        </label>
-                                                        <span class="form-text text-muted font-12 mt-0">Enable/Disable access</span>
-                                                    </div>
-                                                </div>
-                                                <!--end card-body-->
-                                            </div>
-                                            <!--end card-->
-                                        </div> <!-- end col -->
-                                    </div>
-                                    <!--end row-->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <?php require_once('../partials/footer.php'); ?>
-                <!--end footer-->
-    </div>
-<?php
+        <?php
             }
-        } ?>
-<!-- end page content -->
-</div>
-<!-- end page-wrapper -->
-<!-- jQuery  -->
-<?php require_once('../partials/scripts.php'); ?>
+        }
+        require_once('../partials/footer.php'); ?>
+        <!--end footer-->
+    </div>
+
+    <!-- end page content -->
+    </div>
+    <!-- end page-wrapper -->
+    <!-- jQuery  -->
+    <?php require_once('../partials/scripts.php'); ?>
 
 </body>
 
