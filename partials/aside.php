@@ -44,8 +44,13 @@ while ($sys = $res->fetch_object()) {
                 <li>
                     <a href="dashboard"><i data-feather="home" class="align-self-center menu-icon"></i><span>Dashboard</span></a>
                 </li>
+
                 <li>
-                    <a href="rooms"><i data-feather="activity" class="align-self-center menu-icon"></i><span>Rooms</span></a>
+                    <a href="javascript: void(0);"> <i data-feather="activity" class="align-self-center menu-icon"></i><span>Rooms</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li class="nav-item"><a class="nav-link" href="room_categories"><i class="ti-control-record"></i>Room Categories</a></li>
+                        <li class="nav-item"><a class="nav-link" href="rooms"><i class="ti-control-record"></i>Rooms</a></li>
+                    </ul>
                 </li>
                 <li>
                     <a href="javascript: void(0);"> <i data-feather="user-check" class="align-self-center menu-icon"></i><span>Reservations</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
