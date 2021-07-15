@@ -89,7 +89,7 @@ if (isset($_POST['Upload_Images'])) {
         $filename = time() . $_FILES['file']['name'][$i];
 
         // Upload files and store in database
-        if (move_uploaded_file($_FILES["file"]["tmp_name"][$i], '../public/uploads/sys_data/rooms/' .$filename)) {
+        if (move_uploaded_file($_FILES["file"]["tmp_name"][$i], '../public/uploads/sys_data/rooms/' . $filename)) {
             // Image db insert sql
             $insert = "INSERT INTO iResturant_Room_Images(room_id ,image ) values('$room_id','$filename')";
             if (mysqli_query($mysqli, $insert)) {
@@ -143,7 +143,7 @@ require_once('../partials/head.php');
                                 <div class="page-title-box">
                                     <div class="row">
                                         <div class="col">
-                                            <h4 class="page-title"><?php echo $room->number; ?> Details</h4>
+                                            <h1 class="page-title"><b>Room Number : <?php echo $room->number; ?> Details</b></h1>
                                             <ol class="breadcrumb">
                                                 <li class="breadcrumb-item"><a href="dashboard">Dashboard</a></li>
                                                 <li class="breadcrumb-item"><a href="rooms">Rooms</a></li>
@@ -178,8 +178,8 @@ require_once('../partials/head.php');
                                                         </span>
                                                     </div> -->
                                                         <div class="dastone-profile_user-detail">
-                                                            <h5 class="dastone-user-name">Number : <?php echo $room->number; ?></h5>
-                                                            <p class="mb-0 dastone-user-name-post">Category: <?php echo $room->name; ?></p>
+                                                            <h5 class="text-primary">Room Number : <?php echo $room->number; ?></h5>
+                                                            <p class="mb-0 dastone-user-name-post text-primary">Category: <?php echo $room->name; ?></p>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -187,8 +187,8 @@ require_once('../partials/head.php');
 
                                                 <div class="col-lg-4 ms-auto align-self-center">
                                                     <ul class="list-unstyled personal-detail mb-0">
-                                                        <li class=""><i class="ti ti-signal me-2 text-secondary font-16 align-middle"></i> <b> Status </b> : <?php echo $room->status; ?></li>
-                                                        <li class="mt-2"><i class="ti ti-money text-secondary font-16 align-middle me-2"></i> <b> Price </b> : <?php echo $currency->code . " " . $room->price; ?></li>
+                                                        <li class=""><i class="ti ti-signal me-2 text-primary font-16 align-middle"></i> Status : <?php echo $room->status; ?></li>
+                                                        <li class="mt-2"><i class="ti ti-money text-primary font-16 align-middle me-2"></i> Price : <?php echo $currency->code . " " . $room->price; ?></li>
                                                         </li>
                                                     </ul>
 
@@ -207,31 +207,17 @@ require_once('../partials/head.php');
                                     <div class="col-lg-12">
                                         <div class="card">
                                             <div class="card-body  report-card">
-                                                <div class="row d-flex justify-content-center">
-                                                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                                                        <div class="carousel-inner">
-                                                            <?php
-                                                            $ret = "SELECT * FROM `iResturant_Room_Images` WHERE room_id = '$view'  ";
-                                                            $stmt = $mysqli->prepare($ret);
-                                                            $stmt->execute(); //ok
-                                                            $res = $stmt->get_result();
-                                                            while ($images = $res->fetch_object()) {
-                                                            ?>
-                                                                <div class="carousel-item active">
-                                                                    <img src="../public/uploads/sys_data/rooms/<?php echo $images->image; ?>" class="d-block w-100" alt="Hotel Room Image">
-                                                                </div>
-                                                            <?php
-                                                            } ?>
-                                                        </div>
-                                                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
-                                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                            <span class="visually-hidden">Previous</span>
-                                                        </a>
-                                                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
-                                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                            <span class="visually-hidden">Next</span>
-                                                        </a>
-                                                    </div>
+                                                <div class="row">
+                                                    <?php
+                                                    $ret = "SELECT * FROM `iResturant_Room_Images` WHERE room_id = '$view'  ";
+                                                    $stmt = $mysqli->prepare($ret);
+                                                    $stmt->execute(); //ok
+                                                    $res = $stmt->get_result();
+                                                    while ($images = $res->fetch_object()) {
+                                                    ?>
+                                                        <img src="../public/uploads/sys_data/rooms/<?php echo $images->image; ?>" class="img-fluid col-md-4">
+                                                    <?php
+                                                    } ?>
                                                 </div>
                                             </div>
                                         </div>
