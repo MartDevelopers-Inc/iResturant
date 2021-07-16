@@ -149,28 +149,30 @@
         $.ajax({
             type: "POST",
             url: "ajax.php",
-            data: 'PhoneNumber=' + val,
+            data: 'ClientPhone=' + val,
             success: function(data) {
                 //alert(data);
                 $('#ClientID').val(data);
             }
         });
+
         $.ajax({
             type: "POST",
             url: "ajax.php",
             data: 'ClientID=' + val,
             success: function(data) {
                 //alert(data);
-                $('#CustomerName').val(data);
+                $('#ClientEmail').val(data);
             }
         });
+
         $.ajax({
             type: "POST",
             url: "ajax.php",
-            data: 'CustomerName=' + val,
+            data: 'ClientEmail=' + val,
             success: function(data) {
                 //alert(data);
-                $('#CustomerEmail').val(data);
+                $('#ClientName').val(data);
             }
         });
 

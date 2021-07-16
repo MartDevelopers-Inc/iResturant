@@ -315,7 +315,7 @@ require_once('../partials/head.php');
                         </div>
                         <!-- Add Room Modal -->
                         <div class="modal fade" id="add_room" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
+                            <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header bg-primary">
                                         <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Add Room</h6>

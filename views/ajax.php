@@ -42,8 +42,8 @@ if (!empty($_POST["RoomNumber"])) {
 }
 
 /* Get Client Details - */
-if (!empty($_POST["PhoneNumber"])) {
-    $id = $_POST['PhoneNumber'];
+if (!empty($_POST["ClientPhone"])) {
+    $id = $_POST['ClientPhone'];
     $stmt = $DB_con->prepare("SELECT * FROM iResturant_Customer WHERE phone = :id");
     $stmt->execute(array(':id' => $id));
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -56,15 +56,15 @@ if (!empty($_POST["ClientID"])) {
     $stmt = $DB_con->prepare("SELECT * FROM iResturant_Customer WHERE phone = :id");
     $stmt->execute(array(':id' => $id));
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        echo htmlentities($row['name']);
+        echo htmlentities($row['email']);
     }
 }
 
-if (!empty($_POST["CustomerName"])) {
-    $id = $_POST['CustomerName'];
+if (!empty($_POST["ClientEmail"])) {
+    $id = $_POST['ClientEmail'];
     $stmt = $DB_con->prepare("SELECT * FROM iResturant_Customer WHERE phone = :id");
     $stmt->execute(array(':id' => $id));
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        echo htmlentities($row['email']);
+        echo htmlentities($row['name']);
     }
 }

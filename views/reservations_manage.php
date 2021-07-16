@@ -331,7 +331,7 @@ require_once('../partials/head.php');
 
                                                         <div class="form-group col-md-6">
                                                             <label for="">Customer Phone Number</label>
-                                                            <select id="PhoneNumber" class="form-control" onchange="GetClientDetails(this.value);">
+                                                            <select id="ClientPhone" class="form-control" onchange="GetClientDetails(this.value);">
                                                                 <option>Select Customer Phone No</option>
                                                                 <?php
                                                                 $ret = "SELECT * FROM  iResturant_Customer";
@@ -344,15 +344,16 @@ require_once('../partials/head.php');
                                                                 <?php
                                                                 } ?>
                                                             </select>
-                                                            <input type="hidden" required name="client_id" id="ClientID" class="form-control">
+                                                            <input type="hidden" id="ClientID" required name="client_id" class="form-control">
                                                         </div>
+
                                                         <div class="form-group col-md-6">
                                                             <label for="">Customer Name</label>
-                                                            <input type="text" readonly required id="CustomerName" class="form-control">
+                                                            <input type="text" readonly required id="ClientName" class="form-control">
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="">Customer Email</label>
-                                                            <input type="text" readonly required id="CustomerEmail" class="form-control">
+                                                            <input type="text" readonly required id="ClientEmail" class="form-control">
                                                         </div>
                                                     </div>
 
