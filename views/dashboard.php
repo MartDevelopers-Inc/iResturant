@@ -529,7 +529,6 @@ require_once('../partials/head.php');
                 <?php
                 } ?>
 
-
             </div><!-- container -->
 
             <?php require_once('../partials/footer.php'); ?>

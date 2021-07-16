@@ -31,15 +31,20 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
-<!-- Select 2  -->
-<script src="../public/plugins/select2/select2.min.js"></script>
-<script src="../public/plugins/select2/custom-select2.js"></script>
+
+<!-- Leaflet Js -->
+<script src="../public/plugins/leaflet/leaflet.js"></script>
+<!-- Light Pick -->
+<script src="../public/plugins/lightpick/lightpick.js"></script>
+<!-- Profile Init -->
+<script src="../public/pages/jquery.profile.init.js"></script>
+<!-- Light Box -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
 <!-- Init Js -->
 <script>
     $(document).ready(function() {
         $('.table').DataTable();
     });
-
     $(document).ready(function() {
         $('#export-data-table').DataTable({
             dom: 'Bfrtip',
@@ -106,6 +111,7 @@
 <script>
     /* Ajax Scripts */
     function GetRoomCategoryID(val) {
+        /* Get Room Category ID */
         $.ajax({
             type: "POST",
             url: "ajax.php",
@@ -113,6 +119,54 @@
             success: function(data) {
                 //alert(data);
                 $('#RoomCategoryID').val(data);
+            }
+        });
+
+    }
+
+    function GetRoomDetails(val) {
+        /* Get Room Number */
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'RoomNumber=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#RoomID').val(data);
+            }
+        });
+
+    }
+
+    function GetClientDetails(val) {
+        /* Get Client Details */
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'ClientPhone=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#ClientID').val(data);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'ClientID=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#ClientEmail').val(data);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'ClientEmail=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#ClientName').val(data);
             }
         });
 
