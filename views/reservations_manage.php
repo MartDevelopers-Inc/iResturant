@@ -78,8 +78,8 @@ if (isset($_POST['add_room_reservation'])) {
         $err = "Purpose Cannot Be Empty";
     }
 
-    if (isset($_POST['status']) && !empty($_POST['status'])) {
-        $status  = mysqli_real_escape_string($mysqli, trim($_POST['status']));
+    if (isset($_POST['payment_status']) && !empty($_POST['payment_status'])) {
+        $payment_status  = mysqli_real_escape_string($mysqli, trim($_POST['payment_status']));
     } else {
         $error = 1;
         $err = "Status Cannot Be Empty";
@@ -98,13 +98,13 @@ if (isset($_POST['add_room_reservation'])) {
                 $err =  "A Room Reservation  With This Number Already Exists";
             }
         } else {
-            $query = "INSERT INTO iResturant_Room_Reservation (id, code, client_id, room_id, arrival, departure, purpose, status, special_request, reserved_on) VALUES(?,?,?,?,?,?,?,?,?,?)";
+            $query = "INSERT INTO iResturant_Room_Reservation (id, code, client_id, room_id, arrival, departure, purpose, payment_status, special_request, reserved_on) VALUES(?,?,?,?,?,?,?,?,?,?)";
             $roomqrry = "UPDATE iResturant_Room SET status  =? WHERE id = ?";
 
             $stmt = $mysqli->prepare($query);
             $rstmt = $mysqli->prepare($roomqrry);
 
-            $rc = $stmt->bind_param('ssssssssss', $id, $code, $client_id, $room_id, $arrival, $departure, $purpose, $status, $special_request, $reserved_on);
+            $rc = $stmt->bind_param('ssssssssss', $id, $code, $client_id, $room_id, $arrival, $departure, $purpose, $payment_status, $special_request, $reserved_on);
             $rc = $rstmt->bind_param('ss', $room_status, $room_id);
 
             $stmt->execute();
@@ -256,7 +256,7 @@ require_once('../partials/head.php');
                                             <tr>
                                                 <th class="border-top-0">Reservation Code</th>
                                                 <th class="border-top-0">Customer Details</th>
-                                                <th class="border-top-0">Room Number</th>
+                                                <th class="border-top-0">Room No</th>
                                                 <th class="border-top-0">Check In</th>
                                                 <th class="border-top-0">Check Out</th>
                                                 <th class="border-top-0">Date</th>
@@ -265,109 +265,175 @@ require_once('../partials/head.php');
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $ret = "SELECT * FROM iResturant_Customer c
-                                                        INNER JOIN iResturant_Room_Reservation r ON c.id = r.client_id
-                                                        INNER JOIN iResturant_Room rm
-                                                        ON r.room_id = rm.id;                                                        
-                                                         ";
+                                            $ret = "SELECT * FROM `iResturant_Currencies` WHERE status = 'Active'  ";
                                             $stmt = $mysqli->prepare($ret);
                                             $stmt->execute(); //ok
                                             $res = $stmt->get_result();
-                                            while ($reservations = $res->fetch_object()) {
-                                            ?>
-                                                <tr>
-                                                    <td>
-                                                        <a title="View Reservation Details" href="reservation_details?view=<?php echo $reservations->code; ?>">
-                                                            <?php echo $reservations->code; ?>
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        Name:<?php echo $reservations->name; ?><br>
-                                                        Phone:<?php echo $reservations->phone; ?><br>
-                                                        Email:<?php echo $reservations->email; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?php echo $reservations->number; ?>
-                                                    </td>
-                                                    <td><?php echo date('d-M-Y', strtotime($reservations->arrival)); ?></td>
-                                                    <td><?php echo date('d-M-Y', strtotime($reservations->departure)); ?></td>
-                                                    <td><?php echo date('d-M-Y', strtotime($reservations->reserved_on)); ?></td>
-                                                    <td>
-                                                        <a href="#edit-<?php echo $reservations->code; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $reservations->code; ?>" class="btn btn-sm btn-outline-warning">
-                                                            <i data-feather="edit" class="align-self-center icon-xs ms-1"></i> Edit
-                                                        </a>
-                                                        <!-- Update Modal -->
-                                                        <div class="modal fade" id="edit-<?php echo $reservations->code; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header bg-warning">
-                                                                        <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Edit Reservation</h6>
-                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <div class="row">
-                                                                            <form method="post" enctype="multipart/form-data" role="form">
-                                                                                <div class="card-body">
-                                                                                    <div class="row">
-                                                                                        <div class="form-group col-md-6">
-                                                                                            <label for="">Check In</label>
-                                                                                            <input type="date" value="<?php echo $reservations->arrival; ?>" required name="arrival" class="form-control">
-                                                                                            <input type="hidden" value="<?php echo $reservations->code; ?>" required name="code" class="form-control">
-                                                                                        </div>
-                                                                                        <div class="form-group col-md-6">
-                                                                                            <label for="">Check Out</label>
-                                                                                            <input type="date" value="<?php echo $reservations->departure; ?>" required name="departure" class="form-control">
-                                                                                        </div>
-                                                                                        <div class="form-group col-md-12">
-                                                                                            <label for="">Reservation Purpose</label>
-                                                                                            <select name="purpose" class="form-control">
-                                                                                                <option>Business</option>
-                                                                                                <option>Educational</option>
-                                                                                                <option>Vacation</option>
-                                                                                            </select>
-                                                                                        </div>
-                                                                                        <div class="form-group col-md-12">
-                                                                                            <label for="">Any Special Request</label>
-                                                                                            <textarea name="special_request" class="form-control" rows="5"><?php echo $reservations->special_request; ?></textarea>
+                                            while ($currency = $res->fetch_object()) {
+                                                $ret = "SELECT * FROM iResturant_Customer c
+                                            INNER JOIN iResturant_Room_Reservation r ON c.id = r.client_id
+                                            INNER JOIN iResturant_Room rm
+                                            ON r.room_id = rm.id;                                                        
+                                            ";
+                                                $stmt = $mysqli->prepare($ret);
+                                                $stmt->execute(); //ok
+                                                $res = $stmt->get_result();
+                                                while ($reservations = $res->fetch_object()) {
+                                                    $checkin = strtotime($reservations->arrival);
+                                                    $checkout = strtotime($reservations->departure);
+                                                    $secs = $checkout - $checkin;
+                                                    $days_reserved = $secs / 86400;
+                                                    $total_payable_amt = $days_reserved * ($reservations->price); ?>
+                                                    <tr>
+                                                        <td>
+                                                            <a title="View Reservation Details" href="reservation_details?view=<?php echo $reservations->code; ?>">
+                                                                <?php echo $reservations->code; ?>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            Name:<?php echo $reservations->name; ?><br>
+                                                            Phone:<?php echo $reservations->phone; ?><br>
+                                                            Email:<?php echo $reservations->email; ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $reservations->number; ?>
+                                                        </td>
+                                                        <td><?php echo date('d-M-Y', strtotime($reservations->arrival)); ?></td>
+                                                        <td><?php echo date('d-M-Y', strtotime($reservations->departure)); ?></td>
+                                                        <td><?php echo date('d-M-Y', strtotime($reservations->reserved_on)); ?></td>
+                                                        <td>
+                                                            <?php
+                                                            if ($reservations->payment_status == 'UnPaid') {
+                                                                echo
+                                                                '
+                                                            <a href="#pay-' . $reservations->code . '" data-bs-toggle="modal" data-bs-target="#pay-' . $reservations->code . '" class="btn btn-sm btn-outline-warning">
+                                                                <i data-feather="dollar-sign" class="align-self-center icon-xs ms-1"></i> Pay
+                                                            </a>
+                                                        ';
+                                                            } else {
+                                                                /* Nothing */
+                                                            } ?>
+                                                            <!-- Pay Reservation Modal -->
+                                                            <div class="modal fade" id="pay-<?php echo $reservations->code; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header bg-warning">
+                                                                            <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Pay Reservation </h6>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="row">
+                                                                                <form method="post" enctype="multipart/form-data" role="form">
+                                                                                    <div class="card-body">
+                                                                                        <div class="row">
+                                                                                            <div class="form-group col-md-12">
+                                                                                                <label for="">Payment Code</label>
+                                                                                                <input type="hidden" value="<?php echo $a . $b; ?>" required name="code" class="form-control">
+                                                                                                <input type="hidden" value="<?php echo $reservations->code; ?>" required name="reservation_code" class="form-control">
+                                                                                                <input type="hidden" value="<?php echo $sys_gen_id_alt_1; ?>" required name="id" class="form-control">
+                                                                                                <input type="hidden" value="Reservations" required name="type" class="form-control">
+                                                                                                <input type="hidden" value="Paid" required name="payment_status" class="form-control">
+                                                                                                <input type="text" readonly value="<?php echo $sys_gen_paycode; ?>" required name="code" class="form-control">
+                                                                                            </div>
+                                                                                            <div class="form-group col-md-6">
+                                                                                                <label for="">Payment Method</label>
+                                                                                                <select name="means" class="form-control">
+                                                                                                    <option>Cash</option>
+                                                                                                    <option>Mpesa</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                            <div class="form-group col-md-6">
+                                                                                                <label for="">Amount Payable (<?php echo $currency->code; ?>)</label>
+                                                                                                <input type="text" readonly value="<?php echo $total_payable_amt; ?>" required name="amount" class="form-control">
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
-                                                                                <div class="text-center">
-                                                                                    <button type="submit" name="update_room_reservation" class="btn btn-primary">Submit</button>
-                                                                                </div>
-                                                                            </form>
+                                                                                    <div class="text-center">
+                                                                                        <button type="submit" name="add_payment" class="btn btn-primary">Submit</button>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <!-- End Update Modal -->
-                                                        <a href="#delete-<?php echo $reservations->code; ?>" data-bs-toggle="modal" data-bs-target="#delete-<?php echo $reservations->code; ?>" class="btn btn-sm btn-outline-danger">
-                                                            <i data-feather="trash" class="align-self-center icon-xs ms-1"></i> Delete
-                                                        </a>
-                                                        <!-- Delete Modal -->
-                                                        <div class="modal fade" id="delete-<?php echo $reservations->code; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="exampleModalLabel">CONFIRM</h5>
-                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
-                                                                    </div>
-                                                                    <div class="modal-body text-center text-danger">
-                                                                        <h4>Delete <?php echo $reservations->code; ?> ?</h4>
-                                                                        <br>
-                                                                        <p>Heads Up, You are about to delete <?php echo $reservations->code; ?>. This action is irrevisble.</p>
-                                                                        <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
-                                                                        <a href="reservations_manage?delete=<?php echo $reservations->code; ?>&number=<?php echo $reservations->number; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                            <!-- End Payment -->
+                                                            <a href="#edit-<?php echo $reservations->code; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $reservations->code; ?>" class="btn btn-sm btn-outline-warning">
+                                                                <i data-feather="edit" class="align-self-center icon-xs ms-1"></i> Edit
+                                                            </a>
+                                                            <!-- Update Modal -->
+                                                            <div class="modal fade" id="edit-<?php echo $reservations->code; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header bg-warning">
+                                                                            <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Edit Reservation</h6>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="row">
+                                                                                <form method="post" enctype="multipart/form-data" role="form">
+                                                                                    <div class="card-body">
+                                                                                        <div class="row">
+                                                                                            <div class="form-group col-md-6">
+                                                                                                <label for="">Check In</label>
+                                                                                                <input type="date" value="<?php echo $reservations->arrival; ?>" required name="arrival" class="form-control">
+                                                                                                <input type="hidden" value="<?php echo $reservations->code; ?>" required name="code" class="form-control">
+                                                                                            </div>
+                                                                                            <div class="form-group col-md-6">
+                                                                                                <label for="">Check Out</label>
+                                                                                                <input type="date" value="<?php echo $reservations->departure; ?>" required name="departure" class="form-control">
+                                                                                            </div>
+                                                                                            <div class="form-group col-md-12">
+                                                                                                <label for="">Reservation Purpose</label>
+                                                                                                <select name="purpose" class="form-control">
+                                                                                                    <option>Business</option>
+                                                                                                    <option>Educational</option>
+                                                                                                    <option>Vacation</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                            <div class="form-group col-md-12">
+                                                                                                <label for="">Any Special Request</label>
+                                                                                                <textarea name="special_request" class="form-control" rows="5"><?php echo $reservations->special_request; ?></textarea>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="text-center">
+                                                                                        <button type="submit" name="update_room_reservation" class="btn btn-primary">Submit</button>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <!-- End Delete Modal -->
-                                                    </td>
-                                                </tr>
+                                                            <!-- End Update Modal -->
+                                                            <a href="#delete-<?php echo $reservations->code; ?>" data-bs-toggle="modal" data-bs-target="#delete-<?php echo $reservations->code; ?>" class="btn btn-sm btn-outline-danger">
+                                                                <i data-feather="trash" class="align-self-center icon-xs ms-1"></i> Delete
+                                                            </a>
+                                                            <!-- Delete Modal -->
+                                                            <div class="modal fade" id="delete-<?php echo $reservations->code; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLabel">CONFIRM</h5>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                                                                        </div>
+                                                                        <div class="modal-body text-center text-danger">
+                                                                            <h4>Delete <?php echo $reservations->code; ?> ?</h4>
+                                                                            <br>
+                                                                            <p>Heads Up, You are about to delete <?php echo $reservations->code; ?>. This action is irrevisble.</p>
+                                                                            <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
+                                                                            <a href="reservations_manage?delete=<?php echo $reservations->code; ?>&number=<?php echo $reservations->number; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- End Delete Modal -->
+                                                        </td>
+                                                    </tr>
                                             <?php
+                                                }
                                             } ?>
                                         </tbody>
                                     </table>
@@ -405,7 +471,7 @@ require_once('../partials/head.php');
                                                             <input type="hidden" required name="room_id" id="RoomID" class="form-control">
                                                             <input type="hidden" required name="id" value="<?php echo $sys_gen_id_alt_1; ?>" class="form-control">
                                                             <input type="hidden" required name="code" value="<?php echo $a . $b; ?>" class="form-control">
-                                                            <input type="hidden" required name="status" value="UnPaid" class="form-control">
+                                                            <input type="hidden" required name="payment_status" value="UnPaid" class="form-control">
                                                         </div>
 
                                                         <div class="form-group col-md-6">

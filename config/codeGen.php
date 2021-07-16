@@ -28,6 +28,12 @@ $sys_gen_password = substr(
     8
 );
 
+/* SysGenerated Payment Codes */
+$sys_gen_paycode = substr(
+    str_shuffle("QWERTYUIOPLKJHGFDSAZXCVBNM1234567890"),
+    1,
+    10
+);
 /* System Generated ID */
 $length = date('y');
 $sys_gen_id = bin2hex(random_bytes($length));
