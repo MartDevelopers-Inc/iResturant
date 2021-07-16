@@ -338,7 +338,7 @@ require_once('../partials/head.php');
                                                             if ($reservations->payment_status == 'UnPaid') {
                                                                 echo
                                                                 '
-                                                            <a href="#pay-' . $reservations->code . '" data-bs-toggle="modal" data-bs-target="#pay-' . $reservations->code . '" class="btn btn-sm btn-outline-warning">
+                                                            <a href="#pay-' . $reservations->code . '" data-bs-toggle="modal" data-bs-target="#pay-' . $reservations->code . '" class="btn btn-sm btn-outline-success">
                                                                 <i data-feather="dollar-sign" class="align-self-center icon-xs ms-1"></i> Pay
                                                             </a>
                                                         ';
@@ -364,7 +364,8 @@ require_once('../partials/head.php');
                                                                                                 <input type="hidden" value="<?php echo $sys_gen_id_alt_1; ?>" required name="id" class="form-control">
                                                                                                 <input type="hidden" value="Reservations" required name="type" class="form-control">
                                                                                                 <input type="hidden" value="Paid" required name="payment_status" class="form-control">
-                                                                                                <input type="text" readonly value="<?php echo $sys_gen_paycode; ?>" required name="code" class="form-control">
+                                                                                                
+                                                                                                <input type="text" value="<?php echo $sys_gen_paycode; ?>" readonly  required name="code" class="form-control">
                                                                                             </div>
                                                                                             <div class="form-group col-md-6">
                                                                                                 <label for="">Payment Method</label>
