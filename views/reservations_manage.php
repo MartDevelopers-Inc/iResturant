@@ -184,14 +184,14 @@ if (isset($_GET['vacate'])) {
 /* Delete Reservation */
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    $room_id = $_GET['room_id'];
+    $number = $_GET['number'];
     $status = 'Vacant';
-    $adn = 'DELETE FROM iResturant_Room_Reservation WHERE id=?';
-    $vacate = 'UPDATE iResturant_Room SET status  =? WHERE id = ?';
+    $adn = 'DELETE FROM iResturant_Room_Reservation WHERE code=?';
+    $vacate = 'UPDATE iResturant_Room SET status  =? WHERE number = ?';
     $stmt = $mysqli->prepare($adn);
     $vacatestmt = $mysqli->prepare($vacate);
     $stmt->bind_param('s', $id);
-    $vacatestmt->bind_param('ss', $status, $room_id);
+    $vacatestmt->bind_param('ss', $status, $number);
     $stmt->execute();
     $vacatestmt->execute();
     $stmt->close();
@@ -260,6 +260,7 @@ require_once('../partials/head.php');
                                                 <th class="border-top-0">Check In</th>
                                                 <th class="border-top-0">Check Out</th>
                                                 <th class="border-top-0">Date</th>
+                                                <th class="border-top-0">Manage</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -291,6 +292,32 @@ require_once('../partials/head.php');
                                                     <td><?php echo date('d-M-Y', strtotime($reservations->arrival)); ?></td>
                                                     <td><?php echo date('d-M-Y', strtotime($reservations->departure)); ?></td>
                                                     <td><?php echo date('d-M-Y', strtotime($reservations->reserved_on)); ?></td>
+                                                    <td>
+                                                        <!-- End Update Modal -->
+                                                        <a href="#delete-<?php echo $reservations->code; ?>" data-bs-toggle="modal" data-bs-target="#delete-<?php echo $reservations->code; ?>" class="btn btn-sm btn-outline-danger">
+                                                            <i data-feather="trash" class="align-self-center icon-xs ms-1"></i> Delete
+                                                        </a>
+                                                        <!-- Delete Modal -->
+                                                        <div class="modal fade" id="delete-<?php echo $reservations->code; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">CONFIRM</h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                                                                    </div>
+                                                                    <div class="modal-body text-center text-danger">
+                                                                        <h4>Delete <?php echo $reservations->code; ?> ?</h4>
+                                                                        <br>
+                                                                        <p>Heads Up, You are about to delete <?php echo $reservations->code; ?>. This action is irrevisble.</p>
+                                                                        <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
+                                                                        <a href="reservations_manage?delete=<?php echo $reservations->code; ?>&number=<?php echo $reservations->number; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- End Delete Modal -->
+                                                    </td>
                                                 </tr>
                                             <?php
                                             } ?>
