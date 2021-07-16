@@ -202,6 +202,38 @@ if (isset($_GET['delete'])) {
         $info = 'Please Try Again Or Try Later';
     }
 }
+
+/* Payment Details */
+if (isset($_POST['add_payment'])) {
+
+    $id = $_POST['id'];
+    $code = $_POST['code'];
+    $reservation_code = $_POST['reservation_code'];
+    $type = $_POST['type'];
+    $payment_status = $_POST['payment_status'];
+    $means = $_POST['means'];
+    $amount = $_POST['amount'];
+
+    $query = "INSERT INTO iResturant_Payments (id, code, reservation_code, means, amount, type) VALUES(?,?,?,?,?,?)";
+    $roomqrry = "UPDATE iResturant_Room_Reservation SET payment_status  =? WHERE code = ?";
+
+    $stmt = $mysqli->prepare($query);
+    $rstmt = $mysqli->prepare($roomqrry);
+
+    $rc = $stmt->bind_param('ssssss', $id, $code, $reservation_code, $means, $amount, $type);
+    $rc = $rstmt->bind_param('ss', $payment_status, $reservation_code);
+
+    $stmt->execute();
+    $rstmt->execute();
+
+    if ($stmt && $rstmt) {
+        $success = "Reservation Payment Added";
+    } else {
+        $info = "Please Try Again Or Try Later";
+    }
+}
+
+
 require_once('../partials/head.php');
 ?>
 
@@ -328,7 +360,6 @@ require_once('../partials/head.php');
                                                                                         <div class="row">
                                                                                             <div class="form-group col-md-12">
                                                                                                 <label for="">Payment Code</label>
-                                                                                                <input type="hidden" value="<?php echo $a . $b; ?>" required name="code" class="form-control">
                                                                                                 <input type="hidden" value="<?php echo $reservations->code; ?>" required name="reservation_code" class="form-control">
                                                                                                 <input type="hidden" value="<?php echo $sys_gen_id_alt_1; ?>" required name="id" class="form-control">
                                                                                                 <input type="hidden" value="Reservations" required name="type" class="form-control">
