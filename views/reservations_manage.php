@@ -26,7 +26,6 @@ require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 admin_check_login();
 
-
 /* Add Room  Reservation*/
 if (isset($_POST['add_room_reservation'])) {
     $error = 0;
