@@ -275,7 +275,11 @@ require_once('../partials/head.php');
                                             while ($reservations = $res->fetch_object()) {
                                             ?>
                                                 <tr>
-                                                    <td><?php echo $reservations->code; ?></td>
+                                                    <td>
+                                                        <a href="reservation_details?view=<?php echo $reservations->code; ?>">
+                                                            <?php echo $reservations->code; ?>
+                                                        </a>
+                                                    </td>
                                                     <td>
                                                         Name:<?php echo $reservations->name; ?><br>
                                                         Phone:<?php echo $reservations->phone; ?><br>
@@ -286,7 +290,7 @@ require_once('../partials/head.php');
                                                     </td>
                                                     <td><?php echo date('d-M-Y', strtotime($reservations->arrival)); ?></td>
                                                     <td><?php echo date('d-M-Y', strtotime($reservations->departure)); ?></td>
-                                                    <td><?php echo date('d-M-Y g:ia', strtotime($reservations->reserved_on)); ?></td>
+                                                    <td><?php echo date('d-M-Y', strtotime($reservations->reserved_on)); ?></td>
                                                 </tr>
                                             <?php
                                             } ?>
@@ -313,7 +317,7 @@ require_once('../partials/head.php');
                                                             <select id="RoomNumber" class="form-control" onchange="GetRoomDetails(this.value);">
                                                                 <option>Select Room Number</option>
                                                                 <?php
-                                                                $ret = "SELECT * FROM  iResturant_Room";
+                                                                $ret = "SELECT * FROM  iResturant_Room WHERE status = 'Vacant'";
                                                                 $stmt = $mysqli->prepare($ret);
                                                                 $stmt->execute(); //ok
                                                                 $res = $stmt->get_result();
@@ -358,15 +362,15 @@ require_once('../partials/head.php');
                                                     </div>
 
                                                     <div class="row">
-                                                        <div class="form-group col-md-6">
+                                                        <div class="form-group col-md-4">
                                                             <label for="">Check In</label>
                                                             <input type="date" required name="arrival" class="form-control">
                                                         </div>
-                                                        <div class="form-group col-md-6">
+                                                        <div class="form-group col-md-4">
                                                             <label for="">Check Out</label>
                                                             <input type="date" required name="departure" class="form-control">
                                                         </div>
-                                                        <div class="form-group col-md-6">
+                                                        <div class="form-group col-md-4">
                                                             <label for="">Reservation Purpose</label>
                                                             <select name="purpose" class="form-control">
                                                                 <option>Business</option>
