@@ -170,47 +170,57 @@ require_once('../partials/head.php');
                                         </div>
 
                                         <div class="tab-pane fade " id="Profile_Post" role="tabpanel" aria-labelledby="Profile_Post_tab">
-                                            <div class="row">
+                                            <div class="row align-items-center">
                                                 <div class="col-lg-12">
-                                                    <table class="table mb-0">
-                                                        <thead class="table-light">
-                                                            <tr>
-                                                                <th class="border-top-0">Reservation Code</th>
-                                                                <th class="border-top-0">Customer Details</th>
-                                                                <th class="border-top-0">Check In</th>
-                                                                <th class="border-top-0">Check Out</th>
-                                                                <th class="border-top-0">Date</th>
-                                                            </tr>
-                                                            <!--end tr-->
-                                                        </thead>
-                                                        <tbody>
-                                                            <?php
-                                                            $ret = "SELECT * FROM iResturant_Customer c
-                                                        INNER JOIN iResturant_Room_Reservation r ON c.id = r.client_id
-                                                        INNER JOIN iResturant_Room rm
-                                                        ON r.room_id = rm.id
-                                                        WHERE r.room_id = '$view'
-                                                         ";
-                                                            $stmt = $mysqli->prepare($ret);
-                                                            $stmt->execute(); //ok
-                                                            $res = $stmt->get_result();
-                                                            while ($reservations = $res->fetch_object()) {
-                                                            ?>
-                                                                <tr>
-                                                                    <td><?php echo $reservations->code; ?></td>
-                                                                    <td>
-                                                                        Name:<?php echo $reservations->name; ?> <br>
-                                                                        Phone:<?php echo $reservations->phone; ?><br>
-                                                                        Email:<?php echo $reservations->email; ?>
-                                                                    </td>
-                                                                    <td><?php echo $reservations->arrival; ?></td>
-                                                                    <td><?php echo $reservations->departure; ?></td>
-                                                                    <td><?php echo date('d-M-Y', strtotime($reservations->reserved_on)); ?></td>
-                                                                </tr>
-                                                            <?php
-                                                            } ?>
-                                                        </tbody>
-                                                    </table>
+                                                    <div class="card">
+                                                        <?php
+                                                        $ret = "SELECT * FROM  iResturant_Payments  WHERE reservation_code = '$view'";
+                                                        $stmt = $mysqli->prepare($ret);
+                                                        $stmt->execute(); //ok
+                                                        $res = $stmt->get_result();
+                                                        while ($payment_details = $res->fetch_object()) {
+                                                        ?>
+                                                            <div class="card-body border-bottom-dashed">
+                                                                <div class="earning-data text-center">
+                                                                    <img src="../public/images/money-bag.png" alt="" class="money-bag my-3" height="60">
+                                                                    <h5 class="earn-money mb-1"><?php echo $currency->code . " " . $payment_details->amount; ?></h5>
+                                                                    <p class="text-muted font-15 mb-4">Total Reservation Fee For <?php echo $days_reserved; ?> Day (s) </p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body my-1">
+                                                                <div class="row">
+                                                                    <div class="col">
+                                                                        <div class="media">
+                                                                            <i data-feather="tag" class="align-self-center icon-md text-secondary me-2"></i>
+                                                                            <div class="media-body align-self-center">
+                                                                                <h6 class="m-0 font-24"><?php echo $payment_details->code; ?></h6>
+                                                                                <p class="text-muted mb-0">Payment Code:</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <div class="media">
+                                                                            <i data-feather="anchor" class="align-self-center icon-md text-secondary me-2"></i>
+                                                                            <div class="media-body align-self-center">
+                                                                                <h6 class="m-0 font-24"><?php echo $payment_details->means; ?></h6>
+                                                                                <p class="text-muted mb-0">Payment Means: </p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col">
+                                                                        <div class="media">
+                                                                            <i data-feather="calendar" class="align-self-center icon-md text-secondary me-2"></i>
+                                                                            <div class="media-body align-self-center">
+                                                                                <h6 class="m-0 font-24"><?php echo date('d-M-Y g:ia', strtotime($payment_details->date_paid)); ?></h6>
+                                                                                <p class="text-muted mb-0">Date Paid: </p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        <?php
+                                                        } ?>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

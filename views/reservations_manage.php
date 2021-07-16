@@ -364,8 +364,8 @@ require_once('../partials/head.php');
                                                                                                 <input type="hidden" value="<?php echo $sys_gen_id_alt_1; ?>" required name="id" class="form-control">
                                                                                                 <input type="hidden" value="Reservations" required name="type" class="form-control">
                                                                                                 <input type="hidden" value="Paid" required name="payment_status" class="form-control">
-                                                                                                
-                                                                                                <input type="text" value="<?php echo $sys_gen_paycode; ?>" readonly  required name="code" class="form-control">
+
+                                                                                                <input type="text" value="<?php echo $sys_gen_paycode; ?>" readonly required name="code" class="form-control">
                                                                                             </div>
                                                                                             <div class="form-group col-md-6">
                                                                                                 <label for="">Payment Method</label>
