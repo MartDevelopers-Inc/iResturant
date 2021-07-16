@@ -150,67 +150,16 @@ require_once('../partials/head.php');
                                     <li class="nav-item">
                                         <a class="nav-link active" id="Profile_Project_tab" data-bs-toggle="pill" href="#Profile_Project">Attached Reservation Special Request</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link " id="Profile_Post_tab" data-bs-toggle="pill" href="#Profile_Post">Reservation Payment Details</a>
-                                    </li>
-
                                 </ul>
                             </div>
                             <!--end card-body-->
                             <div class="row">
                                 <div class="col-12">
                                     <div class="tab-content" id="pills-tabContent">
-                                        <!-- Distinct Room Features -->
                                         <div class="tab-pane fade show active " id="Profile_Project" role="tabpanel" aria-labelledby="Profile_Project_tab">
                                             <div class="row">
                                                 <div class="col-12">
                                                     <?php echo $reservation->special_request; ?>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Previous Room Reservations -->
-                                        <div class="tab-pane fade " id="Profile_Post" role="tabpanel" aria-labelledby="Profile_Post_tab">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <table class="table mb-0">
-                                                        <thead class="table-light">
-                                                            <tr>
-                                                                <th class="border-top-0">Reservation Code</th>
-                                                                <th class="border-top-0">Customer Details</th>
-                                                                <th class="border-top-0">Check In</th>
-                                                                <th class="border-top-0">Check Out</th>
-                                                                <th class="border-top-0">Date</th>
-                                                            </tr>
-                                                            <!--end tr-->
-                                                        </thead>
-                                                        <tbody>
-                                                            <?php
-                                                            $ret = "SELECT * FROM iResturant_Customer c
-                                                        INNER JOIN iResturant_Room_Reservation r ON c.id = r.client_id
-                                                        INNER JOIN iResturant_Room rm
-                                                        ON r.room_id = rm.id
-                                                        WHERE r.room_id = '$view'
-                                                         ";
-                                                            $stmt = $mysqli->prepare($ret);
-                                                            $stmt->execute(); //ok
-                                                            $res = $stmt->get_result();
-                                                            while ($reservations = $res->fetch_object()) {
-                                                            ?>
-                                                                <tr>
-                                                                    <td><?php echo $reservations->code; ?></td>
-                                                                    <td>
-                                                                        Name:<?php echo $reservations->name; ?> <br>
-                                                                        Phone:<?php echo $reservations->phone; ?><br>
-                                                                        Email:<?php echo $reservations->email; ?>
-                                                                    </td>
-                                                                    <td><?php echo $reservations->arrival; ?></td>
-                                                                    <td><?php echo $reservations->departure; ?></td>
-                                                                    <td><?php echo date('d-M-Y', strtotime($reservations->reserved_on)); ?></td>
-                                                                </tr>
-                                                            <?php
-                                                            } ?>
-                                                        </tbody>
-                                                    </table>
                                                 </div>
                                             </div>
                                         </div>
