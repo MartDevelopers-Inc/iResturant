@@ -65,8 +65,7 @@ require_once('../partials/head.php');
                     $checkin = strtotime($reservation->arrival);
                     $checkout = strtotime($reservation->departure);
                     $secs = $checkout - $checkin;
-                    $days_reserved = $secs / 86400;
-        ?>
+                    $days_reserved = $secs / 86400; ?>
                     <!-- Top Bar End -->
 
                     <!-- Page Content-->
@@ -136,6 +135,8 @@ require_once('../partials/head.php');
                                                             <li class="mt-2"><i class="ti ti-agenda text-secondary font-16 align-middle me-2"></i> <b> Check Out </b> : <?php echo date('d-M-Y', strtotime($reservation->departure)); ?></li>
                                                             <li class="mt-2"><i class="ti ti-time text-secondary font-16 align-middle me-2"></i> <b> Days Reserved </b> : <?php echo $days_reserved; ?> Days</li>
                                                             <li class="mt-2"><i class="ti ti-write text-secondary font-16 align-middle me-2"></i> <b> Purpose </b> : <?php echo $reservation->purpose; ?></li>
+                                                            <li class="mt-2"><i class="ti ti-pin-alt me-2 text-secondary font-16 align-middle"></i> <b> Room Number </b> : <?php echo $reservation->number; ?></li>
+                                                            <li class="mt-2"><i class="ti ti-money text-secondary font-16 align-middle me-2"></i> <b> Single Night Price </b> : <?php echo $currency->code . " " . $reservation->price; ?></li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -144,245 +145,88 @@ require_once('../partials/head.php');
                                     </div>
                                 </div>
                             </div>
-                            <!--end row-->
                             <div class="pb-4">
                                 <ul class="nav-border nav nav-pills mb-0" id="pills-tab" role="tablist">
                                     <li class="nav-item">
-                                        <a class="nav-link active" id="Profile_Project_tab" data-bs-toggle="pill" href="#Profile_Project">Reserved Room Details</a>
+                                        <a class="nav-link active" id="Profile_Project_tab" data-bs-toggle="pill" href="#Profile_Project">Attached Reservation Special Request</a>
                                     </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link " id="Profile_Post_tab" data-bs-toggle="pill" href="#Profile_Post">Reservation Payment Details</a>
+                                    </li>
+
                                 </ul>
                             </div>
                             <!--end card-body-->
                             <div class="row">
                                 <div class="col-12">
                                     <div class="tab-content" id="pills-tabContent">
+                                        <!-- Distinct Room Features -->
                                         <div class="tab-pane fade show active " id="Profile_Project" role="tabpanel" aria-labelledby="Profile_Project_tab">
-                                            <div class="row mb-4">
-                                                <div class="col">
-                                                    <form>
-                                                        <div class="input-group">
-                                                            <input type="text" id="example-input1-group2" name="example-input1-group2" class="form-control" placeholder="Search">
-                                                            <button type="button" class="btn btn-primary"><i class="fas fa-search"></i></button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                                <!--end col-->
-                                                <div class="col-auto">
-                                                    <button type="button" class="btn btn-primary"><i class="fas fa-filter"></i></button>
-                                                    <button type="button" class="btn btn-primary">Add Project</button>
-                                                </div>
-                                                <!--end col-->
-                                            </div>
-                                            <!--end row-->
                                             <div class="row">
-                                                <div class="col-3">
-                                                    <div class="card">
-                                                        <div class="card-body ">
-                                                            <div class="text-center">
-                                                                <img src="assets/images/widgets/project2.jpg" alt="" class="rounded-circle d-block mx-auto mt-2" height="70">
-                                                                <h4 class="m-0 fw-semibold text-dark font-16 mt-3">Body Care</h4>
-                                                                <p class="text-muted  mb-0 font-13"><span class="text-dark">Client : </span>Hyman M. Cross</p>
-                                                            </div>
-                                                            <div class="row mt-4 d-flex align-items-center">
-                                                                <div class="col">
-                                                                    <h5 class="font-22 m-0 fw-bold">$26,100</h5>
-                                                                    <p class="mb-0 text-muted">Total Budget</p>
-                                                                </div>
-                                                                <div class="col-auto">
-                                                                    <a href="#" class="btn btn-sm btn-outline-secondary  px-4">More Details</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--end card-body-->
-                                                    </div>
-                                                    <!--end card-->
+                                                <div class="col-12">
+                                                    <?php echo $reservation->special_request; ?>
                                                 </div>
-                                                <!--end col-->
-                                                <div class="col-3">
-                                                    <div class="card">
-                                                        <div class="card-body ">
-                                                            <div class="text-center">
-                                                                <img src="assets/images/widgets/project4.jpg" alt="" class="rounded-circle d-block mx-auto mt-2" height="70">
-                                                                <h4 class="m-0 fw-semibold text-dark font-16 mt-3">Book My World</h4>
-                                                                <p class="text-muted  mb-0 font-13"><span class="text-dark">Client : </span>Johnson M. delly</p>
-                                                            </div>
-                                                            <div class="row mt-4 d-flex align-items-center">
-                                                                <div class="col">
-                                                                    <h5 class="font-22 m-0 fw-bold">$71,100</h5>
-                                                                    <p class="mb-0 text-muted">Total Budget</p>
-                                                                </div>
-                                                                <div class="col-auto">
-                                                                    <a href="#" class="btn btn-sm btn-outline-secondary  px-4">More Details</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--end card-body-->
-                                                    </div>
-                                                    <!--end card-->
-                                                </div>
-                                                <!--end col-->
-
-                                                <div class="col-3">
-                                                    <div class="card">
-                                                        <div class="card-body ">
-                                                            <div class="text-center">
-                                                                <img src="assets/images/widgets/project3.jpg" alt="" class="rounded-circle d-block mx-auto mt-2" height="70">
-                                                                <h4 class="m-0 fw-semibold text-dark font-16 mt-3">Banking</h4>
-                                                                <p class="text-muted  mb-0 font-13"><span class="text-dark">Client : </span>Hyman M. Cross</p>
-                                                            </div>
-                                                            <div class="row mt-4 d-flex align-items-center">
-                                                                <div class="col">
-                                                                    <h5 class="font-22 m-0 fw-bold">$56,700</h5>
-                                                                    <p class="mb-0 text-muted">Total Budget</p>
-                                                                </div>
-                                                                <div class="col-auto">
-                                                                    <a href="#" class="btn btn-sm btn-outline-secondary  px-4">More Details</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--end card-body-->
-                                                    </div>
-                                                    <!--end card-->
-                                                </div>
-                                                <!--end col-->
-                                                <div class="col-3">
-                                                    <div class="card">
-                                                        <div class="card-body ">
-                                                            <div class="text-center">
-                                                                <img src="assets/images/widgets/project1.jpg" alt="" class="rounded-circle d-block mx-auto mt-2" height="70">
-                                                                <h4 class="m-0 fw-semibold text-dark font-16 mt-3">Transfer money</h4>
-                                                                <p class="text-muted  mb-0 font-13"><span class="text-dark">Client : </span>Jack Z Jackson</p>
-                                                            </div>
-                                                            <div class="row mt-4 d-flex align-items-center">
-                                                                <div class="col">
-                                                                    <h5 class="font-22 m-0 fw-bold">$48,200</h5>
-                                                                    <p class="mb-0 text-muted">Total Budget</p>
-                                                                </div>
-                                                                <div class="col-auto">
-                                                                    <a href="#" class="btn btn-sm btn-outline-secondary  px-4">More Details</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--end card-body-->
-                                                    </div>
-                                                    <!--end card-->
-                                                </div>
-                                                <!--end col-->
                                             </div>
-                                            <!--end row-->
-
+                                        </div>
+                                        <!-- Previous Room Reservations -->
+                                        <div class="tab-pane fade " id="Profile_Post" role="tabpanel" aria-labelledby="Profile_Post_tab">
                                             <div class="row">
-                                                <div class="col-3">
-                                                    <div class="card">
-                                                        <div class="card-body ">
-                                                            <div class="text-center">
-                                                                <img src="assets/images/widgets/project1.jpg" alt="" class="rounded-circle d-block mx-auto mt-2" height="70">
-                                                                <h4 class="m-0 fw-semibold text-dark font-16 mt-3">Body Care</h4>
-                                                                <p class="text-muted  mb-0 font-13"><span class="text-dark">Client : </span>Hyman M. Cross</p>
-                                                            </div>
-                                                            <div class="row mt-4 d-flex align-items-center">
-                                                                <div class="col">
-                                                                    <h5 class="font-22 m-0 fw-bold">$26,100</h5>
-                                                                    <p class="mb-0 text-muted">Total Budget</p>
-                                                                </div>
-                                                                <div class="col-auto">
-                                                                    <a href="#" class="btn btn-sm btn-outline-secondary  px-4">More Details</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--end card-body-->
-                                                    </div>
-                                                    <!--end card-->
+                                                <div class="col-lg-12">
+                                                    <table class="table mb-0">
+                                                        <thead class="table-light">
+                                                            <tr>
+                                                                <th class="border-top-0">Reservation Code</th>
+                                                                <th class="border-top-0">Customer Details</th>
+                                                                <th class="border-top-0">Check In</th>
+                                                                <th class="border-top-0">Check Out</th>
+                                                                <th class="border-top-0">Date</th>
+                                                            </tr>
+                                                            <!--end tr-->
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php
+                                                            $ret = "SELECT * FROM iResturant_Customer c
+                                                        INNER JOIN iResturant_Room_Reservation r ON c.id = r.client_id
+                                                        INNER JOIN iResturant_Room rm
+                                                        ON r.room_id = rm.id
+                                                        WHERE r.room_id = '$view'
+                                                         ";
+                                                            $stmt = $mysqli->prepare($ret);
+                                                            $stmt->execute(); //ok
+                                                            $res = $stmt->get_result();
+                                                            while ($reservations = $res->fetch_object()) {
+                                                            ?>
+                                                                <tr>
+                                                                    <td><?php echo $reservations->code; ?></td>
+                                                                    <td>
+                                                                        Name:<?php echo $reservations->name; ?> <br>
+                                                                        Phone:<?php echo $reservations->phone; ?><br>
+                                                                        Email:<?php echo $reservations->email; ?>
+                                                                    </td>
+                                                                    <td><?php echo $reservations->arrival; ?></td>
+                                                                    <td><?php echo $reservations->departure; ?></td>
+                                                                    <td><?php echo date('d-M-Y', strtotime($reservations->reserved_on)); ?></td>
+                                                                </tr>
+                                                            <?php
+                                                            } ?>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
-                                                <!--end col-->
-                                                <div class="col-3">
-                                                    <div class="card">
-                                                        <div class="card-body ">
-                                                            <div class="text-center">
-                                                                <img src="assets/images/widgets/project3.jpg" alt="" class="rounded-circle d-block mx-auto mt-2" height="70">
-                                                                <h4 class="m-0 fw-semibold text-dark font-16 mt-3">Book My World</h4>
-                                                                <p class="text-muted  mb-0 font-13"><span class="text-dark">Client : </span>Johnson M. delly</p>
-                                                            </div>
-                                                            <div class="row mt-4 d-flex align-items-center">
-                                                                <div class="col">
-                                                                    <h5 class="font-22 m-0 fw-bold">$71,100</h5>
-                                                                    <p class="mb-0 text-muted">Total Budget</p>
-                                                                </div>
-                                                                <div class="col-auto">
-                                                                    <a href="#" class="btn btn-sm btn-outline-secondary  px-4">More Details</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--end card-body-->
-                                                    </div>
-                                                    <!--end card-->
-                                                </div>
-                                                <!--end col-->
-
-                                                <div class="col-3">
-                                                    <div class="card">
-                                                        <div class="card-body ">
-                                                            <div class="text-center">
-                                                                <img src="assets/images/widgets/project4.jpg" alt="" class="rounded-circle d-block mx-auto mt-2" height="70">
-                                                                <h4 class="m-0 fw-semibold text-dark font-16 mt-3">Banking</h4>
-                                                                <p class="text-muted  mb-0 font-13"><span class="text-dark">Client : </span>Hyman M. Cross</p>
-                                                            </div>
-                                                            <div class="row mt-4 d-flex align-items-center">
-                                                                <div class="col">
-                                                                    <h5 class="font-22 m-0 fw-bold">$56,700</h5>
-                                                                    <p class="mb-0 text-muted">Total Budget</p>
-                                                                </div>
-                                                                <div class="col-auto">
-                                                                    <a href="#" class="btn btn-sm btn-outline-secondary  px-4">More Details</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--end card-body-->
-                                                    </div>
-                                                    <!--end card-->
-                                                </div>
-                                                <!--end col-->
-                                                <div class="col-3">
-                                                    <div class="card">
-                                                        <div class="card-body ">
-                                                            <div class="text-center">
-                                                                <img src="assets/images/widgets/project2.jpg" alt="" class="rounded-circle d-block mx-auto mt-2" height="70">
-                                                                <h4 class="m-0 fw-semibold text-dark font-16 mt-3">Transfer money</h4>
-                                                                <p class="text-muted  mb-0 font-13"><span class="text-dark">Client : </span>Jack Z Jackson</p>
-                                                            </div>
-                                                            <div class="row mt-4 d-flex align-items-center">
-                                                                <div class="col">
-                                                                    <h5 class="font-22 m-0 fw-bold">$48,200</h5>
-                                                                    <p class="mb-0 text-muted">Total Budget</p>
-                                                                </div>
-                                                                <div class="col-auto">
-                                                                    <a href="#" class="btn btn-sm btn-outline-secondary  px-4">More Details</a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!--end card-body-->
-                                                    </div>
-                                                    <!--end card-->
-                                                </div>
-                                                <!--end col-->
                                             </div>
-                                            <!--end row-->
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <?php
-
-                        require_once('../partials/footer.php'); ?>
+                        <?php require_once('../partials/footer.php'); ?>
                     </div>
-    </div>
-    <!-- jQuery  -->
-<?php
+        <?php
                 }
             }
-        }
-        require_once('../partials/scripts.php'); ?>
+        } ?>
+    </div>
+    <!-- jQuery  -->
+    <?php require_once('../partials/scripts.php'); ?>
 
 </body>
 
