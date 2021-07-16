@@ -288,8 +288,8 @@ require_once('../partials/head.php');
                                                             <tr>
                                                                 <td><?php echo $reservations->code; ?></td>
                                                                 <td>
-                                                                    Name:<?php echo $reservations->means; ?>
-                                                                    Phone:<?php echo $reservations->phone; ?>
+                                                                    Name:<?php echo $reservations->name; ?> <br>
+                                                                    Phone:<?php echo $reservations->phone; ?><br>
                                                                     Email:<?php echo $reservations->email; ?>
                                                                 </td>
                                                                 <td><?php echo $reservations->arrival; ?></td>

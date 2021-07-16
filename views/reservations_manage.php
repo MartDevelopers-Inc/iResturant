@@ -87,7 +87,7 @@ if (isset($_POST['add_room_reservation'])) {
     }
 
     $special_request = $_POST['special_request'];
-    $reserved_on = time();
+    $reserved_on = date('d-M-Y');
     $room_status = 'Reserved';
 
     if (!$error) {
@@ -277,8 +277,8 @@ require_once('../partials/head.php');
                                                 <tr>
                                                     <td><?php echo $reservations->code; ?></td>
                                                     <td>
-                                                        Name:<?php echo $reservations->means; ?>
-                                                        Phone:<?php echo $reservations->phone; ?>
+                                                        Name:<?php echo $reservations->name; ?><br>
+                                                        Phone:<?php echo $reservations->phone; ?><br>
                                                         Email:<?php echo $reservations->email; ?>
                                                     </td>
                                                     <td>
@@ -368,7 +368,7 @@ require_once('../partials/head.php');
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="">Reservation Purpose</label>
-                                                            <select id="RoomNumber" class="form-control">
+                                                            <select name="purpose" class="form-control">
                                                                 <option>Business</option>
                                                                 <option>Educational</option>
                                                                 <option>Vacation</option>
