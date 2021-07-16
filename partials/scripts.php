@@ -49,7 +49,7 @@
         $('.table').DataTable();
     });
     /* Init Light Box */
-    
+
 
     $(document).ready(function() {
         $('#export-data-table').DataTable({
@@ -117,6 +117,7 @@
 <script>
     /* Ajax Scripts */
     function GetRoomCategoryID(val) {
+        /* Get Room Category ID */
         $.ajax({
             type: "POST",
             url: "ajax.php",
@@ -124,6 +125,52 @@
             success: function(data) {
                 //alert(data);
                 $('#RoomCategoryID').val(data);
+            }
+        });
+
+    }
+
+    function GetRoomDetails(val) {
+        /* Get Room Number */
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'RoomNumber=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#RoomID').val(data);
+            }
+        });
+
+    }
+
+    function GetClientDetails(val) {
+        /* Get Client Details */
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'PhoneNumber=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#ClientID').val(data);
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'ClientID=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#CustomerName').val(data);
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'CustomerName=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#CustomerEmail').val(data);
             }
         });
 

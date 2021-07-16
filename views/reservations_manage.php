@@ -310,7 +310,7 @@ require_once('../partials/head.php');
                                                     <div class="row">
                                                         <div class="form-group col-md-6">
                                                             <label for="">Room Number</label>
-                                                            <select id="RoomNumber" class="form-control" onchange="GetRoomNumber(this.value);">
+                                                            <select id="RoomNumber" class="form-control" onchange="GetRoomDetails(this.value);">
                                                                 <option>Select Room Number</option>
                                                                 <?php
                                                                 $ret = "SELECT * FROM  iResturant_Room";
