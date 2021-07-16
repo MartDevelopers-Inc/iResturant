@@ -266,8 +266,8 @@ require_once('../partials/head.php');
                                                         <tr>
                                                             <th class="border-top-0">Reservation Code</th>
                                                             <th class="border-top-0">Customer Details</th>
-                                                            <th class="border-top-0">Arrival</th>
-                                                            <th class="border-top-0">Departure</th>
+                                                            <th class="border-top-0">Check In</th>
+                                                            <th class="border-top-0">Check Out</th>
                                                             <th class="border-top-0">Date</th>
                                                         </tr>
                                                         <!--end tr-->
