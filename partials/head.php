@@ -58,8 +58,6 @@ while ($sys = $res->fetch_object()) {
         <!-- Data Table CDNS -->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.css" />
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css" />
-        <!-- Select 2 -->
-        <link href="../public/plugins/select2/select2.min.css" rel="stylesheet" type="text/css" />
         <!-- Leaflet CSS -->
         <link href="../public/plugins/leaflet/leaflet.css" rel="stylesheet">
         <!-- Light Pick Css -->

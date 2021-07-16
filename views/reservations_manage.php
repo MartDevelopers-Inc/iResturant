@@ -121,13 +121,13 @@ if (isset($_POST['add_room_reservation'])) {
 }
 
 /* Update Room Reservation */
-if (isset($_POST['add_room_reservation'])) {
+if (isset($_POST['update_room_reservation'])) {
     $error = 0;
-    if (isset($_POST['id']) && !empty($_POST['id'])) {
-        $id = mysqli_real_escape_string($mysqli, trim($_POST['id']));
+    if (isset($_POST['code']) && !empty($_POST['code'])) {
+        $code = mysqli_real_escape_string($mysqli, trim($_POST['code']));
     } else {
         $error = 1;
-        $err = "Reservation ID Cannot Be Empty";
+        $err = "Reservation Code Cannot Be Empty";
     }
 
     if (isset($_POST['arrival']) && !empty($_POST['arrival'])) {
@@ -151,11 +151,12 @@ if (isset($_POST['add_room_reservation'])) {
         $err = "Purpose Cannot Be Empty";
     }
 
+    $special_request = $_POST['special_request'];
 
     if (!$error) {
-        $query = "UPDATE  iResturant_Room_Reservation SET arrival =?, departure =?, purpose =? WHERE id = ?";
+        $query = "UPDATE iResturant_Room_Reservation SET arrival =?, departure =?, purpose =?, special_request=? WHERE code = ?";
         $stmt = $mysqli->prepare($query);
-        $rc = $stmt->bind_param('ssss', $arrival, $departure, $purpose, $id);
+        $rc = $stmt->bind_param('sssss', $arrival, $departure, $purpose, $special_request,  $code);
         $stmt->execute();
         if ($stmt) {
             $success = "Reservation Updated";
@@ -277,7 +278,7 @@ require_once('../partials/head.php');
                                             ?>
                                                 <tr>
                                                     <td>
-                                                        <a href="reservation_details?view=<?php echo $reservations->code; ?>">
+                                                        <a title="View Reservation Details" href="reservation_details?view=<?php echo $reservations->code; ?>">
                                                             <?php echo $reservations->code; ?>
                                                         </a>
                                                     </td>
@@ -293,6 +294,54 @@ require_once('../partials/head.php');
                                                     <td><?php echo date('d-M-Y', strtotime($reservations->departure)); ?></td>
                                                     <td><?php echo date('d-M-Y', strtotime($reservations->reserved_on)); ?></td>
                                                     <td>
+                                                        <a href="#edit-<?php echo $reservations->code; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $reservations->code; ?>" class="btn btn-sm btn-outline-warning">
+                                                            <i data-feather="edit" class="align-self-center icon-xs ms-1"></i> Edit
+                                                        </a>
+                                                        <!-- Update Modal -->
+                                                        <div class="modal fade" id="edit-<?php echo $reservations->code; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header bg-warning">
+                                                                        <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Edit Reservation</h6>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="row">
+                                                                            <form method="post" enctype="multipart/form-data" role="form">
+                                                                                <div class="card-body">
+                                                                                    <div class="row">
+                                                                                        <div class="form-group col-md-6">
+                                                                                            <label for="">Check In</label>
+                                                                                            <input type="date" value="<?php echo $reservations->arrival; ?>" required name="arrival" class="form-control">
+                                                                                            <input type="hidden" value="<?php echo $reservations->code; ?>" required name="code" class="form-control">
+                                                                                        </div>
+                                                                                        <div class="form-group col-md-6">
+                                                                                            <label for="">Check Out</label>
+                                                                                            <input type="date" value="<?php echo $reservations->departure; ?>" required name="departure" class="form-control">
+                                                                                        </div>
+                                                                                        <div class="form-group col-md-12">
+                                                                                            <label for="">Reservation Purpose</label>
+                                                                                            <select name="purpose" class="form-control">
+                                                                                                <option>Business</option>
+                                                                                                <option>Educational</option>
+                                                                                                <option>Vacation</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <div class="form-group col-md-12">
+                                                                                            <label for="">Any Special Request</label>
+                                                                                            <textarea name="special_request" class="form-control" rows="5"><?php echo $reservations->special_request; ?></textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="text-center">
+                                                                                    <button type="submit" name="update_room_reservation" class="btn btn-primary">Submit</button>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <!-- End Update Modal -->
                                                         <a href="#delete-<?php echo $reservations->code; ?>" data-bs-toggle="modal" data-bs-target="#delete-<?php echo $reservations->code; ?>" class="btn btn-sm btn-outline-danger">
                                                             <i data-feather="trash" class="align-self-center icon-xs ms-1"></i> Delete

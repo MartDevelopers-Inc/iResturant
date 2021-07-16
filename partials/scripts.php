@@ -38,9 +38,6 @@
 <script src="../public/plugins/lightpick/lightpick.js"></script>
 <!-- Profile Init -->
 <script src="../public/pages/jquery.profile.init.js"></script>
-<!-- Select 2  -->
-<script src="../public/plugins/select2/select2.min.js"></script>
-<script src="../public/plugins/select2/custom-select2.js"></script>
 <!-- Light Box -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
 <!-- Init Js -->
@@ -48,9 +45,6 @@
     $(document).ready(function() {
         $('.table').DataTable();
     });
-    /* Init Light Box */
-
-
     $(document).ready(function() {
         $('#export-data-table').DataTable({
             dom: 'Bfrtip',
