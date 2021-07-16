@@ -169,7 +169,7 @@ if (isset($_POST['update_room_reservation'])) {
 if (isset($_GET['vacate'])) {
     $id = $_GET['vacate'];
     $status = 'Vacant';
-    $adn = 'UPDATE iResturant_Room SET status  =? WHERE id = ?';
+    $adn = 'UPDATE iResturant_Room SET status  =? WHERE number = ?';
     $stmt = $mysqli->prepare($adn);
     $stmt->bind_param('ss', $status, $id);
     $stmt->execute();
@@ -289,9 +289,7 @@ require_once('../partials/head.php');
                                                 <th class="border-top-0">Reservation Code</th>
                                                 <th class="border-top-0">Customer Details</th>
                                                 <th class="border-top-0">Room No</th>
-                                                <th class="border-top-0">Check In</th>
-                                                <th class="border-top-0">Check Out</th>
-                                                <th class="border-top-0">Date</th>
+                                                <th class="border-top-0">Reservation Details</th>
                                                 <th class="border-top-0">Manage</th>
                                             </tr>
                                         </thead>
@@ -315,7 +313,9 @@ require_once('../partials/head.php');
                                                     $checkout = strtotime($reservations->departure);
                                                     $secs = $checkout - $checkin;
                                                     $days_reserved = $secs / 86400;
-                                                    $total_payable_amt = $days_reserved * ($reservations->price); ?>
+                                                    $total_payable_amt = $days_reserved * ($reservations->price);
+                                                    $now = strtotime(date("Y-m-d"));
+                                            ?>
                                                     <tr>
                                                         <td>
                                                             <a title="View Reservation Details" href="reservation_details?view=<?php echo $reservations->code; ?>">
@@ -330,9 +330,13 @@ require_once('../partials/head.php');
                                                         <td>
                                                             <?php echo $reservations->number; ?>
                                                         </td>
-                                                        <td><?php echo date('d-M-Y', strtotime($reservations->arrival)); ?></td>
-                                                        <td><?php echo date('d-M-Y', strtotime($reservations->departure)); ?></td>
-                                                        <td><?php echo date('d-M-Y', strtotime($reservations->reserved_on)); ?></td>
+                                                        <td>
+                                                            Check In: <?php echo date('d-M-Y', strtotime($reservations->arrival)); ?><br>
+                                                            Check Out: <?php echo date('d-M-Y', strtotime($reservations->departure)); ?><br>
+                                                            Days Reserved: <?php echo $days_reserved; ?>Days(s)<br>
+                                                            Date Reserved: <?php echo date('d-M-Y', strtotime($reservations->reserved_on)); ?>
+                                                        </td>
+
                                                         <td>
                                                             <?php
                                                             if ($reservations->payment_status == 'UnPaid') {
@@ -341,10 +345,18 @@ require_once('../partials/head.php');
                                                             <a href="#pay-' . $reservations->code . '" data-bs-toggle="modal" data-bs-target="#pay-' . $reservations->code . '" class="btn btn-sm btn-outline-success">
                                                                 <i data-feather="dollar-sign" class="align-self-center icon-xs ms-1"></i> Pay
                                                             </a>
-                                                        ';
-                                                            } else {
-                                                                /* Nothing */
-                                                            } ?>
+                                                            ';
+                                                            }
+                                                            if ($now > $checkout) {
+                                                                echo
+                                                                '
+                                                                <a href="#vacate-' . $reservations->code . '" data-bs-toggle="modal" data-bs-target="#vacate-' . $reservations->code . '" class="btn btn-sm btn-outline-danger">
+                                                                    <i data-feather="airplay" class="align-self-center icon-xs ms-1"></i> Vacate Room
+                                                                </a>
+                                                                ';
+                                                            }
+                                                            ?>
+
                                                             <!-- Pay Reservation Modal -->
                                                             <div class="modal fade" id="pay-<?php echo $reservations->code; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
                                                                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -462,6 +474,27 @@ require_once('../partials/head.php');
                                                                 </div>
                                                             </div>
                                                             <!-- End Delete Modal -->
+
+                                                            <!-- Vacate Room Modal -->
+                                                            <div class="modal fade" id="vacate-<?php echo $reservations->code; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="exampleModalLabel">CONFIRM</h5>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+                                                                        </div>
+                                                                        <div class="modal-body text-center text-danger">
+                                                                            <h4>Vacate Room Number <?php echo $reservations->number; ?> ?</h4>
+                                                                            <br>
+                                                                            <p>Heads Up, You are about vacate customer in room number: <?php echo $reservations->number; ?>.</p>
+                                                                            <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
+                                                                            <a href="reservations_manage?vacate=<?php echo $reservations->number; ?>" class="text-center btn btn-danger"> Vacate </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!-- End Vacate Room Modal   -->
                                                         </td>
                                                     </tr>
                                             <?php
