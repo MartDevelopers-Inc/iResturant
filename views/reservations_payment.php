@@ -142,41 +142,44 @@ require_once('../partials/head.php');
                                                                 $ret = "SELECT * FROM iResturant_Customer c
                                                                 INNER JOIN iResturant_Room_Reservation r ON c.id = r.client_id
                                                                 INNER JOIN iResturant_Room rm
-                                                                ON r.room_id = rm.id WHERE r.code = '$view'                                                        
+                                                                ON r.room_id = rm.id WHERE r.code = '$payment->reservation_code'                                                        
                                                                 ";
                                                                 $stmt = $mysqli->prepare($ret);
                                                                 $stmt->execute(); //ok
                                                                 $res = $stmt->get_result();
                                                                 while ($reservation = $res->fetch_object()) {
+                                                                    $checkin = strtotime($reservation->arrival);
+                                                                    $checkout = strtotime($reservation->departure);
+                                                                    $secs = $checkout - $checkin;
+                                                                    $days_reserved = $secs / 86400;
+                                                                    $total_payable_amt = $days_reserved * ($reservation->price);
+                                                                    $now = strtotime(date("Y-m-d"));
                                                                 ?>
 
                                                                     <tr>
                                                                         <td class="content-block aligncenter" style="padding: 0 0 20px;" align="center" valign="top">
                                                                             <table class="invoice" style="width: 80%;">
                                                                                 <tr>
-                                                                                    <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; padding: 5px 0;" valign="top">Mannatthemes
+                                                                                    <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; padding: 5px 0;" valign="top">
+                                                                                        <?php echo $reservation->name; ?> <br>
+                                                                                        <?php echo $reservation->phone; ?><br>
+                                                                                        <?php echo $reservation->email; ?><br>
                                                                                         <br />Room #<?php echo $reservation->number; ?>
-                                                                                        <br />01 Sep 2018
+                                                                                        <br />Check In: <?php echo date('d-M-Y', strtotime($reservation->arrival)); ?>
+                                                                                        <br />Check Out: <?php echo date('d-M-Y', strtotime($reservation->departure)); ?>
                                                                                     </td>
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td style="padding: 5px 0;" valign="top">
                                                                                         <table class="invoice-items" cellpadding="0" cellspacing="0" style="width: 100%;">
                                                                                             <tr>
-                                                                                                <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 10px 0;" valign="top">Apple iphone X</td>
-                                                                                                <td class="alignright" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; vertical-align: top; text-align: right; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 10px 0;" align="right" valign="top">$ 1499.99</td>
+                                                                                                <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 10px 0;" valign="top">Room Reservation For <?php echo $days_reserved; ?> Day(s)</td>
+                                                                                                <td class="alignright" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; vertical-align: top; text-align: right; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 10px 0;" align="right" valign="top"><?php echo $currency->code . " " . $total_payable_amt; ?></td>
                                                                                             </tr>
+
                                                                                             <tr>
-                                                                                                <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 10px 0;" valign="top">Data cable</td>
-                                                                                                <td class="alignright" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; vertical-align: top; text-align: right; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 10px 0;" align="right" valign="top">$ 20.00</td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 10px 0;" valign="top">Phone Cover</td>
-                                                                                                <td class="alignright" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; vertical-align: top; text-align: right; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 10px 0;" align="right" valign="top">$ 40.00</td>
-                                                                                            </tr>
-                                                                                            <tr>
-                                                                                                <td class="alignright" width="80%" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; vertical-align: top; text-align: right; border-top-width: 2px; border-top-color: #50649c; border-top-style: solid; border-bottom-color: #50649c; border-bottom-width: 2px; border-bottom-style: solid; font-weight: 700; margin: 0; padding: 10px 0;" align="right" valign="top">Total</td>
-                                                                                                <td class="alignright" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; vertical-align: top; text-align: right; border-top-width: 2px; border-top-color: #50649c; border-top-style: solid; border-bottom-color: #50649c; border-bottom-width: 2px; border-bottom-style: solid; font-weight: 700; margin: 0; padding: 10px 0;" align="right" valign="top">$ 1559.99</td>
+                                                                                                <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; vertical-align: top; border-top-width: 1px; border-top-color: #eee; border-top-style: solid; margin: 0; padding: 10px 0;" valign="top">Total </td>
+                                                                                                <td class="alignright" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; vertical-align: top; text-align: right; border-top-width: 2px; border-top-color: #50649c; border-top-style: solid; border-bottom-color: #50649c; border-bottom-width: 2px; border-bottom-style: solid; font-weight: 700; margin: 0; padding: 10px 0;" align="right" valign="top"> <?php echo "" . $currency->code . " " . $total_payable_amt; ?></td>
                                                                                             </tr>
                                                                                         </table>
                                                                                     </td>
