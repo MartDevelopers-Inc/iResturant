@@ -108,6 +108,13 @@ require_once('../partials/head.php');
                         <!-- end page title end breadcrumb -->
                         <div class="row">
                             <div class="col-lg-12">
+                                <div class="text-center">
+                                    <button id="print" onclick="printContent('PrintReceipt');" type="button" class="btn btn-primary">
+                                        <i data-feather="printer" class="align-self-center icon-xs ms-1"></i>
+                                        Print Receipt
+                                    </button>
+                                </div>
+                                <br>
                                 <table class="body-wrap" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; background-color: transparent; margin: 0;" bgcolor="transparent">
                                     <tr>
                                         <td valign="top"></td>
@@ -116,7 +123,7 @@ require_once('../partials/head.php');
                                                 <table class="main" width="100%" cellpadding="0" cellspacing="0" style="border: 1px dashed #4d79f6;">
                                                     <tr>
                                                         <td class="content-wrap aligncenter" style="padding: 20px; background-color: transparent;" align="center" valign="top">
-                                                            <table width="100%" cellpadding="0" cellspacing="0">
+                                                            <table id="PrintReceipt" width="100%" cellpadding="0" cellspacing="0">
                                                                 <?php
                                                                 /* Load System COnfigurations And Settings */
                                                                 $ret = "SELECT * FROM `iResturant_System_Details`  ";
@@ -192,7 +199,7 @@ require_once('../partials/head.php');
                                                                 ?>
                                                                 <tr>
                                                                     <td class="content-block aligncenter" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; vertical-align: top; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top">
-                                                                        Dastone Inc. 123 my street, And my Country
+                                                                        A <a href="https://martdev.info" target="_blank">MartDevelopers Inc</a> Production
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -208,6 +215,7 @@ require_once('../partials/head.php');
                                     </tr>
                                 </table>
                                 <!--end table-->
+
                             </div>
                         </div>
                         <?php require_once('../partials/footer.php'); ?>
