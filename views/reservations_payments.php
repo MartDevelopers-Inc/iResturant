@@ -34,9 +34,9 @@ if (isset($_POST['update_payment'])) {
     $means = $_POST['means'];
     $amount = $_POST['amount'];
 
-    $query = "UPDATE iResturant_Payments SET means =?, amount =?, type =? WHERE id =?";
+    $query = "UPDATE iResturant_Payments SET means =?, amount =? WHERE id =?";
     $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('ssss', $means, $amount, $type, $id);
+    $rc = $stmt->bind_param('sss', $means, $amount, $id);
     $stmt->execute();
     if ($stmt) {
         $success = "Reservation Payment Updated";
@@ -191,7 +191,6 @@ require_once('../partials/head.php');
                                                                     </div>
                                                                 </div>
                                                             </div>
-
 
                                                             <!-- End Update Modal -->
                                                             <a href="#delete-<?php echo $payments->code; ?>" data-bs-toggle="modal" data-bs-target="#delete-<?php echo $payments->code; ?>" class="btn btn-sm btn-outline-danger">
