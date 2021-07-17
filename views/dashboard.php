@@ -386,19 +386,34 @@ require_once('../partials/head.php');
                             <div class="card-body">
                                 <div class="analytic-dash-activity" data-simplebar>
                                     <div class="activity">
-                                        <div class="activity-info">
-                                            <div class="icon-info-activity">
-                                                <i class="las la-user-clock bg-soft-primary"></i>
-                                            </div>
-                                            <div class="activity-info-text">
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <p class="text-muted mb-0 font-13 w-75"><span>Donald</span>
-                                                        updated the status of <a href="#">Refund #1234</a> to awaiting customer response
-                                                    </p>
-                                                    <small class="text-muted">10 Min ago</small>
+                                        <?php
+
+                                        $ret = "SELECT * FROM iResturant_Customer c
+                                            INNER JOIN iResturant_Room_Reservation r ON c.id = r.client_id
+                                            INNER JOIN iResturant_Room rm
+                                            ON r.room_id = rm.id ORDER BY r.reserved_on ASC                                                 
+                                            ";
+                                        $stmt = $mysqli->prepare($ret);
+                                        $stmt->execute(); //ok
+                                        $res = $stmt->get_result();
+                                        while ($reservations = $res->fetch_object()) {
+                                        ?>
+                                            <div class="activity-info">
+                                                <div class="icon-info-activity">
+                                                    <i class="las la-user-check bg-soft-primary"></i>
+                                                </div>
+                                                <div class="activity-info-text">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <p class="text-muted mb-0 font-13 w-75"><span><?php echo $reservations->name . " " . $reservations->email; ?></span>
+                                                            Reserved Room Number:<?php echo $reservations->number; ?>. Code: <a href="reservation_details?view=<?php echo $reservations->code; ?>"><?php echo $reservations->code; ?>
+                                                            </a>
+                                                            On <?php echo date('dMY', strtotime($reservations->reserved_on)); ?>
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        <?php
+                                        } ?>
 
                                     </div>
                                 </div>
