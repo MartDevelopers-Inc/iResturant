@@ -49,13 +49,13 @@ if (isset($_POST['update_payment'])) {
 /* Delete Reservation Payment */
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    $adn = 'DELETE FROM iResturant_Room_Reservation WHERE code=?';
+    $adn = 'DELETE FROM iResturant_Payments WHERE id=?';
     $stmt = $mysqli->prepare($adn);
     $stmt->bind_param('s', $id);
     $stmt->execute();
     $stmt->close();
     if ($stmt) {
-        $success = 'Payment Deleted' && header('refresh:1; url=reservtion_payments');;
+        $success = 'Payment Deleted' && header('refresh:1; url=reservations_payments');;
     } else {
         $info = 'Please Try Again Or Try Later';
     }
@@ -150,6 +150,9 @@ require_once('../partials/head.php');
                                                             <?php echo date('d M Y g:ia', strtotime($payments->date_paid)); ?>
                                                         </td>
                                                         <td>
+                                                            <a href="reservations_payment?view=<?php echo $payments->id; ?>" class="btn btn-sm btn-outline-warning">
+                                                                <i data-feather="file" class="align-self-center icon-xs ms-1"></i> View
+                                                            </a>
                                                             <!-- End Payment -->
                                                             <a href="#edit-<?php echo $payments->code; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $payments->code; ?>" class="btn btn-sm btn-outline-warning">
                                                                 <i data-feather="edit" class="align-self-center icon-xs ms-1"></i> Edit
@@ -208,7 +211,7 @@ require_once('../partials/head.php');
                                                                         <div class="modal-body text-center text-danger">
                                                                             <h4>Delete <?php echo $payments->code; ?> ?</h4>
                                                                             <br>
-                                                                            <p>Heads Up, You are about to delete reservation : <?php echo $reservations->reservation_code; ?> payment record. This action is irrevisble.</p>
+                                                                            <p>Heads Up, You are about to delete reservation : <br> <?php echo $payments->reservation_code; ?> payment record. This action is irrevisble.</p>
                                                                             <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
                                                                             <a href="reservations_payments?delete=<?php echo $payments->id; ?>" class="text-center btn btn-danger"> Delete </a>
                                                                         </div>
