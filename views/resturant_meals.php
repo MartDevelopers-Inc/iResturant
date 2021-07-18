@@ -59,7 +59,7 @@ if (isset($_POST['add_meal_category'])) {
                 $err =  "Category With This  Name Already Exists";
             }
         } else {
-            $query = "INSERT INTO iResturant_Meal_Category (id, name, details) VALUES(?,??,)";
+            $query = "INSERT INTO iResturant_Meal_Category (id, name, details) VALUES(?,?,?)";
             $stmt = $mysqli->prepare($query);
             $rc = $stmt->bind_param('sss', $id, $name, $details);
             $stmt->execute();
@@ -164,7 +164,7 @@ require_once('../partials/head.php');
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_meal_category">Add Meal Category</button>
                         </div>
                         <!-- Add Room Category Modal -->
-                        <div class="modal fade" id="add_room_category" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+                        <div class="modal fade" id="add_meal_category" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header bg-primary">
@@ -208,7 +208,7 @@ require_once('../partials/head.php');
                                             <tr>
                                                 <th>Category Name</th>
                                                 <th>Category Details</th>
-                                                <th> Room Category</th>
+                                                <th>Manage</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -250,7 +250,7 @@ require_once('../partials/head.php');
                                                                                         </div>
                                                                                         <div class="form-group col-md-12">
                                                                                             <label for="">Category Details</label>
-                                                                                            <textarea type="text" required name="details" class="form-control" id="exampleInputEmail1"><?php echo $meal_categories->name; ?></textarea>
+                                                                                            <textarea type="text" required name="details" class="form-control" id="exampleInputEmail1"><?php echo $meal_categories->details; ?></textarea>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
