@@ -68,3 +68,14 @@ if (!empty($_POST["ClientEmail"])) {
         echo htmlentities($row['name']);
     }
 }
+
+
+/* Get Meal Category ID  */
+if (!empty($_POST["MealCategoryName"])) {
+    $id = $_POST['MealCategoryName'];
+    $stmt = $DB_con->prepare("SELECT * FROM iResturant_Meal_Category WHERE name = :id");
+    $stmt->execute(array(':id' => $id));
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo htmlentities($row['id']);
+    }
+}

@@ -179,4 +179,18 @@
         });
 
     }
+
+    function GetMealCategoryDetails(val) {
+        /* Get Meal Category ID */
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'MealCategoryName=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#MealCategoryID').val(data);
+            }
+        });
+
+    }
 </script>
