@@ -63,7 +63,7 @@ while ($sys = $res->fetch_object()) {
                     <a href="javascript: void(0);"> <i data-feather="layers" class="align-self-center menu-icon"></i><span>Resturant Management</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="nav-second-level" aria-expanded="false">
                         <li class="nav-item"><a class="nav-link" href="resturant_meals"><i class="ti-control-record"></i>Meals Categories </a></li>
-                        <li class="nav-item"><a class="nav-link" href="resturan-menus"><i class="ti-control-record"></i>Menus</a></li>
+                        <li class="nav-item"><a class="nav-link" href="resturant_menus"><i class="ti-control-record"></i>Menus</a></li>
                     </ul>
                 </li>
                 <li>
