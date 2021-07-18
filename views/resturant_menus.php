@@ -83,7 +83,7 @@ if (isset($_POST['add_meal'])) {
 }
 
 /* Update Meal  */
-if (isset($_POST['update_menu'])) {
+if (isset($_POST['update_meal'])) {
     $error = 0;
 
     if (isset($_POST['meal_id']) && !empty($_POST['meal_id'])) {
@@ -255,7 +255,7 @@ require_once('../partials/head.php');
                                             <tbody>
                                                 <?php
                                                 $ret = "SELECT * FROM iResturant_Meal_Category mc
-                                                INNER JOIN iResturant_Menu m
+                                                INNER JOIN iResturant_Menu mn
                                                 ON mn.meal_category_id = mc.id";
                                                 $stmt = $mysqli->prepare($ret);
                                                 $stmt->execute(); //ok
@@ -265,7 +265,7 @@ require_once('../partials/head.php');
                                                     <tr>
                                                         <td><?php echo $meals->meal_name; ?></td>
                                                         <td><?php echo $meals->name; ?></td>
-                                                        <td><?php echo $currency->code . "" . $meals->meal_price; ?></td>
+                                                        <td><?php echo $currency->code . " " . $meals->meal_price; ?></td>
                                                         <td>
                                                             <a href="#edit-<?php echo $meals->meal_id; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $meals->meal_id; ?>" class="btn btn-sm btn-outline-warning">
                                                                 <i data-feather="edit" class="align-self-center icon-xs ms-1"></i> Edit
@@ -274,7 +274,7 @@ require_once('../partials/head.php');
                                                                 <i data-feather="trash" class="align-self-center icon-xs ms-1"></i> Delete
                                                             </a>
                                                             <!-- Edit Room Category Modal -->
-                                                            <div class="modal fade" id="edit-<?php echo $meals->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+                                                            <div class="modal fade" id="edit-<?php echo $meals->meal_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
                                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header bg-warning">
@@ -321,7 +321,7 @@ require_once('../partials/head.php');
                                                                         <div class="modal-body text-center text-danger">
                                                                             <h4>Delete <?php echo $meals->name; ?> ?</h4>
                                                                             <br>
-                                                                            <p>Heads Up, You are about to delete <?php echo $meals->name; ?> from menu. This action is irrevisble.</p>
+                                                                            <p>Heads Up, You are about to delete <br> <?php echo $meals->name; ?> from menu. This action is irrevisble.</p>
                                                                             <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
                                                                             <a href="resturant_menus?delete=<?php echo $meals->meal_id; ?>" class="text-center btn btn-danger"> Delete </a>
                                                                         </div>
