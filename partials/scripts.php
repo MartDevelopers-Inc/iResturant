@@ -41,10 +41,19 @@
 <!-- Light Box -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
 <!-- Init Js -->
+
+<!-- File Uploads  -->
+<script src="../public/js/bs-custom-file-input.min.js"></script>
+
 <script>
+    $(document).ready(function() {
+        bsCustomFileInput.init();
+    });
+
     $(document).ready(function() {
         $('.table').DataTable();
     });
+
     $(document).ready(function() {
         $('#export-data-table').DataTable({
             dom: 'Bfrtip',
@@ -192,5 +201,47 @@
             }
         });
 
+    }
+
+    function GetStaffDetails(val) {
+        $.ajax({
+            /* Staff ID */
+            type: "POST",
+            url: "ajax.php",
+            data: 'StaffNumber=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#StaffId').val(data);
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'StaffId=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#StaffName').val(data);
+            }
+        });
+        $.ajax({
+            /* Staff Email */
+            type: "POST",
+            url: "ajax.php",
+            data: 'StaffName=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#StaffEmail').val(data);
+            }
+        });
+        $.ajax({
+            /* Staff Phone No */
+            type: "POST",
+            url: "ajax.php",
+            data: 'StaffEmail=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#StaffPhoneNumber').val(data);
+            }
+        });
     }
 </script>

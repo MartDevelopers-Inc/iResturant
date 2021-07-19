@@ -79,3 +79,44 @@ if (!empty($_POST["MealCategoryName"])) {
         echo htmlentities($row['id']);
     }
 }
+
+
+/* Get Staff ID */
+if (!empty($_POST["StaffNumber"])) {
+    $id = $_POST['StaffNumber'];
+    $stmt = $DB_con->prepare("SELECT * FROM iResturant_Staff WHERE number = :id");
+    $stmt->execute(array(':id' => $id));
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo htmlentities($row['id']);
+    }
+}
+
+/* Get Staff Name */
+if (!empty($_POST["StaffId"])) {
+    $id = $_POST['StaffId'];
+    $stmt = $DB_con->prepare("SELECT * FROM iResturant_Staff WHERE number = :id");
+    $stmt->execute(array(':id' => $id));
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo htmlentities($row['name']);
+    }
+}
+
+/* Get Staff Email */
+if (!empty($_POST["StaffName"])) {
+    $id = $_POST['StaffName'];
+    $stmt = $DB_con->prepare("SELECT * FROM iResturant_Staff WHERE number = :id");
+    $stmt->execute(array(':id' => $id));
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo htmlentities($row['email']);
+    }
+}
+
+/* Get Staff Phone NUmber */
+if (!empty($_POST["StaffEmail"])) {
+    $id = $_POST['StaffEmail'];
+    $stmt = $DB_con->prepare("SELECT * FROM iResturant_Staff WHERE number = :id");
+    $stmt->execute(array(':id' => $id));
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo htmlentities($row['phone']);
+    }
+}
