@@ -406,7 +406,7 @@ require_once('../partials/head.php');
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="">Passport (Profile Picture) </label>
-                                                            <input type="file" name="passport" class="form-control" id="exampleInputEmail1">
+                                                            <input type="file" required name="passport" class="form-control" id="exampleInputEmail1">
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="">Login Password </label>
