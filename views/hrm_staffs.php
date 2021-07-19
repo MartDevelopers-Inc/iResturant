@@ -219,11 +219,11 @@ require_once('../partials/head.php');
                         <div class="page-title-box">
                             <div class="row">
                                 <div class="col">
-                                    <h4 class="page-title">Resturant Meal Categories</h4>
+                                    <h4 class="page-title">HRM - Staffs</h4>
                                     <ol class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
                                         <li class="breadcrumb-item"><a href="dashboard">Dashboard</a></li>
-                                        <li class="breadcrumb-item active">Meal Categories</li>
+                                        <li class="breadcrumb-item"><a href="dashboard">HRM</a></li>
+                                        <li class="breadcrumb-item active">Staffs</li>
                                     </ol>
                                 </div>
                             </div>
@@ -236,14 +236,14 @@ require_once('../partials/head.php');
                 <div class="row">
                     <div class="col-lg-12 col-sm-12">
                         <div class="text-center">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_meal_category">Add Meal Category</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_staff">Add Staff</button>
                         </div>
-                        <!-- Add Room Category Modal -->
-                        <div class="modal fade" id="add_meal_category" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+                        <!-- Add  Modal -->
+                        <div class="modal fade" id="add_staff" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header bg-primary">
-                                        <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Add Meal Category</h6>
+                                        <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Fill All Required Fields</h6>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -251,19 +251,55 @@ require_once('../partials/head.php');
                                             <form method="post" enctype="multipart/form-data" role="form">
                                                 <div class="card-body">
                                                     <div class="row">
-                                                        <div class="form-group col-md-12">
-                                                            <label for="">Category Name</label>
-                                                            <input type="text" required name="name" class="form-control" id="exampleInputEmail1">
+                                                        <div class="form-group col-md-6">
+                                                            <label for="">Number </label>
+                                                            <input type="text" readonly required name="number" value="<?php echo $b; ?>" class="form-control" id="exampleInputEmail1">
                                                             <input type="hidden" required name="id" value="<?php echo $sys_gen_id; ?>" class="form-control">
                                                         </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="">Full Name </label>
+                                                            <input type="text" required name="name" class="form-control" id="exampleInputEmail1">
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="">Gender </label>
+                                                            <select type="text" required name="gender" class="form-control">
+                                                                <option>Male</option>
+                                                                <option>Female</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="">D.O.B </label>
+                                                            <input type="text" placeholder="DD/MM/YYYY" required name="dob" class="form-control" id="exampleInputEmail1">
+                                                        </div>
+                                                        <div class="form-group col-md-4">
+                                                            <label for="">Phone Number </label>
+                                                            <input type="number" required name="phone" class="form-control" id="exampleInputEmail1">
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="">Email Address </label>
+                                                            <input type="text" required name="email" class="form-control" id="exampleInputEmail1">
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="">Date Employed </label>
+                                                            <input type="date" required name="date_employed" class="form-control" id="exampleInputEmail1">
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="">Passport (Profile Picture) </label>
+                                                            <input type="file" required name="passport" class="form-control" id="exampleInputEmail1">
+                                                        </div>
+                                                        <div class="form-group col-md-6">
+                                                            <label for="">Login Password </label>
+                                                            <input type="text" required value='<?php echo $sys_gen_password; ?>' name="login_password" class="form-control" id="exampleInputEmail1">
+                                                            <input type="hidden" required value='Allow Login' name="login_permission" class="form-control" id="exampleInputEmail1">
+                                                        </div>
                                                         <div class="form-group col-md-12">
-                                                            <label for="">Category Details</label>
-                                                            <textarea type="text" required name="details" class="form-control" id="exampleInputEmail1"></textarea>
+                                                            <label for="">Address</label>
+                                                            <textarea type="text" required name="adr" class="form-control" rows="4" id="exampleInputEmail1"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="text-center">
-                                                    <button type="submit" name="add_meal_category" class="btn btn-primary">Submit</button>
+                                                    <button type="submit" name="add_staff" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -281,32 +317,44 @@ require_once('../partials/head.php');
                                     <table class="table dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
-                                                <th>Category Name</th>
-                                                <th>Category Details</th>
+                                                <th>Number</th>
+                                                <th>Name</th>
+                                                <th>Contact Details</th>
+                                                <th>Gender</th>
+                                                <th>D.O.B</th>
+                                                <th>Date Employed</th>
                                                 <th>Manage</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $ret = "SELECT * FROM  iResturant_Meal_Category ";
+                                            $ret = "SELECT * FROM  iResturant_Staff ";
                                             $stmt = $mysqli->prepare($ret);
                                             $stmt->execute(); //ok
                                             $res = $stmt->get_result();
-                                            while ($meal_categories = $res->fetch_object()) {
+                                            while ($staffs = $res->fetch_object()) {
 
                                             ?>
                                                 <tr>
-                                                    <td><?php echo $meal_categories->name; ?></td>
-                                                    <td><?php echo $meal_categories->details; ?></td>
+                                                    <td><?php echo $staffs->number; ?></td>
+                                                    <td><?php echo $staffs->name; ?></td>
                                                     <td>
-                                                        <a href="#edit-<?php echo $meal_categories->id; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $meal_categories->id; ?>" class="btn btn-sm btn-outline-warning">
+                                                        Phone:<?php echo $staffs->phone; ?><br>
+                                                        Email:<?php echo $staffs->email; ?>
+                                                        Adr:<?php echo $staffs->adr; ?>
+                                                    </td>
+                                                    <td><?php echo $staffs->gender; ?></td>
+                                                    <td><?php echo $staffs->dob; ?></td>
+                                                    <td><?php echo $staffs->date_employed; ?></td>
+                                                    <td>
+                                                        <a href="#edit-<?php echo $staffs->id; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $staffs->id; ?>" class="btn btn-sm btn-outline-warning">
                                                             <i data-feather="edit" class="align-self-center icon-xs ms-1"></i> Edit
                                                         </a>
-                                                        <a href="#delete-<?php echo $meal_categories->id; ?>" data-bs-toggle="modal" data-bs-target="#delete-<?php echo $meal_categories->id; ?>" class="btn btn-sm btn-outline-danger">
+                                                        <a href="#delete-<?php echo $staffs->id; ?>" data-bs-toggle="modal" data-bs-target="#delete-<?php echo $staffs->id; ?>" class="btn btn-sm btn-outline-danger">
                                                             <i data-feather="trash" class="align-self-center icon-xs ms-1"></i> Delete
                                                         </a>
-                                                        <!-- Edit Room Category Modal -->
-                                                        <div class="modal fade" id="edit-<?php echo $meal_categories->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+                                                        <!-- Edit  Modal -->
+                                                        <div class="modal fade" id="edit-<?php echo $staffs->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header bg-warning">
@@ -318,19 +366,47 @@ require_once('../partials/head.php');
                                                                             <form method="post" enctype="multipart/form-data" role="form">
                                                                                 <div class="card-body">
                                                                                     <div class="row">
-                                                                                        <div class="form-group col-md-12">
-                                                                                            <label for="">Category Name</label>
-                                                                                            <input type="text" required name="name" class="form-control" value="<?php echo $meal_categories->name; ?>" id="exampleInputEmail1">
-                                                                                            <input type="hidden" required name="id" value="<?php echo $meal_categories->id; ?>" class="form-control">
+                                                                                        <div class="form-group col-md-6">
+                                                                                            <label for="">Number </label>
+                                                                                            <input type="text" readonly required name="number" value="<?php echo $staffs->number; ?>" class="form-control" id="exampleInputEmail1">
+                                                                                            <input type="hidden" required name="id" value="<?php echo $staffs->id; ?>" class="form-control">
                                                                                         </div>
+                                                                                        <div class="form-group col-md-6">
+                                                                                            <label for="">Full Name </label>
+                                                                                            <input type="text" required name="name" value="<?php echo $staffs->name; ?>" class="form-control" id="exampleInputEmail1">
+                                                                                        </div>
+                                                                                        <div class="form-group col-md-4">
+                                                                                            <label for="">Gender </label>
+                                                                                            <select type="text" required name="gender" class="form-control">
+                                                                                                <option>Male</option>
+                                                                                                <option>Female</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                        <div class="form-group col-md-4">
+                                                                                            <label for="">D.O.B </label>
+                                                                                            <input type="text" placeholder="DD/MM/YYYY" value="<?php echo $staffs->dob; ?>" required name="dob" class="form-control" id="exampleInputEmail1">
+                                                                                        </div>
+                                                                                        <div class="form-group col-md-4">
+                                                                                            <label for="">Phone Number </label>
+                                                                                            <input type="number" required name="phone" value="<?php echo $staffs->phone; ?>" class="form-control" id="exampleInputEmail1">
+                                                                                        </div>
+                                                                                        <div class="form-group col-md-6">
+                                                                                            <label for="">Email Address </label>
+                                                                                            <input type="text" required value="<?php echo $staffs->email; ?>" name="email" class="form-control" id="exampleInputEmail1">
+                                                                                        </div>
+                                                                                        <div class="form-group col-md-6">
+                                                                                            <label for="">Date Employed </label>
+                                                                                            <input type="date" required value="<?php echo $staffs->date_employed; ?>" name="date_employed" class="form-control" id="exampleInputEmail1">
+                                                                                        </div>
+
                                                                                         <div class="form-group col-md-12">
-                                                                                            <label for="">Category Details</label>
-                                                                                            <textarea type="text" required name="details" class="form-control" id="exampleInputEmail1"><?php echo $meal_categories->details; ?></textarea>
+                                                                                            <label for="">Address</label>
+                                                                                            <textarea type="text" required name="adr" class="form-control" rows="4" id="exampleInputEmail1"><?php echo $staffs->adr; ?></textarea>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="text-center">
-                                                                                    <button type="submit" name="update_meal_category" class="btn btn-primary">Submit</button>
+                                                                                    <button type="submit" name="update_staff" class="btn btn-primary">Submit</button>
                                                                                 </div>
                                                                             </form>
                                                                         </div>
@@ -341,7 +417,7 @@ require_once('../partials/head.php');
                                                         <!-- End Edit Modal -->
 
                                                         <!-- Delete Room Category Modal -->
-                                                        <div class="modal fade" id="delete-<?php echo $meal_categories->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                        <div class="modal fade" id="delete-<?php echo $staffs->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog modal-dialog-centered" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
@@ -350,11 +426,11 @@ require_once('../partials/head.php');
 
                                                                     </div>
                                                                     <div class="modal-body text-center text-danger">
-                                                                        <h4>Delete <?php echo $meal_categories->name; ?> ?</h4>
+                                                                        <h4>Delete <?php echo $staffs->name; ?> ?</h4>
                                                                         <br>
-                                                                        <p>Heads Up, You are about to delete <?php echo $meal_categories->name; ?>. This action is irrevisble.</p>
+                                                                        <p>Heads Up, You are about to delete <?php echo $staffs->name; ?> account. This action is irrevisble.</p>
                                                                         <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
-                                                                        <a href="resturant_meals?delete=<?php echo $meal_categories->id; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                        <a href="hrm_staffs?delete=<?php echo $staffs->id; ?>" class="text-center btn btn-danger"> Delete </a>
                                                                     </div>
                                                                 </div>
                                                             </div>
