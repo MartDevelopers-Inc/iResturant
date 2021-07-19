@@ -26,6 +26,128 @@ require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 admin_check_login();
 
+/* Bulk Upload Staffs Via XLS */
+$time = time();
+
+use MartDevelopersAPI\DataSource;
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+
+$db = new DataSource();
+$conn = $db->getConnection();
+
+if (isset($_POST["upload"])) {
+
+    $allowedFileType = [
+        'application/vnd.ms-excel',
+        'text/xls',
+        'text/xlsx',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    ];
+
+    /* Where Magic Happens */
+    if (in_array($_FILES["file"]["type"], $allowedFileType)) {
+        $targetPath = '../public/uploads/XLS/' . $time . $_FILES['file']['name'];
+        move_uploaded_file($_FILES['file']['tmp_name'], $targetPath);
+
+        /* Initaite XLS Class */
+        $Reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+
+        $spreadSheet = $Reader->load($targetPath);
+        $excelSheet = $spreadSheet->getActiveSheet();
+        $spreadSheetAry = $excelSheet->toArray();
+        $sheetCount = count($spreadSheetAry);
+
+        /* Decode XLS File */
+        for ($i = 1; $i <= $sheetCount; $i++) {
+            $id = "";
+            if (isset($spreadSheetAry[$i][0])) {
+                $id = sha1(md5(rand(mysqli_real_escape_string($conn, $spreadSheetAry[$i][0]), date('Y'))));
+            }
+
+            $number = "";
+            if (isset($spreadSheetAry[$i][1])) {
+                $number = mysqli_real_escape_string($conn, $spreadSheetAry[$i][1]);
+            }
+
+            $name = "";
+            if (isset($spreadSheetAry[$i][2])) {
+                $name = mysqli_real_escape_string($conn, $spreadSheetAry[$i][2]);
+            }
+
+            $dob = "";
+            if (isset($spreadSheetAry[$i][3])) {
+                $dob = mysqli_real_escape_string($conn, $spreadSheetAry[$i][3]);
+            }
+
+            $gender = "";
+            if (isset($spreadSheetAry[$i][4])) {
+                $gender = mysqli_real_escape_string($conn, $spreadSheetAry[$i][4]);
+            }
+
+            $phone = "";
+            if (isset($spreadSheetAry[$i][5])) {
+                $phone = mysqli_real_escape_string($conn, $spreadSheetAry[$i][5]);
+            }
+
+            $email = "";
+            if (isset($spreadSheetAry[$i][6])) {
+                $email = mysqli_real_escape_string($conn, $spreadSheetAry[$i][6]);
+            }
+
+            $adr = "";
+            if (isset($spreadSheetAry[$i][7])) {
+                $adr = mysqli_real_escape_string($conn, $spreadSheetAry[$i][7]);
+            }
+
+            $gender = "";
+            if (isset($spreadSheetAry[$i][8])) {
+                $gender = mysqli_real_escape_string($conn, $spreadSheetAry[$i][8]);
+            }
+
+            $login_password = "";
+            if (isset($spreadSheetAry[$i][9])) {
+                $login_password = mysqli_real_escape_string($conn, $spreadSheetAry[$i][9]);
+            }
+
+            $date_employed = "";
+            if (isset($spreadSheetAry[$i][10])) {
+                $date_employed = mysqli_real_escape_string($conn, $spreadSheetAry[$i][10]);
+            }
+
+            /* Constant Values K */
+            $login_permission = 'Allow Login';
+
+            if (!empty($name) || !empty($email) || !empty($phone)) {
+                $query = "INSERT INTO iResturant_Staff (id, number, name, dob, gender, phone, email, adr, login_password, login_permission, date_employed) 
+                VALUES(?,?,?,?,?,?,?,?,?,?,?)";
+                $paramType = "ssssssssss";
+                $paramArray = array(
+                    $id,
+                    $number,
+                    $name,
+                    $dob,
+                    $gender,
+                    $phone,
+                    $email,
+                    $adr,
+                    $login_password,
+                    $login_permission,
+                    $date_employed
+                );
+                $insertId = $db->insert($query, $paramType, $paramArray);
+
+                if (!empty($insertId)) {
+                    $err = "Error Occured While Importing Data";
+                } else {
+                    $success = "Data Imported";
+                }
+            }
+        }
+    } else {
+        $info = "Invalid File Type. Upload Excel File.";
+    }
+}
+
 /* Add Staff */
 if (isset($_POST['add_staff'])) {
     $error = 0;
@@ -180,8 +302,6 @@ if (isset($_POST['update_staff'])) {
     }
 }
 
-
-
 /* Delete Staff */
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
@@ -196,6 +316,7 @@ if (isset($_GET['delete'])) {
         $info = 'Please Try Again Or Try Later';
     }
 }
+
 require_once('../partials/head.php');
 ?>
 
