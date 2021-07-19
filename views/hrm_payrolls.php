@@ -76,7 +76,7 @@ if (isset($_POST['add_payroll'])) {
         } else {
             $query = "INSERT INTO iResturant_Payroll (id, code, month, staff_id, amount) VALUES(?,?,?,?,?)";
             $stmt = $mysqli->prepare($query);
-            $rc = $stmt->bind_param('sssss', $id, $number, $room_category_id, $price, $status, $details);
+            $rc = $stmt->bind_param('sssss', $id, $code, $month, $staff_id, $amount);
             $stmt->execute();
             if ($stmt) {
                 $success = "Staff Payroll Added";
@@ -114,12 +114,12 @@ if (isset($_POST['update_payroll'])) {
     }
 
     if (!$error) {
-        $query = "INSERT INTO iResturant_Payroll (id, code, month, staff_id, amount) VALUES(?,?,?,?,?)";
+        $query = "UPDATE  iResturant_Payroll  SET month =?, amount =?  WHERE code = ?";
         $stmt = $mysqli->prepare($query);
-        $rc = $stmt->bind_param('sssss', $id, $number, $room_category_id, $price, $status, $details);
+        $rc = $stmt->bind_param('sss', $month, $amount, $code);
         $stmt->execute();
         if ($stmt) {
-            $success = "Staff Payroll Added";
+            $success = "Staff Payroll Updated";
         } else {
             $info = "Please Try Again Or Try Later";
         }
@@ -130,7 +130,7 @@ if (isset($_POST['update_payroll'])) {
 /* Delete Payroll */
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
-    $adn = 'DELETE FROM iResturant_Payroll WHERE id=?';
+    $adn = 'DELETE FROM iResturant_Payroll WHERE code=?';
     $stmt = $mysqli->prepare($adn);
     $stmt->bind_param('s', $id);
     $stmt->execute();
@@ -183,7 +183,6 @@ require_once('../partials/head.php');
                         <div class="text-center">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_room">Add Payroll</button>
                         </div>
-
 
                         <hr>
                         <div class="card">
@@ -246,14 +245,51 @@ require_once('../partials/head.php');
                                                                         </div>
                                                                         <div class="modal-body">
                                                                             <div class="row">
+                                                                                <form method="post" enctype="multipart/form-data" role="form">
+                                                                                    <div class="card-body">
+                                                                                        <div class="row">
+                                                                                            <div class="form-group col-md-12">
+                                                                                                <label for="">Payroll Code</label>
+                                                                                                <input type="text" readonly required name="code" value="<?php echo $payrolls->code; ?>" class="form-control" id="exampleInputEmail1">
+                                                                                            </div>
+                                                                                        </div>
 
+                                                                                        <div class="row">
+                                                                                            <div class="form-group col-md-6">
+                                                                                                <label for="">Payroll Month</label>
+                                                                                                <select class="form-control" name="month">
+                                                                                                    <option><?php echo $payrolls->month; ?></option>
+                                                                                                    <option>January</option>
+                                                                                                    <option>February</option>
+                                                                                                    <option>March</option>
+                                                                                                    <option>April</option>
+                                                                                                    <option>May</option>
+                                                                                                    <option>June</option>
+                                                                                                    <option>July</option>
+                                                                                                    <option>August</option>
+                                                                                                    <option>September</option>
+                                                                                                    <option>Octomber</option>
+                                                                                                    <option>November</option>
+                                                                                                    <option>December</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                            <div class="form-group col-md-6">
+                                                                                                <label for="">Monthly Salary</label>
+                                                                                                <input type="text" name="amount" value="<?php echo $payrolls->amount; ?>" required class="form-control">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="text-center">
+                                                                                        <button type="submit" name="update_payroll" class="btn btn-primary">Submit</button>
+                                                                                    </div>
+                                                                                </form>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <!-- End Update Modal -->
-                                                            <a href="#delete-<?php echo $payrolls->code; ?>" data-bs-toggle="modal" data-bs-target="#delete-<?php echo $payrolls->id; ?>" class="btn btn-sm btn-outline-danger">
+                                                            <a href="#delete-<?php echo $payrolls->code; ?>" data-bs-toggle="modal" data-bs-target="#delete-<?php echo $payrolls->code; ?>" class="btn btn-sm btn-outline-danger">
                                                                 <i data-feather="trash" class="align-self-center icon-xs ms-1"></i> Delete
                                                             </a>
                                                             <!-- Delete Modal -->
@@ -303,7 +339,7 @@ require_once('../partials/head.php');
                                                     <div class="row">
                                                         <div class="form-group col-md-6">
                                                             <label for="">Payroll Code</label>
-                                                            <input type="text" required name="code" value="<?php echo $a . $b; ?>" class="form-control" id="exampleInputEmail1">
+                                                            <input type="text" readonly required name="code" value="<?php echo $a . $b; ?>" class="form-control" id="exampleInputEmail1">
                                                             <input type="hidden" required name="id" value="<?php echo $sys_gen_id_alt_1; ?>" class="form-control">
                                                         </div>
 
