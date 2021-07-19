@@ -25,6 +25,7 @@ require_once('../config/config.php');
 require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 require_once('../config/DataSource.php');
+require_once('../vendor/autoload.php');
 admin_check_login();
 
 /* Bulk Upload Staffs Via XLS */
@@ -47,7 +48,7 @@ if (isset($_POST["upload"])) {
 
     /* Where Magic Happens */
     if (in_array($_FILES["file"]["type"], $allowedFileType)) {
-        $targetPath = '../public/uploads/XLS/' . $time . $_FILES['file']['name'];
+        $targetPath = '../public/uploads/sys_data/XLS/' . $time . $_FILES['file']['name'];
         move_uploaded_file($_FILES['file']['tmp_name'], $targetPath);
 
         /* Initaite XLS Class */
@@ -121,7 +122,7 @@ if (isset($_POST["upload"])) {
             if (!empty($name) || !empty($email) || !empty($phone)) {
                 $query = "INSERT INTO iResturant_Staff (id, number, name, dob, gender, phone, email, adr, login_password, login_permission, date_employed) 
                 VALUES(?,?,?,?,?,?,?,?,?,?,?)";
-                $paramType = "ssssssssss";
+                $paramType = "sssssssssss";
                 $paramArray = array(
                     $id,
                     $number,
@@ -447,7 +448,7 @@ require_once('../partials/head.php');
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="form-group text-center col-md-12">
-                                                            <label for="exampleInputFile">Allowed File Types: XLS, XLSX. Please, <a class="text-primary" href="../public/uploads/sys_data/Templates/Staffs_Template.xls">Download</a> A Sample File. </label>
+                                                            <label for="exampleInputFile">Allowed File Types: XLS, XLSX. Please, <a class="text-primary" href="../public/uploads/sys_data/Templates/Staff.xlsx">Download</a> A Sample File. </label>
                                                         </div>
                                                         <div class="form-group col-md-12">
                                                             <input required name="file" accept=".xls,.xlsx" type="file" class="form-control">
