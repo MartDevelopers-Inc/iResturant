@@ -126,7 +126,6 @@ if (isset($_POST['update_payroll'])) {
     }
 }
 
-
 /* Delete Payroll */
 if (isset($_GET['delete'])) {
     $id = $_GET['delete'];
@@ -141,6 +140,7 @@ if (isset($_GET['delete'])) {
         $info = 'Please Try Again Or Try Later';
     }
 }
+
 require_once('../partials/head.php');
 ?>
 
@@ -176,8 +176,6 @@ require_once('../partials/head.php');
                     </div>
                 </div>
                 <!-- end page title end breadcrumb -->
-
-
                 <div class="row">
                     <div class="col-lg-12 col-sm-12">
                         <div class="text-center">
