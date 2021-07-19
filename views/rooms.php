@@ -228,14 +228,15 @@ require_once('../partials/head.php');
                                                 while ($rooms = $res->fetch_object()) {
                                             ?>
                                                     <tr>
-                                                        <td><?php echo $rooms->number; ?></td>
+                                                        <td>
+                                                            <a href="room?view=<?php echo $rooms->id; ?>" class="text-primary">
+                                                                <?php echo $rooms->number; ?>
+                                                            </a>
+                                                        </td>
                                                         <td><?php echo $rooms->name; ?></td>
                                                         <td><?php echo $currency->code . " " . $rooms->price; ?></td>
                                                         <td><?php echo $rooms->status; ?></td>
                                                         <td>
-                                                            <a href="room?view=<?php echo $rooms->id; ?>" class="btn btn-sm btn-outline-success">
-                                                                <i data-feather="eye" class="align-self-center icon-xs ms-1"></i> View
-                                                            </a>
 
                                                             <a href="#edit-<?php echo $rooms->id; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $rooms->id; ?>" class="btn btn-sm btn-outline-warning">
                                                                 <i data-feather="edit" class="align-self-center icon-xs ms-1"></i> Edit

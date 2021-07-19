@@ -318,7 +318,7 @@ require_once('../partials/head.php');
                                             ?>
                                                     <tr>
                                                         <td>
-                                                            <a title="View Reservation Details" href="reservation_details?view=<?php echo $reservations->code; ?>">
+                                                            <a class="text-primary" href="reservation_details?view=<?php echo $reservations->code; ?>">
                                                                 <?php echo $reservations->code; ?>
                                                             </a>
                                                         </td>

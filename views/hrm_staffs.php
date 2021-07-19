@@ -492,7 +492,11 @@ require_once('../partials/head.php');
                                             while ($staffs = $res->fetch_object()) {
                                             ?>
                                                 <tr>
-                                                    <td><?php echo $staffs->number; ?></td>
+                                                    <td>
+                                                        <a href="hrm_staff?view=<?php echo $staffs->id; ?>" class="text-primary">
+                                                            <?php echo $staffs->number; ?>
+                                                        </a>
+                                                    </td>
                                                     <td><?php echo $staffs->name; ?></td>
                                                     <td>
                                                         Phone: <?php echo $staffs->phone; ?><br>
