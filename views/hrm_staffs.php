@@ -101,19 +101,15 @@ if (isset($_POST["upload"])) {
                 $adr = mysqli_real_escape_string($conn, $spreadSheetAry[$i][7]);
             }
 
-            $gender = "";
-            if (isset($spreadSheetAry[$i][8])) {
-                $gender = mysqli_real_escape_string($conn, $spreadSheetAry[$i][8]);
-            }
 
             $login_password = "";
-            if (isset($spreadSheetAry[$i][9])) {
-                $login_password = mysqli_real_escape_string($conn, $spreadSheetAry[$i][9]);
+            if (isset($spreadSheetAry[$i][8])) {
+                $login_password = mysqli_real_escape_string($conn, $spreadSheetAry[$i][8]);
             }
 
             $date_employed = "";
-            if (isset($spreadSheetAry[$i][10])) {
-                $date_employed = mysqli_real_escape_string($conn, $spreadSheetAry[$i][10]);
+            if (isset($spreadSheetAry[$i][9])) {
+                $date_employed = mysqli_real_escape_string($conn, $spreadSheetAry[$i][9]);
             }
 
             /* Constant Values K */
