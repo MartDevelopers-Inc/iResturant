@@ -237,6 +237,8 @@ require_once('../partials/head.php');
                     <div class="col-lg-12 col-sm-12">
                         <div class="text-center">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_staff">Add Staff</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bulk_import_staff">Bulk Import Staffs</button>
+
                         </div>
                         <!-- Add  Modal -->
                         <div class="modal fade" id="add_staff" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
@@ -307,7 +309,45 @@ require_once('../partials/head.php');
                                 </div>
                             </div>
                         </div>
-                        <!-- End Add Room Categories -->
+                        <!-- End Modal -->
+
+                        <!-- Bulk Import Modal -->
+                        <div class="modal fade" id="bulk_import_staff" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-primary">
+                                        <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Bulk Import Staffs</h6>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <form method="post" enctype="multipart/form-data" role="form">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="form-group text-center col-md-12">
+                                                            <label for="exampleInputFile">Allowed File Types: XLS, XLSX. Please, <a href="../public/uploads/sys_data/Templates/Staffs_Template.xls">Download</a> A Sample File. </label>
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <label for="exampleInputFile">Select File</label>
+                                                            <div class="input-group">
+                                                                <div class="custom-file">
+                                                                    <input required name="file" accept=".xls,.xlsx" type="file" class="custom-file-input" id="exampleInputFile">
+                                                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="text-right">
+                                                    <button type="submit" name="upload" class="btn btn-primary">Upload File</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Modal -->
 
                         <hr>
                         <div class="card">
@@ -333,7 +373,6 @@ require_once('../partials/head.php');
                                             $stmt->execute(); //ok
                                             $res = $stmt->get_result();
                                             while ($staffs = $res->fetch_object()) {
-
                                             ?>
                                                 <tr>
                                                     <td><?php echo $staffs->number; ?></td>

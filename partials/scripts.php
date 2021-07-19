@@ -41,10 +41,19 @@
 <!-- Light Box -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
 <!-- Init Js -->
+
+<!-- File Uploads  -->
+<script src="../public/js/bs-custom-file-input.min.js"></script>
+
 <script>
+    $(document).ready(function() {
+        bsCustomFileInput.init();
+    });
+
     $(document).ready(function() {
         $('.table').DataTable();
     });
+
     $(document).ready(function() {
         $('#export-data-table').DataTable({
             dom: 'Bfrtip',
