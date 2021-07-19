@@ -202,4 +202,46 @@
         });
 
     }
+
+    function GetStaffDetails(val) {
+        $.ajax({
+            /* Staff ID */
+            type: "POST",
+            url: "ajax.php",
+            data: 'StaffNumber=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#StaffId').val(data);
+            }
+        });
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'StaffId=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#StaffName').val(data);
+            }
+        });
+        $.ajax({
+            /* Staff Email */
+            type: "POST",
+            url: "ajax.php",
+            data: 'StaffName=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#StaffEmail').val(data);
+            }
+        });
+        $.ajax({
+            /* Staff Phone No */
+            type: "POST",
+            url: "ajax.php",
+            data: 'StaffEmail=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#StaffPhoneNumber').val(data);
+            }
+        });
+    }
 </script>

@@ -312,7 +312,7 @@ require_once('../partials/head.php');
                                                             <select id="StaffNumber" class="select form-control" onchange="GetStaffDetails(this.value);">
                                                                 <option>Select Staff Number</option>
                                                                 <?php
-                                                                $ret = "SELECT * FROM  iResturant_Staffs ";
+                                                                $ret = "SELECT * FROM  iResturant_Staff ";
                                                                 $stmt = $mysqli->prepare($ret);
                                                                 $stmt->execute(); //ok
                                                                 $res = $stmt->get_result();
@@ -332,7 +332,7 @@ require_once('../partials/head.php');
                                                         </div>
                                                         <div class="form-group col-md-4">
                                                             <label for="">Staff Email</label>
-                                                            <input type="text" id="StaffName" readonly required class="form-control">
+                                                            <input type="text" id="StaffEmail" readonly required class="form-control">
                                                         </div>
                                                         <div class="form-group col-md-4">
                                                             <label for="">Staff Phone Number</label>
