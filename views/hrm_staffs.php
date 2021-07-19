@@ -77,8 +77,8 @@ if (isset($_POST['add_staff'])) {
         $error = 1;
         $err = "Staff Address Cannot Be Empty";
     }
-    if (isset($_POST['login_password ']) && !empty($_POST['login_password '])) {
-        $login_password  = sha1(md5(mysqli_real_escape_string($mysqli, trim($_POST['login_password ']))));
+    if (isset($_POST['login_password']) && !empty($_POST['login_password'])) {
+        $login_password  = sha1(md5(mysqli_real_escape_string($mysqli, trim($_POST['login_password']))));
     } else {
         $error = 1;
         $err = "Staff Login Password Cannot Be Empty";
@@ -170,7 +170,7 @@ if (isset($_POST['update_staff'])) {
 
         $query = "UPDATE  iResturant_Staff SET name =?, dob =?, gender =?, phone =?, email =?, adr =?, date_employed =? WHERE id =?";
         $stmt = $mysqli->prepare($query);
-        $rc = $stmt->bind_param('ssssssss', $name, $dob, $gender, $phone, $email, $adr, $date_employed);
+        $rc = $stmt->bind_param('ssssssss', $name, $dob, $gender, $phone, $email, $adr, $date_employed, $id);
         $stmt->execute();
         if ($stmt) {
             $success = "$name - $number  Account Updated";
@@ -240,7 +240,7 @@ require_once('../partials/head.php');
                         </div>
                         <!-- Add  Modal -->
                         <div class="modal fade" id="add_staff" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
+                            <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header bg-primary">
                                         <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Fill All Required Fields</h6>
@@ -273,7 +273,7 @@ require_once('../partials/head.php');
                                                         </div>
                                                         <div class="form-group col-md-4">
                                                             <label for="">Phone Number </label>
-                                                            <input type="number" required name="phone" class="form-control" id="exampleInputEmail1">
+                                                            <input type="text" required name="phone" class="form-control" id="exampleInputEmail1">
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="">Email Address </label>
@@ -285,7 +285,7 @@ require_once('../partials/head.php');
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="">Passport (Profile Picture) </label>
-                                                            <input type="file" required name="passport" class="form-control" id="exampleInputEmail1">
+                                                            <input type="file" name="passport" class="form-control" id="exampleInputEmail1">
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="">Login Password </label>
@@ -339,13 +339,13 @@ require_once('../partials/head.php');
                                                     <td><?php echo $staffs->number; ?></td>
                                                     <td><?php echo $staffs->name; ?></td>
                                                     <td>
-                                                        Phone:<?php echo $staffs->phone; ?><br>
-                                                        Email:<?php echo $staffs->email; ?>
-                                                        Adr:<?php echo $staffs->adr; ?>
+                                                        Phone: <?php echo $staffs->phone; ?><br>
+                                                        Email: <?php echo $staffs->email; ?><br>
+                                                        Adr: <?php echo $staffs->adr; ?>
                                                     </td>
                                                     <td><?php echo $staffs->gender; ?></td>
-                                                    <td><?php echo $staffs->dob; ?></td>
-                                                    <td><?php echo $staffs->date_employed; ?></td>
+                                                    <td><?php echo date('d M Y', strtotime($staffs->dob)); ?></td>
+                                                    <td><?php echo date('d M Y', strtotime($staffs->date_employed)); ?></td>
                                                     <td>
                                                         <a href="#edit-<?php echo $staffs->id; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $staffs->id; ?>" class="btn btn-sm btn-outline-warning">
                                                             <i data-feather="edit" class="align-self-center icon-xs ms-1"></i> Edit
@@ -355,7 +355,7 @@ require_once('../partials/head.php');
                                                         </a>
                                                         <!-- Edit  Modal -->
                                                         <div class="modal fade" id="edit-<?php echo $staffs->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
-                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header bg-warning">
                                                                         <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Edit Meal Category</h6>
@@ -388,7 +388,7 @@ require_once('../partials/head.php');
                                                                                         </div>
                                                                                         <div class="form-group col-md-4">
                                                                                             <label for="">Phone Number </label>
-                                                                                            <input type="number" required name="phone" value="<?php echo $staffs->phone; ?>" class="form-control" id="exampleInputEmail1">
+                                                                                            <input type="text" required name="phone" value="<?php echo $staffs->phone; ?>" class="form-control" id="exampleInputEmail1">
                                                                                         </div>
                                                                                         <div class="form-group col-md-6">
                                                                                             <label for="">Email Address </label>
