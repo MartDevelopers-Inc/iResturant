@@ -325,20 +325,14 @@ require_once('../partials/head.php');
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="form-group text-center col-md-12">
-                                                            <label for="exampleInputFile">Allowed File Types: XLS, XLSX. Please, <a href="../public/uploads/sys_data/Templates/Staffs_Template.xls">Download</a> A Sample File. </label>
+                                                            <label for="exampleInputFile">Allowed File Types: XLS, XLSX. Please, <a class="text-primary" href="../public/uploads/sys_data/Templates/Staffs_Template.xls">Download</a> A Sample File. </label>
                                                         </div>
                                                         <div class="form-group col-md-12">
-                                                            <label for="exampleInputFile">Select File</label>
-                                                            <div class="input-group">
-                                                                <div class="custom-file">
-                                                                    <input required name="file" accept=".xls,.xlsx" type="file" class="custom-file-input" id="exampleInputFile">
-                                                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
-                                                                </div>
-                                                            </div>
+                                                            <input required name="file" accept=".xls,.xlsx" type="file" class="form-control">
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="text-right">
+                                                <div class="text-center">
                                                     <button type="submit" name="upload" class="btn btn-primary">Upload File</button>
                                                 </div>
                                             </form>
