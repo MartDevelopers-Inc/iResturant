@@ -314,25 +314,6 @@ require_once('../partials/head.php');
                         </div>
 
                         <!--end row-->
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="row align-items-center">
-                                    <div class="col">
-                                        <h4 class="card-title">Revenue Flow Overview</h4>
-                                    </div>
-                                    <!--end col-->
-                                </div>
-                                <!--end row-->
-                            </div>
-                            <!--end card-header-->
-                            <div class="card-body">
-                                <div class="">
-                                    <div id="ana_dash_1" class="apex-charts"></div>
-                                </div>
-                            </div>
-                            <!--end card-body-->
-                        </div>
-                        <!--end card-->
                     </div>
                 </div>
                 <!--end row-->
@@ -391,7 +372,7 @@ require_once('../partials/head.php');
                                         $ret = "SELECT * FROM iResturant_Customer c
                                             INNER JOIN iResturant_Room_Reservation r ON c.id = r.client_id
                                             INNER JOIN iResturant_Room rm
-                                            ON r.room_id = rm.id ORDER BY r.reserved_on ASC                                                 
+                                            ON r.room_id = rm.id ORDER BY r.reserved_on ASC LIMIT 10                                                 
                                             ";
                                         $stmt = $mysqli->prepare($ret);
                                         $stmt->execute(); //ok
@@ -412,6 +393,7 @@ require_once('../partials/head.php');
                                                     </div>
                                                 </div>
                                             </div>
+                                            <hr>
                                         <?php
                                         } ?>
 
