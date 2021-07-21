@@ -125,12 +125,13 @@ if (isset($_POST['update_room'])) {
         $error = 1;
         $err = "Room Details Cannot Be Empty";
     }
+    $status = $_POST['status'];
 
     if (!$error) {
 
-        $query = "UPDATE iResturant_Room SET  number =?,  price =?, details =? WHERE  id = ?";
+        $query = "UPDATE iResturant_Room SET  number =?,  price =?, status= ?,  details =? WHERE  id = ?";
         $stmt = $mysqli->prepare($query);
-        $rc = $stmt->bind_param('ssss', $number, $price, $details, $id);
+        $rc = $stmt->bind_param('sssss', $number, $price, $status, $details, $id);
         $stmt->execute();
         if ($stmt) {
             $success = "Room $number  Updated";
@@ -254,15 +255,22 @@ require_once('../partials/head.php');
                                                                                 <form method="post" enctype="multipart/form-data" role="form">
                                                                                     <div class="card-body">
                                                                                         <div class="row">
-                                                                                            <div class="form-group col-md-6">
+                                                                                            <div class="form-group col-md-4">
                                                                                                 <label for="">Room Number</label>
                                                                                                 <input type="text" required name="number" value="<?php echo $rooms->number; ?>" class="form-control" id="exampleInputEmail1">
                                                                                                 <input type="hidden" required name="id" value="<?php echo $rooms->id; ?>" class="form-control">
                                                                                             </div>
-
-                                                                                            <div class="form-group col-md-6">
-                                                                                                <label for="">Room Price (Per Night / Day)</label>
+                                                                                            <div class="form-group col-md-4">
+                                                                                                <label for="">Room Price</label>
                                                                                                 <input type="number" required name="price" value="<?php echo $rooms->price; ?>" class="form-control">
+                                                                                            </div>
+                                                                                            <div class="form-group col-md-4">
+                                                                                                <label for="">Status</label>
+                                                                                                <select type="status" required name="status" value="<?php echo $rooms->price; ?>" class="form-control">
+                                                                                                    <option><?php echo $rooms->status; ?></option>
+                                                                                                    <option>Vacant</option>
+                                                                                                    <option>Under Repair</option>
+                                                                                                </select>
                                                                                             </div>
                                                                                             <div class="form-group col-md-12">
                                                                                                 <label for="">Room Details</label>
