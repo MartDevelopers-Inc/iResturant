@@ -331,7 +331,7 @@ require_once('../partials/head.php');
                                                                             <br>
                                                                             <p>Heads Up, You are about to delete customer order.<br> This action is irrevisble.</p>
                                                                             <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
-                                                                            <a href="order_customers?delete=<?php echo $orders->code; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                            <a href="order_customers?delete_order=<?php echo $orders->code; ?>" class="text-center btn btn-danger"> Delete </a>
                                                                         </div>
                                                                     </div>
                                                                 </div>

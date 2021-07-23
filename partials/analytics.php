@@ -57,7 +57,7 @@ while ($currency = $res->fetch_object()) {
     $stmt->bind_result($supplier_expenses);
     $stmt->fetch();
     $stmt->close();
-    $se = $currency->code . "" . $supplier_expenses;
+    $se = $currency->code . " " . $supplier_expenses;
 
     /* Payroll Expenses */
     $query = "SELECT SUM(amount)  FROM `iResturant_Payroll` ";
@@ -66,7 +66,7 @@ while ($currency = $res->fetch_object()) {
     $stmt->bind_result($payroll_expenses);
     $stmt->fetch();
     $stmt->close();
-    $pe = $currency->code . "" . $payroll_expenses;
+    $pe = $currency->code . " " . $payroll_expenses;
 }
 
 /* Total Rooms */

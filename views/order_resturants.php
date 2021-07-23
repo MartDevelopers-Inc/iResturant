@@ -33,8 +33,8 @@ if (isset($_POST['add_order'])) {
     $code = $a . $b;
     $supplier_id = $_POST['supplier_id'];
     $amount = $_POST['amount'];
-    $details  = $_POST['details '];
-    $status = 'Unpaid';
+    $details  = $_POST['details'];
+    $status = 'Un Paid';
 
     $sql = "SELECT * FROM  iResturant_Expenses WHERE  (code='$code')  ";
     $res = mysqli_query($mysqli, $sql);
@@ -167,7 +167,7 @@ require_once('../partials/head.php');
                                             ?>
                                                     <tr>
                                                         <td>
-                                                            <a class="text-primary" href="order_resturantview=<?php echo $orders->code; ?>">
+                                                            <a class="text-primary" href="order_resturant?view=<?php echo $orders->code; ?>">
                                                                 <?php echo $orders->code; ?>
                                                             </a>
                                                         </td>
@@ -181,6 +181,9 @@ require_once('../partials/head.php');
                                                             <?php echo $currency->code . "" . $orders->amount; ?>
                                                         </td>
                                                         <td>
+                                                            <?php echo date('d M Y g:ia', strtotime($orders->amount)); ?>
+                                                        </td>
+                                                        <td>
 
                                                             <a href="#edit-<?php echo $orders->code; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $orders->code; ?>" class="btn btn-sm btn-outline-warning">
                                                                 <i data-feather="edit" class="align-self-center icon-xs ms-1"></i> Edit
@@ -188,9 +191,6 @@ require_once('../partials/head.php');
                                                             <a href="#delete-<?php echo $orders->code; ?>" data-bs-toggle="modal" data-bs-target="#delete-<?php echo $orders->code; ?>" class="btn btn-sm btn-outline-danger">
                                                                 <i data-feather="trash" class="align-self-center icon-xs ms-1"></i> Delete
                                                             </a>
-
-
-
                                                             <!-- Edit  Modal -->
                                                             <div class="modal fade" id="edit-<?php echo $orders->code; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
                                                                 <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -204,13 +204,13 @@ require_once('../partials/head.php');
                                                                                 <form method="post" enctype="multipart/form-data" role="form">
                                                                                     <div class="card-body">
                                                                                         <div class="row">
-                                                                                            <div class="form-group col-md-12">
+                                                                                            <div class="form-group col-md-6">
                                                                                                 <label for="">Order Amount </label>
-                                                                                                <input value="<?php echo $orders->amount; ?>" required name="status" class="form-control">
+                                                                                                <input value="<?php echo $orders->amount; ?>" required name="amount" class="form-control">
 
                                                                                                 <input type="hidden" required name="code" value="<?php echo $orders->code; ?>" class="form-control">
                                                                                             </div>
-                                                                                            <div class="form-group col-md-12">
+                                                                                            <div class="form-group col-md-6">
                                                                                                 <label for="">Order Status </label>
                                                                                                 <select required name="status" class="form-control">
                                                                                                     <option><?php echo $orders->status; ?></option>
@@ -251,7 +251,7 @@ require_once('../partials/head.php');
                                                                             <br>
                                                                             <p>Heads Up, You are about to delete customer order.<br> This action is irrevisble.</p>
                                                                             <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
-                                                                            <a href="order_customers?delete=<?php echo $orders->code; ?>" class="text-center btn btn-danger"> Delete </a>
+                                                                            <a href="order_resturants?delete_order=<?php echo $orders->code; ?>" class="text-center btn btn-danger"> Delete </a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -272,7 +272,7 @@ require_once('../partials/head.php');
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header bg-primary">
-                                        <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Add Customer Order</h6>
+                                        <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Add Supplier Expense</h6>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -281,50 +281,30 @@ require_once('../partials/head.php');
                                                 <div class="card-body">
                                                     <div class="row">
                                                         <div class="form-group col-md-6">
-                                                            <label for="">Customer Name</label>
-                                                            <select name="customer_id" class="select form-control">
-                                                                <option>Select Customer Name</option>
+                                                            <label for="">Supplier Name</label>
+                                                            <select name="supplier_id" class="select form-control">
+                                                                <option>Select Supplier Name</option>
                                                                 <?php
-                                                                $ret = "SELECT * FROM  iResturant_Customer ";
+                                                                $ret = "SELECT * FROM  iResturant_Suppliers ";
                                                                 $stmt = $mysqli->prepare($ret);
                                                                 $stmt->execute(); //ok
                                                                 $res = $stmt->get_result();
-                                                                while ($customer = $res->fetch_object()) {
+                                                                while ($suppliers = $res->fetch_object()) {
                                                                 ?>
-                                                                    <option value="<?php echo $customer->id; ?>"><?php echo $customer->name; ?></option>
+                                                                    <option value="<?php echo $suppliers->id; ?>"><?php echo $suppliers->name; ?></option>
                                                                 <?php
                                                                 } ?>
                                                             </select>
                                                         </div>
                                                         <div class="form-group col-md-6">
-                                                            <label for="">Meal Name</label>
-                                                            <select class="select form-control" name="meal_menu_id" onchange="getMenuDetails(this.value);" id="MealID">
-                                                                <option>Select Meal Name</option>
-                                                                <?php
-                                                                $ret = "SELECT * FROM  iResturant_Menu ";
-                                                                $stmt = $mysqli->prepare($ret);
-                                                                $stmt->execute(); //ok
-                                                                $res = $stmt->get_result();
-                                                                while ($menu = $res->fetch_object()) {
-                                                                ?>
-                                                                    <option value="<?php echo $menu->meal_id; ?>"><?php echo $menu->meal_name; ?></option>
-                                                                <?php
-                                                                } ?>
-                                                            </select>
+                                                            <label for="">Order Amount </label>
+                                                            <input type="text" required name="amount" class="form-control">
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="form-group col-md-6">
-                                                            <label for="">Meal Count </label>
-                                                            <input type="number" required name="meal_count" class="form-control">
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label for="">Unit Meal Price </label>
-                                                            <input type="text" readonly id="MealPrice" required name="order_amount" class="form-control">
-                                                        </div>
                                                         <div class="form-group col-md-12">
-                                                            <label for="">Special Requests</label>
-                                                            <textarea name="speacial_request" class="form-control" rows="5"></textarea>
+                                                            <label for="">Order Details</label>
+                                                            <textarea name="details" class="form-control" rows="5"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
