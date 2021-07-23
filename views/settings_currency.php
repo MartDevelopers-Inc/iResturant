@@ -86,19 +86,30 @@ if (isset($_GET['delete'])) {
 
 /* Make Currency Active */
 if (isset($_GET['activate'])) {
-    $id = $_GET['activate'];
+    $delete = $_GET['activate'];
     $status = 'Active';
-    $adn = "UPDATE  iResturant_Currencies SET status = '$status' WHERE id = ?";
-    $stmt = $mysqli->prepare($adn);
-    $stmt->bind_param('s', $id);
-    $stmt->execute();
-    $stmt->close();
-    if ($stmt) {
+    /* Update Initial Current First */
+    $clear_initial_current = "UPDATE  iResturant_Currencies SET status = '' ";
+    $current = "UPDATE  iResturant_Currencies SET status ='$status' WHERE id = ?";
+
+    $clear_stmt = $mysqli->prepare($clear_initial_current);
+    $current_stmt = $mysqli->prepare($current);
+
+    $current_stmt->bind_param('s', $status, $delete);
+
+    $clear_stmt->execute();
+    $current_stmt->execute();
+
+    $clear_stmt->close();
+    $current_stmt->close();
+
+    if ($clear_stmt && $current_stmt) {
         $success = 'Set As Active' && header('refresh:1; url=settings_currency');;
     } else {
-        $info = 'Please Try Again Or Try Later';
+        $info = "Please Try Again Or Try Later";
     }
 }
+
 require_once('../partials/head.php');
 ?>
 
