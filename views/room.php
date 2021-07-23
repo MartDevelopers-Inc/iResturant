@@ -268,7 +268,7 @@ require_once('../partials/head.php');
                                                             <th class="border-top-0">Customer Details</th>
                                                             <th class="border-top-0">Check In</th>
                                                             <th class="border-top-0">Check Out</th>
-                                                            <th class="border-top-0">Date</th>
+                                                            <th class="border-top-0">Reservation Date</th>
                                                         </tr>
                                                         <!--end tr-->
                                                     </thead>
@@ -292,9 +292,9 @@ require_once('../partials/head.php');
                                                                     Phone:<?php echo $reservations->phone; ?><br>
                                                                     Email:<?php echo $reservations->email; ?>
                                                                 </td>
-                                                                <td><?php echo $reservations->arrival; ?></td>
-                                                                <td><?php echo $reservations->departure; ?></td>
-                                                                <td><?php echo date('d-M-Y', strtotime($reservations->reserved_on)); ?></td>
+                                                                <td><?php echo date('d M Y', strtotime($reservations->arrival)); ?></td>
+                                                                <td><?php echo date('d M Y', strtotime($reservations->departure)); ?></td>
+                                                                <td><?php echo date('d M Y', strtotime($reservations->reserved_on)); ?></td>
                                                             </tr>
                                                         <?php
                                                         } ?>

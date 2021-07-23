@@ -95,7 +95,7 @@ if (isset($_GET['activate'])) {
     $clear_stmt = $mysqli->prepare($clear_initial_current);
     $current_stmt = $mysqli->prepare($current);
 
-    $current_stmt->bind_param('s', $status, $delete);
+    $current_stmt->bind_param('s', $delete);
 
     $clear_stmt->execute();
     $current_stmt->execute();
@@ -189,8 +189,8 @@ require_once('../partials/head.php');
                                                         } else {
                                                             echo
                                                             "
-                                                                <a href='#mark-$currency->id; ?>' data-bs-toggle='modal' data-bs-target=#mark-$currency->id' class='btn btn-sm btn-outline-warning'>
-                                                                    <i data-feather='edit' class='align-self-center icon-xs ms-1'></i> Edit
+                                                                <a href='#mark-$currency->id' data-bs-toggle='modal' data-bs-target='#mark-$currency->id' class='btn btn-sm btn-outline-success'>
+                                                                    <i data-feather='check' class='align-self-center icon-xs ms-1'></i> Set As Active
                                                                 </a>
                                                             ";
                                                         }
@@ -202,15 +202,13 @@ require_once('../partials/head.php');
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
                                                                         <h5 class="modal-title" id="exampleModalLabel">CONFIRM</h5>
-                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                            <span aria-hidden="true">&times;</span>
-                                                                        </button>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                     </div>
                                                                     <div class="modal-body text-center text-danger">
                                                                         <h4>Set <?php echo $currency->code . " " . $currency->name; ?> As Active Currency</h4>
                                                                         <br>
-                                                                        <button type="button" class="text-center btn btn-success" data-dismiss="modal">No</button>
-                                                                        <a href="settings_currency?activate=<?php echo $currency->id; ?>" class="text-center btn btn-danger"> Yes Set As Active </a>
+                                                                        <button type="button" class="btn btn-soft-danger" data-bs-dismiss="modal">No</button>
+                                                                        <a href="settings_currency?activate=<?php echo $currency->id; ?>" class="text-center btn btn-success"> Yes Set As Active </a>
                                                                     </div>
                                                                 </div>
                                                             </div>
