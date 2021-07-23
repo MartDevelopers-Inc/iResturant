@@ -204,7 +204,7 @@ require_once('../partials/head.php');
                                                 <table class="table dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                                     <thead>
                                                         <tr>
-                                                            <th class="border-top-0">Reservation Code</th>
+                                                            <th class="border-top-0">Order Code</th>
                                                             <th class="border-top-0">Customer Details</th>
                                                             <th class="border-top-0">Ordered Meal</th>
                                                         </tr>
@@ -225,6 +225,8 @@ require_once('../partials/head.php');
                                                             $stmt->execute(); //ok
                                                             $res = $stmt->get_result();
                                                             while ($orders = $res->fetch_object()) {
+                                                                /* Order Bill Amount */
+                                                                $order_bill = $orders->meal_count * $orders->order_amount;
                                                         ?>
                                                                 <tr>
                                                                     <td>
@@ -238,10 +240,10 @@ require_once('../partials/head.php');
                                                                         Email:<?php echo $orders->email; ?>
                                                                     </td>
                                                                     <td>
-                                                                        Meal : <?php echo $order->meal_name; ?><br>
-                                                                        Count : <?php echo $order->meal_count; ?><br>
-                                                                        Order Bill : <?php echo $currency->code . " " . $order->order_amount; ?>Days(s)<br>
-                                                                        Date Ordeered: <?php echo date('d-M-Y', strtotime($orders->created_at)); ?>
+                                                                        Meal : <?php echo $orders->meal_name; ?><br>
+                                                                        Count : <?php echo $orders->meal_count; ?><br>
+                                                                        Order Bill : <?php echo $currency->code . " " . $order_bill; ?><br>
+                                                                        Date Ordered: <?php echo date('d-M-Y', strtotime($orders->created_at)); ?>
                                                                     </td>
                                                                 </tr>
                                                         <?php

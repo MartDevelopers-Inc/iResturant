@@ -244,4 +244,18 @@
             }
         });
     }
+
+    function getMenuDetails(val) {
+        /* Get Meal Price */
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'MealID=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#MealPrice').val(data);
+            }
+        });
+
+    }
 </script>

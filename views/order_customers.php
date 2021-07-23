@@ -161,7 +161,7 @@ require_once('../partials/head.php');
                                                     <div class="row">
                                                         <div class="form-group col-md-6">
                                                             <label for="">Customer Name</label>
-                                                            <select class="select form-control">
+                                                            <select name="customer_id" class="select form-control">
                                                                 <option>Select Customer Name</option>
                                                                 <?php
                                                                 $ret = "SELECT * FROM  iResturant_Customer ";
@@ -177,7 +177,7 @@ require_once('../partials/head.php');
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="">Meal Name</label>
-                                                            <select class="select form-control" onchange="getMenuDetails(this.value);" id="MealName">
+                                                            <select class="select form-control" name="meal_menu_id" onchange="getMenuDetails(this.value);" id="MealID">
                                                                 <option>Select Meal Name</option>
                                                                 <?php
                                                                 $ret = "SELECT * FROM  iResturant_Menu ";
