@@ -83,10 +83,9 @@ while ($sys = $res->fetch_object()) {
                     </ul>
                 </li>
                 <li>
-                    <a href="javascript: void(0);"> <i data-feather="check" class="align-self-center menu-icon"></i><span>Inventory</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+                    <a href="javascript: void(0);"> <i data-feather="check" class="align-self-center menu-icon"></i><span>Equipments</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="nav-second-level" aria-expanded="false">
-                        <li class="nav-item"><a class="nav-link" href="inventory_assets"><i class="ti-control-record"></i>Assets </a></li>
-                        <li class="nav-item"><a class="nav-link" href="inventory_rooms"><i class="ti-control-record"></i>Rooms</a></li>
+                        <li class="nav-item"><a class="nav-link" href="inventory_assets"><i class="ti-control-record"></i>Manage </a></li>
                     </ul>
                 </li>
                 <li>
