@@ -332,22 +332,36 @@ require_once('../partials/head.php');
                             <!--end card-header-->
                             <div class="card-body">
                                 <div class="analytic-dash-activity" data-simplebar>
-                                    <div class="activity">
-                                        <div class="activity-info">
-                                            <div class="icon-info-activity">
-                                                <i class="las la-user-clock bg-soft-primary"></i>
-                                            </div>
-                                            <div class="activity-info-text">
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <p class="text-muted mb-0 font-13 w-75"><span>Donald</span>
-                                                        updated the status of <a href="#">Refund #1234</a> to awaiting customer response
-                                                    </p>
-                                                    <small class="text-muted">10 Min ago</small>
+                                    <?php
+                                    $ret =
+                                        "SELECT * FROM iResturant_Customer c INNER JOIN iResturant_Customer_Orders cs ON cs.customer_id = c.id 
+                                        INNER JOIN iResturant_Menu rm
+                                        ON rm.meal_id = cs.meal_menu_id ORDER BY cs.created_at DESC LIMIT 10
+                                        /* INNER JOIN iResturant_Payments pa ON cs.code = pa.order_code  */";
+                                    $stmt = $mysqli->prepare($ret);
+                                    $stmt->execute(); //ok
+                                    $res = $stmt->get_result();
+                                    while ($orders = $res->fetch_object()) {
+                                    ?>
+                                        <div class="activity">
+                                            <div class="activity-info">
+                                                <div class="icon-info-activity">
+                                                    <i class="las la-user-check bg-soft-primary"></i>
+                                                </div>
+                                                <div class="activity-info-text">
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <p class="text-muted mb-0 font-13 w-75"><span><?php echo $orders->name; ?><br></span>
+                                                            ordered <?php echo $orders->meal_count . " " . $orders->meal_name; ?>
+                                                        </p>
+
+                                                        <small class="text-muted"><?php echo date('d M Y g:ia', strtotime($orders->created_at)); ?></small>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                        <hr>
+                                    <?php } ?>
 
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -464,8 +478,8 @@ require_once('../partials/head.php');
                                                     <tr>
                                                         <td><?php echo $resturant_sales->code; ?></td>
                                                         <td><?php echo $resturant_sales->means; ?></td>
-                                                        <td><?php echo $currency->code . "" . $resturant_sales->amount; ?></td>
-                                                        <td><?php echo date('d-M-Y g:ia', strtotime($resturant_sales->date_paid)); ?></td>
+                                                        <td><?php echo $currency->code . " " . $resturant_sales->amount; ?></td>
+                                                        <td><?php echo date('d M Y g:ia', strtotime($resturant_sales->date_paid)); ?></td>
                                                     </tr>
                                                 <?php
                                                 } ?>
@@ -512,7 +526,7 @@ require_once('../partials/head.php');
                                                         <td><?php echo $reservations_payments->code; ?></td>
                                                         <td><?php echo $reservations_payments->means; ?></td>
                                                         <td><?php echo $currency->code . " " . $reservations_payments->amount; ?></td>
-                                                        <td><?php echo date('d-M-Y g:ia', strtotime($reservations_payments->date_paid)); ?></td>
+                                                        <td><?php echo date('d M Y g:ia', strtotime($reservations_payments->date_paid)); ?></td>
                                                     </tr>
                                                 <?php
                                                 } ?>

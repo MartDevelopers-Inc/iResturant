@@ -120,3 +120,13 @@ if (!empty($_POST["StaffEmail"])) {
         echo htmlentities($row['phone']);
     }
 }
+
+/* Get Meal Price */
+if (!empty($_POST["MealID"])) {
+    $id = $_POST['MealID'];
+    $stmt = $DB_con->prepare("SELECT * FROM iResturant_Menu WHERE meal_id = :id");
+    $stmt->execute(array(':id' => $id));
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo htmlentities($row['meal_price']);
+    }
+}
