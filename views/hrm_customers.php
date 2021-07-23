@@ -229,6 +229,9 @@ require_once('../partials/head.php');
                                                         Adr: <?php echo $client->adr; ?>
                                                     </td>
                                                     <td>
+                                                        <a href="hrm_customer?view=<?php echo $client->id; ?>" class="btn btn-sm btn-outline-success">
+                                                            <i data-feather="eye" class="align-self-center icon-xs ms-1"></i> View
+                                                        </a>
                                                         <a href="#edit-<?php echo $client->id; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $client->id; ?>" class="btn btn-sm btn-outline-warning">
                                                             <i data-feather="edit" class="align-self-center icon-xs ms-1"></i> Edit
                                                         </a>
