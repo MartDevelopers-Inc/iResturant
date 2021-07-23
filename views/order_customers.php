@@ -92,6 +92,37 @@ if (isset($_GET['delete_order'])) {
         $info = 'Please Try Again Or Try Later';
     }
 }
+
+/*  Pay Order */
+if (isset($_POST['pay_order'])) {
+    $id = $sys_gen_id_alt_2;
+    $code = $sys_gen_paycode;
+    $order_code = $_POST['order_code'];
+    $means = $_POST['means'];
+    $amount = $_POST['amount'];
+    $type = 'Resturant Sales';
+    $status = 'Paid';
+
+
+    $query = "INSERT INTO iResturant_Payments (id, code, order_code, means, amount, type) VALUES(?,?,?,?,?,?)";
+    $order_qry = "UPDATE iResturant_Customer_Orders SET status = ? WHERE code = ?";
+
+    $stmt = $mysqli->prepare($query);
+    $order_stmt = $mysqli->prepare($order_qry);
+
+    $rc = $stmt->bind_param('ssssss', $id, $code, $order_code, $means, $amount, $type);
+    $rc =  $order_stmt->bind_param('ss', $status, $order_code);
+
+    $stmt->execute();
+    $order_stmt->execute();
+
+    if ($stmt  && $order_stmt) {
+        $success = "Order $order_code Paid";
+    } else {
+        $info = "Please Try Again Or Try Later";
+    }
+}
+
 require_once('../partials/head.php');
 ?>
 
@@ -193,7 +224,7 @@ require_once('../partials/head.php');
                                                             if ($orders->status == 'Unpaid') {
                                                                 echo
                                                                 '
-                                                                <a href="#edit-' . $orders->code . '" data-bs-toggle="modal" data-bs-target="#edit-edit-' . $orders->code . '" class="btn btn-sm btn-outline-success">
+                                                                <a href="#pay-' . $orders->code . '" data-bs-toggle="modal" data-bs-target="#pay-' . $orders->code . '" class="btn btn-sm btn-outline-success">
                                                                     <i data-feather="dollar-sign" class="align-self-center icon-xs ms-1"></i> Pay Order
                                                                 </a>
                                                                 ';
@@ -205,7 +236,46 @@ require_once('../partials/head.php');
                                                             <a href="#delete-<?php echo $orders->code; ?>" data-bs-toggle="modal" data-bs-target="#delete-<?php echo $orders->code; ?>" class="btn btn-sm btn-outline-danger">
                                                                 <i data-feather="trash" class="align-self-center icon-xs ms-1"></i> Delete
                                                             </a>
+
                                                             <!-- Add Payment -->
+                                                            <div class="modal fade" id="pay-<?php echo $orders->code; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+                                                                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header bg-warning">
+                                                                            <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Pay Order <?php echo $orders->code; ?></h6>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="row">
+                                                                                <form method="post" enctype="multipart/form-data" role="form">
+                                                                                    <div class="card-body">
+                                                                                        <div class="row">
+                                                                                            <div class="form-group col-md-4">
+                                                                                                <label for="">Order Code</label>
+                                                                                                <input type="text" readonly required name="order_code" value="<?php echo $orders->code; ?>" class="form-control">
+                                                                                            </div>
+                                                                                            <div class="form-group col-md-4">
+                                                                                                <label for="">Payment Method</label>
+                                                                                                <select name="means" class="form-control">
+                                                                                                    <option>Cash</option>
+                                                                                                    <option>Mpesa</option>
+                                                                                                </select>
+                                                                                            </div>
+                                                                                            <div class="form-group col-md-4">
+                                                                                                <label for="">Amount (<?php echo $currency->code; ?>)</label>
+                                                                                                <input type="text" readonly required name="amount" value="<?php echo $order_bill; ?>" class="form-control">
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="text-center">
+                                                                                        <button type="submit" name="pay_order" class="btn btn-primary">Submit</button>
+                                                                                    </div>
+                                                                                </form>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                             <!-- End Payment -->
 
                                                             <!-- Edit  Modal -->
