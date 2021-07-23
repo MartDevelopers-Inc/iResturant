@@ -182,16 +182,145 @@ require_once('../partials/head.php');
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-                        <div class="text-center">
-                            <button id="print" onclick="printContent('Print');" type="button" class="btn btn-primary">
-                                <i data-feather="printer" class="align-self-center icon-xs ms-1"></i>
-                                Print
-                            </button>
+                        <div class="pb-4">
+                            <ul class="nav-border nav nav-pills mb-0" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="Profile_Project_tab" data-bs-toggle="pill" href="#Profile_Project"><?php echo $customer->name; ?> Orders History</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " id="Profile_Post_tab" data-bs-toggle="pill" href="#Profile_Post"><?php echo $customer->name; ?> Rooms Reservation History</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <!--end card-body-->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="tab-content" id="pills-tabContent">
+                                    <div class="tab-pane fade show active " id="Profile_Project" role="tabpanel" aria-labelledby="Profile_Project_tab">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <table class="table dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="border-top-0">Reservation Code</th>
+                                                            <th class="border-top-0">Customer Details</th>
+                                                            <th class="border-top-0">Ordered Meal</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        $ret = "SELECT * FROM `iResturant_Currencies` WHERE status = 'Active'  ";
+                                                        $stmt = $mysqli->prepare($ret);
+                                                        $stmt->execute(); //ok
+                                                        $res = $stmt->get_result();
+                                                        while ($currency = $res->fetch_object()) {
+                                                            $ret = "SELECT * FROM iResturant_Customer c INNER JOIN iResturant_Customer_Orders cs ON cs.customer_id = c.id 
+                                                            INNER JOIN iResturant_Menu rm
+                                                            ON rm.meal_id = cs.meal_menu_id
+                                                            WHERE c.id = '$view'                                                        
+                                                            ";
+                                                            $stmt = $mysqli->prepare($ret);
+                                                            $stmt->execute(); //ok
+                                                            $res = $stmt->get_result();
+                                                            while ($orders = $res->fetch_object()) {
+                                                        ?>
+                                                                <tr>
+                                                                    <td>
+                                                                        <a class="text-primary" href="order_customer?view=<?php echo $orders->code; ?>">
+                                                                            <?php echo $orders->code; ?>
+                                                                        </a>
+                                                                    </td>
+                                                                    <td>
+                                                                        Name:<?php echo $orders->name; ?><br>
+                                                                        Phone:<?php echo $orders->phone; ?><br>
+                                                                        Email:<?php echo $orders->email; ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        Meal : <?php echo $order->meal_name; ?><br>
+                                                                        Count : <?php echo $order->meal_count; ?><br>
+                                                                        Order Bill : <?php echo $currency->code . " " . $order->order_amount; ?>Days(s)<br>
+                                                                        Date Ordeered: <?php echo date('d-M-Y', strtotime($orders->created_at)); ?>
+                                                                    </td>
+                                                                </tr>
+                                                        <?php
+                                                            }
+                                                        } ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade " id="Profile_Post" role="tabpanel" aria-labelledby="Profile_Post_tab">
+                                        <div class="row align-items-center">
+                                            <div class="col-lg-12">
+                                                <table class="table dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="border-top-0">Reservation Code</th>
+                                                            <th class="border-top-0">Customer Details</th>
+                                                            <th class="border-top-0">Room No</th>
+                                                            <th class="border-top-0">Reservation Details</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        $ret = "SELECT * FROM `iResturant_Currencies` WHERE status = 'Active'  ";
+                                                        $stmt = $mysqli->prepare($ret);
+                                                        $stmt->execute(); //ok
+                                                        $res = $stmt->get_result();
+                                                        while ($currency = $res->fetch_object()) {
+                                                            $ret = "SELECT * FROM iResturant_Customer c INNER JOIN iResturant_Room_Reservation r ON c.id = r.client_id 
+                                                            INNER JOIN iResturant_Room rm
+                                                            ON r.room_id = rm.id WHERE c.id = '$view'                                                        
+                                                            ";
+                                                            $stmt = $mysqli->prepare($ret);
+                                                            $stmt->execute(); //ok
+                                                            $res = $stmt->get_result();
+                                                            while ($reservations = $res->fetch_object()) {
+                                                                $checkin = strtotime($reservations->arrival);
+                                                                $checkout = strtotime($reservations->departure);
+                                                                $secs = $checkout - $checkin;
+                                                                $days_reserved = $secs / 86400;
+                                                                $total_payable_amt = $days_reserved * ($reservations->price);
+                                                                $now = strtotime(date("Y-m-d"));
+                                                        ?>
+                                                                <tr>
+                                                                    <td>
+                                                                        <a class="text-primary" href="reservation_details?view=<?php echo $reservations->code; ?>">
+                                                                            <?php echo $reservations->code; ?>
+                                                                        </a>
+                                                                    </td>
+                                                                    <td>
+                                                                        Name:<?php echo $reservations->name; ?><br>
+                                                                        Phone:<?php echo $reservations->phone; ?><br>
+                                                                        Email:<?php echo $reservations->email; ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php echo $reservations->number; ?>
+                                                                    </td>
+                                                                    <td>
+                                                                        Check In: <?php echo date('d-M-Y', strtotime($reservations->arrival)); ?><br>
+                                                                        Check Out: <?php echo date('d-M-Y', strtotime($reservations->departure)); ?><br>
+                                                                        Days Reserved: <?php echo $days_reserved; ?>Days(s)<br>
+                                                                        Date Reserved: <?php echo date('d-M-Y', strtotime($reservations->reserved_on)); ?>
+                                                                    </td>
+                                                                </tr>
+                                                        <?php
+                                                            }
+                                                        } ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div><!-- container -->
+                </div>
 
                 <?php require_once('../partials/footer.php'); ?>
                 <!--end footer-->
