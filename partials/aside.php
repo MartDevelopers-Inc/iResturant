@@ -32,10 +32,6 @@ while ($sys = $res->fetch_object()) {
                 <span>
                     <img src="../public/uploads/sys_logo/<?php echo $sys->logo; ?>" alt="logo-small" class="logo-sm">
                 </span>
-                <span>
-                    <img src="../public/uploads/sys_logo/<?php echo $sys->logo; ?>" alt="logo-large" class="logo-lg logo-light">
-                    <img src="../public/uploads/sys_logo/<?php echo $sys->logo; ?>" alt="logo-large" class="logo-lg logo-dark">
-                </span>
             </a>
         </div>
         <!--end logo-->
