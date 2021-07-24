@@ -134,3 +134,10 @@ $stmt->execute();
 $stmt->bind_result($ce);
 $stmt->fetch();
 $stmt->close();
+
+
+/* Total Revenue */
+$revenue = $rooms_revenue + $sales_revenue;
+
+/* Total Expenses */
+$expenses =  $supplier_expenses + $payroll_expenses;
