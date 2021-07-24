@@ -20,7 +20,7 @@
 <script src="../public/plugins/jvectormap/jquery-jvectormap-2.0.2.min.js"></script>
 <script src="../public/plugins/jvectormap/jquery-jvectormap-us-aea-en.js"></script>
 <!-- Analytics Dashboard -->
-<script src="../public/pages/jquery.analytics_dashboard.init.js"></script>
+<?php require_once('chart_js.php'); ?>
 <!-- App js -->
 <script src="../public/js/app.js"></script>
 <!-- datatable js  cdns-->

@@ -268,7 +268,7 @@ require_once('../partials/head.php');
                                                                     <div class="modal-body text-center text-danger">
                                                                         <h4>Delete Currency?</h4>
                                                                         <br>
-                                                                        <p>Heads Up, You are about to delete <?php echo $currency->code . " " . $currency->name; ?>. This action is irrevisble.</p>
+                                                                        <p>Heads Up, You are about to delete <?php echo $currency->code . " " . $currency->name; ?>. <br>This action is irrevisble.</p>
                                                                         <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
                                                                         <a href="settings_currency?delete=<?php echo $currency->id; ?>" class="text-center btn btn-danger"> Delete </a>
                                                                     </div>
