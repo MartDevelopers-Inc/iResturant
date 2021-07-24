@@ -27,5 +27,5 @@ if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
 }
 $uri .= $_SERVER['HTTP_HOST'];
 /* Redirect To Index Under Views */
-header('Location: ' . $uri . '/iResturant/views/login');
+header('Location: ' . $uri . '/iResturant/views/');
 exit;
