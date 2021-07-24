@@ -48,34 +48,26 @@
                                     <li>
                                         <a href="#">About Us <i class="la la-angle-down"></i></a>
                                         <ul class="dropdown-menu-item">
-                                            <li><a href="car-grid.html"></a></li>
-                                            <li><a href="car-list.html">car list</a></li>
-                                            <li><a href="car-sidebar.html">car sidebar </a></li>
-                                            <li><a href="car-single.html">car details</a></li>
-                                            <li><a href="car-booking.html">Car Booking</a></li>
-                                            <li><a href="car-search-result.html">Car Search Result</a></li>
+                                            <li><a href="landing_about">About</a></li>
+                                            <li><a href="landing_mission">Mission & Vision</a></li>
+                                            <li><a href="landing_values">Values</a></li>
+                                            <li><a href="landing_team">Team</a></li>
                                         </ul>
                                     </li>
                                     <li>
                                         <a href="landing_rooms">Rooms & Rates</a>
                                     </li>
+                                    <li>
+                                        <a href="landing_restutant">Resturant</a>
                                     </li>
                                     <li>
-                                        <a href="#">car <i class="la la-angle-down"></i></a>
-                                        <ul class="dropdown-menu-item">
-                                            <li><a href="car-grid.html">car grid</a></li>
-                                            <li><a href="car-list.html">car list</a></li>
-                                            <li><a href="car-sidebar.html">car sidebar </a></li>
-                                            <li><a href="car-single.html">car details</a></li>
-                                            <li><a href="car-booking.html">Car Booking</a></li>
-                                            <li><a href="car-search-result.html">Car Search Result</a></li>
-                                        </ul>
+                                        <a href="landing_contact">Contact Us</a>
                                     </li>
                                 </ul>
                             </nav>
                         </div><!-- end main-menu-content -->
                         <div class="nav-btn">
-                            <a href="become-local-expert.html" class="theme-btn">Become Local Expert</a>
+                            <a href="login" target="_blank" class="theme-btn">Staff Portal</a>
                         </div><!-- end nav-btn -->
                     </div><!-- end menu-wrapper -->
                 </div><!-- end col-lg-12 -->
