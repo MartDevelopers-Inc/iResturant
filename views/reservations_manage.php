@@ -229,6 +229,10 @@ if (isset($_POST['add_payment'])) {
     $means = $_POST['means'];
     $amount = $_POST['amount'];
 
+    /* Mailer Details */
+    $client_email = $_POST['client_email'];
+    $client_name = $_POST['client_name'];
+
     $query = "INSERT INTO iResturant_Payments (id, code, reservation_code, means, amount, type) VALUES(?,?,?,?,?,?)";
     $roomqrry = "UPDATE iResturant_Room_Reservation SET payment_status  =? WHERE code = ?";
 
@@ -241,10 +245,13 @@ if (isset($_POST['add_payment'])) {
     $stmt->execute();
     $rstmt->execute();
 
-    if ($stmt && $rstmt) {
+    /* Load Payment Mailer */
+    require_once('../config/pay_reservation_mailer.php');
+
+    if ($mail->send() && $stmt && $rstmt) {
         $success = "Reservation Payment Added";
     } else {
-        $info = "Please Try Again Or Try Later";
+        $info = "Please Connect To The Internet And Try Again";
     }
 }
 
@@ -393,6 +400,8 @@ require_once('../partials/head.php');
                                                                                                 <input type="hidden" value="<?php echo $sys_gen_id_alt_1; ?>" required name="id" class="form-control">
                                                                                                 <input type="hidden" value="Reservations" required name="type" class="form-control">
                                                                                                 <input type="hidden" value="Paid" required name="payment_status" class="form-control">
+                                                                                                <input type="hidden" value="<?php echo $reservations->email; ?>" required name="client_email" class="form-control">
+                                                                                                <input type="hidden" value="<?php echo $reservations->name; ?>" required name="client_name" class="form-control">
 
                                                                                                 <input type="text" value="<?php echo $sys_gen_paycode; ?>" readonly required name="code" class="form-control">
                                                                                             </div>
