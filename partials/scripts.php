@@ -198,6 +198,30 @@
 
     }
 
+    function getCustomerDetails(val) {
+        /* Get Client Details */
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'CustomerID=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#CustomerEmail').val(data);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'CustomerEmail=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#CustomerName').val(data);
+            }
+        });
+
+    }
+
     function GetMealCategoryDetails(val) {
         /* Get Meal Category ID */
         $.ajax({
@@ -263,6 +287,16 @@
             success: function(data) {
                 //alert(data);
                 $('#MealPrice').val(data);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'MealPrice=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#MealName').val(data);
             }
         });
 
