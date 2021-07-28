@@ -88,6 +88,18 @@ if (isset($_POST['add_room_reservation'])) {
     $special_request = $_POST['special_request'];
     $reserved_on = date('d-M-Y');
     $room_status = 'Reserved';
+    /* For Mailing Purposes */
+    $client_email = $_POST['client_email'];
+    $client_name = $_POST['client_name'];
+    $room_number = $_POST['room_number'];
+
+    /* Reservation Cost */
+    $room_cost = $_POST['room_cost'];
+    $checkin = strtotime($_POST['arrival']);
+    $checkout = strtotime($_POST['departure']);
+    $secs = $checkout - $checkin;
+    $days_reserved = $secs / 86400;
+    $total_payable_amt = $days_reserved * $room_cost;
 
     if (!$error) {
         $sql = "SELECT * FROM  iResturant_Room_Reservation WHERE  (code='$code')  ";
@@ -110,10 +122,13 @@ if (isset($_POST['add_room_reservation'])) {
             $stmt->execute();
             $rstmt->execute();
 
-            if ($stmt && $rstmt) {
+            /* Load Reservations Mailer */
+            require_once('../config/reservations_mailer.php');
+
+            if ($mail->send() && $stmt && $rstmt) {
                 $success = "Reservation Added";
             } else {
-                $info = "Please Try Again Or Try Later";
+                $info = "Please Connect To The Internet And Try Again";
             }
         }
     }
@@ -214,6 +229,10 @@ if (isset($_POST['add_payment'])) {
     $means = $_POST['means'];
     $amount = $_POST['amount'];
 
+    /* Mailer Details */
+    $client_email = $_POST['client_email'];
+    $client_name = $_POST['client_name'];
+
     $query = "INSERT INTO iResturant_Payments (id, code, reservation_code, means, amount, type) VALUES(?,?,?,?,?,?)";
     $roomqrry = "UPDATE iResturant_Room_Reservation SET payment_status  =? WHERE code = ?";
 
@@ -226,10 +245,13 @@ if (isset($_POST['add_payment'])) {
     $stmt->execute();
     $rstmt->execute();
 
-    if ($stmt && $rstmt) {
+    /* Load Payment Mailer */
+    require_once('../config/pay_reservation_mailer.php');
+
+    if ($mail->send() && $stmt && $rstmt) {
         $success = "Reservation Payment Added";
     } else {
-        $info = "Please Try Again Or Try Later";
+        $info = "Please Connect To The Internet And Try Again";
     }
 }
 
@@ -273,10 +295,9 @@ require_once('../partials/head.php');
 
                 <div class="row">
                     <div class="col-lg-12 col-sm-12">
-                        <div class="text-center">
+                        <div class="d-flex justify-content-end">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_reservation">Add Reservation</button>
                         </div>
-
 
                         <hr>
                         <div class="card">
@@ -345,6 +366,7 @@ require_once('../partials/head.php');
                                                             <a href="#pay-' . $reservations->code . '" data-bs-toggle="modal" data-bs-target="#pay-' . $reservations->code . '" class="btn btn-sm btn-outline-success">
                                                                 <i data-feather="dollar-sign" class="align-self-center icon-xs ms-1"></i> Pay
                                                             </a>
+                                                            
                                                             ';
                                                             }
                                                             if ($now > $checkout) {
@@ -353,6 +375,8 @@ require_once('../partials/head.php');
                                                                 <a href="#vacate-' . $reservations->code . '" data-bs-toggle="modal" data-bs-target="#vacate-' . $reservations->code . '" class="btn btn-sm btn-outline-danger">
                                                                     <i data-feather="airplay" class="align-self-center icon-xs ms-1"></i> Vacate Room
                                                                 </a>
+                                                                <br>
+                                                                <h4></h4>                                                                
                                                                 ';
                                                             }
                                                             ?>
@@ -376,6 +400,8 @@ require_once('../partials/head.php');
                                                                                                 <input type="hidden" value="<?php echo $sys_gen_id_alt_1; ?>" required name="id" class="form-control">
                                                                                                 <input type="hidden" value="Reservations" required name="type" class="form-control">
                                                                                                 <input type="hidden" value="Paid" required name="payment_status" class="form-control">
+                                                                                                <input type="hidden" value="<?php echo $reservations->email; ?>" required name="client_email" class="form-control">
+                                                                                                <input type="hidden" value="<?php echo $reservations->name; ?>" required name="client_name" class="form-control">
 
                                                                                                 <input type="text" value="<?php echo $sys_gen_paycode; ?>" readonly required name="code" class="form-control">
                                                                                             </div>
@@ -392,7 +418,7 @@ require_once('../partials/head.php');
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="text-center">
+                                                                                    <div class="d-flex justify-content-end">
                                                                                         <button type="submit" name="add_payment" class="btn btn-primary">Submit</button>
                                                                                     </div>
                                                                                 </form>
@@ -441,7 +467,7 @@ require_once('../partials/head.php');
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="text-center">
+                                                                                    <div class="d-flex justify-content-end">
                                                                                         <button type="submit" name="update_room_reservation" class="btn btn-primary">Submit</button>
                                                                                     </div>
                                                                                 </form>
@@ -466,7 +492,7 @@ require_once('../partials/head.php');
                                                                         <div class="modal-body text-center text-danger">
                                                                             <h4>Delete <?php echo $reservations->code; ?> ?</h4>
                                                                             <br>
-                                                                            <p>Heads Up, You are about to delete <?php echo $reservations->code; ?>. This action is irrevisble.</p>
+                                                                            <p>Heads Up, You are about to delete <?php echo $reservations->code; ?>. <br> This action is irrevisble.</p>
                                                                             <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
                                                                             <a href="reservations_manage?delete=<?php echo $reservations->code; ?>&number=<?php echo $reservations->number; ?>" class="text-center btn btn-danger"> Delete </a>
                                                                         </div>
@@ -487,7 +513,7 @@ require_once('../partials/head.php');
                                                                         <div class="modal-body text-center text-danger">
                                                                             <h4>Vacate Room Number <?php echo $reservations->number; ?> ?</h4>
                                                                             <br>
-                                                                            <p>Heads Up, You are about vacate customer in room number: <?php echo $reservations->number; ?>.</p>
+                                                                            <p>Heads Up, You are about vacate customer <br> in room number: <?php echo $reservations->number; ?>.</p>
                                                                             <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
                                                                             <a href="reservations_manage?vacate=<?php echo $reservations->number; ?>" class="text-center btn btn-danger"> Vacate </a>
                                                                         </div>
@@ -520,7 +546,7 @@ require_once('../partials/head.php');
                                                     <div class="row">
                                                         <div class="form-group col-md-6">
                                                             <label for="">Room Number</label>
-                                                            <select id="RoomNumber" class="form-control" onchange="GetRoomDetails(this.value);">
+                                                            <select id="RoomNumber" class="form-control" name="room_number" onchange="GetRoomDetails(this.value);">
                                                                 <option>Select Room Number</option>
                                                                 <?php
                                                                 $ret = "SELECT * FROM  iResturant_Room WHERE status = 'Vacant'";
@@ -534,7 +560,7 @@ require_once('../partials/head.php');
                                                                 } ?>
                                                             </select>
                                                             <input type="hidden" required name="room_id" id="RoomID" class="form-control">
-                                                            <input type="hidden" required name="id" value="<?php echo $sys_gen_id_alt_1; ?>" class="form-control">
+                                                            <input type="hidden" required name="room_cost" id="RoomCost" class="form-control"> <input type="hidden" required name="id" value="<?php echo $sys_gen_id_alt_1; ?>" class="form-control">
                                                             <input type="hidden" required name="code" value="<?php echo $a . $b; ?>" class="form-control">
                                                             <input type="hidden" required name="payment_status" value="UnPaid" class="form-control">
                                                         </div>
@@ -559,11 +585,11 @@ require_once('../partials/head.php');
 
                                                         <div class="form-group col-md-6">
                                                             <label for="">Customer Name</label>
-                                                            <input type="text" readonly required id="ClientName" class="form-control">
+                                                            <input type="text" readonly required id="ClientName" name="client_name" class="form-control">
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="">Customer Email</label>
-                                                            <input type="text" readonly required id="ClientEmail" class="form-control">
+                                                            <input type="text" readonly required id="ClientEmail" name="client_email" class="form-control">
                                                         </div>
                                                     </div>
 
@@ -590,7 +616,7 @@ require_once('../partials/head.php');
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="text-center">
+                                                <div class="d-flex justify-content-end">
                                                     <button type="submit" name="add_room_reservation" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </form>

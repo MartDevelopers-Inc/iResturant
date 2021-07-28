@@ -44,7 +44,6 @@
 
 <!-- File Uploads  -->
 <script src="../public/js/bs-custom-file-input.min.js"></script>
-
 <script>
     $(document).ready(function() {
         bsCustomFileInput.init();
@@ -71,6 +70,7 @@
         $('body').html(restorepage);
     }
 </script>
+
 <!-- Izi Toast Js -->
 <script src="../public/plugins/iziToast/iziToast.min.js"></script>
 <!-- Init Izi Toast -->
@@ -152,6 +152,15 @@
                 $('#RoomID').val(data);
             }
         });
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'RoomID=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#RoomCost').val(data);
+            }
+        });
 
     }
 
@@ -184,6 +193,30 @@
             success: function(data) {
                 //alert(data);
                 $('#ClientName').val(data);
+            }
+        });
+
+    }
+
+    function getCustomerDetails(val) {
+        /* Get Client Details */
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'CustomerID=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#CustomerEmail').val(data);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'CustomerEmail=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#CustomerName').val(data);
             }
         });
 
@@ -254,6 +287,16 @@
             success: function(data) {
                 //alert(data);
                 $('#MealPrice').val(data);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'MealPrice=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#MealName').val(data);
             }
         });
 

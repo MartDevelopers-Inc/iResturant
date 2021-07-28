@@ -178,7 +178,7 @@ require_once('../partials/head.php');
                 <!-- end page title end breadcrumb -->
                 <div class="row">
                     <div class="col-lg-12 col-sm-12">
-                        <div class="text-center">
+                        <div class="d-flex justify-content-end">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_room">Add Payroll</button>
                         </div>
 
@@ -277,7 +277,7 @@ require_once('../partials/head.php');
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="text-center">
+                                                                                    <div class="d-flex justify-content-end">
                                                                                         <button type="submit" name="update_payroll" class="btn btn-primary">Submit</button>
                                                                                     </div>
                                                                                 </form>
@@ -397,7 +397,7 @@ require_once('../partials/head.php');
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="text-center">
+                                                <div class="d-flex justify-content-end">
                                                     <button type="submit" name="add_payroll" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </form>

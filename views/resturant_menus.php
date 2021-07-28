@@ -183,7 +183,7 @@ require_once('../partials/head.php');
 
                     <div class="row">
                         <div class="col-lg-12 col-sm-12">
-                            <div class="text-center">
+                            <div class="d-flex justify-content-end">
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_meal_category">Add Meal</button>
                             </div>
                             <!-- Add Room Category Modal -->
@@ -227,7 +227,7 @@ require_once('../partials/head.php');
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="text-center">
+                                                    <div class="d-flex justify-content-end">
                                                         <button type="submit" name="add_meal" class="btn btn-primary">Submit</button>
                                                     </div>
                                                 </form>
@@ -298,7 +298,7 @@ require_once('../partials/head.php');
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="text-center">
+                                                                                    <div class="d-flex justify-content-end">
                                                                                         <button type="submit" name="update_meal" class="btn btn-primary">Submit</button>
                                                                                     </div>
                                                                                 </form>

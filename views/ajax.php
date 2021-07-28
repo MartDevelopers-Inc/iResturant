@@ -41,6 +41,16 @@ if (!empty($_POST["RoomNumber"])) {
     }
 }
 
+/* Get Room Details - Room Cost */
+if (!empty($_POST["RoomID"])) {
+    $id = $_POST['RoomID'];
+    $stmt = $DB_con->prepare("SELECT * FROM iResturant_Room WHERE number = :id");
+    $stmt->execute(array(':id' => $id));
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo htmlentities($row['price']);
+    }
+}
+
 /* Get Client Details - */
 if (!empty($_POST["ClientPhone"])) {
     $id = $_POST['ClientPhone'];
@@ -128,5 +138,36 @@ if (!empty($_POST["MealID"])) {
     $stmt->execute(array(':id' => $id));
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
         echo htmlentities($row['meal_price']);
+    }
+}
+
+/* Get Meal Name */
+if (!empty($_POST["MealPrice"])) {
+    $id = $_POST['MealPrice'];
+    $stmt = $DB_con->prepare("SELECT * FROM iResturant_Menu WHERE meal_id = :id");
+    $stmt->execute(array(':id' => $id));
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo htmlentities($row['meal_name']);
+    }
+}
+
+
+/* Get Customer Email */
+if (!empty($_POST["CustomerID"])) {
+    $id = $_POST['CustomerID'];
+    $stmt = $DB_con->prepare("SELECT * FROM iResturant_Customer WHERE id = :id");
+    $stmt->execute(array(':id' => $id));
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo htmlentities($row['email']);
+    }
+}
+
+/* Get Customer Name */
+if (!empty($_POST["CustomerEmail"])) {
+    $id = $_POST['CustomerEmail'];
+    $stmt = $DB_con->prepare("SELECT * FROM iResturant_Customer WHERE id = :id");
+    $stmt->execute(array(':id' => $id));
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo htmlentities($row['name']);
     }
 }

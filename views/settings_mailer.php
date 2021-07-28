@@ -107,14 +107,14 @@ require_once('../partials/head.php');
                                                     </div>
                                                     <div class="form-group col-md-6">
                                                         <label for="">Mailing Protocol</label>
-                                                        <select required name="port" class="form-control" id="exampleInputEmail1">
+                                                        <select required name="protocol" class="form-control" id="exampleInputEmail1">
                                                             <option value="ssl">SSL</option>
                                                             <option value="tls">TLS</option>
                                                         </select>
                                                     </div>
                                                     <div class="form-group col-md-6">
                                                         <label for="">Port</label>
-                                                        <select required name="protocol" class="form-control" id="exampleInputEmail1">
+                                                        <select required name="port" class="form-control" id="exampleInputEmail1">
                                                             <option>465</option>
                                                             <option>587</option>
                                                         </select>

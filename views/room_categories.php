@@ -102,7 +102,7 @@ if (isset($_GET['delete'])) {
     $stmt->execute();
     $stmt->close();
     if ($stmt) {
-        $success = 'Category Deleted' && header('refresh:1; url=room_category');;
+        $success = 'Category Deleted' && header('refresh:1; url=room_categories');;
     } else {
         $info = 'Please Try Again Or Try Later';
     }
@@ -147,7 +147,7 @@ require_once('../partials/head.php');
 
                 <div class="row">
                     <div class="col-lg-12 col-sm-12">
-                        <div class="text-center">
+                        <div class="d-flex justify-content-end">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_room_category">Add Room Category</button>
                         </div>
                         <!-- Add Room Category Modal -->
@@ -170,7 +170,7 @@ require_once('../partials/head.php');
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="text-center">
+                                                <div class="d-flex justify-content-end">
                                                     <button type="submit" name="add_room_category" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </form>
@@ -231,7 +231,7 @@ require_once('../partials/head.php');
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="text-center">
+                                                                                <div class="d-flex justify-content-end">
                                                                                     <button type="submit" name="update_room_category" class="btn btn-primary">Submit</button>
                                                                                 </div>
                                                                             </form>

@@ -6,7 +6,7 @@
     <meta name="author" content="TechyDevs">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><?php echo $sys->name . " - " . $sys->tagline; ?></title>
+    <title><?php echo $sys->system_name . " - " . $sys->tagline; ?></title>
     <!-- Favicon -->
     <link rel="icon" href="../public/uploads/sys_logo/<?php echo $sys->logo; ?>">
 

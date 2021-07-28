@@ -77,7 +77,7 @@ require_once('../partials/head.php');
                                                 <th>Manufacturer</th>
                                                 <th>Date Manufactured</th>
                                                 <th>Life Span</th>
-                                                <th>How Many</th>
+                                                <th>Quantity</th>
                                                 <th>Status</th>
                                             </tr>
                                         </thead>
@@ -95,7 +95,7 @@ require_once('../partials/head.php');
                                                         <?php echo $row->name; ?>
                                                     </td>
                                                     <td><?php echo $row->manufacturer; ?></td>
-                                                    <td><?php echo date('d M Y g:ia', strtotime($row->manufacturing_date)); ?></td>
+                                                    <td><?php echo date('d M Y', strtotime($row->manufacturing_date)); ?></td>
                                                     <td><?php echo $row->life_span; ?></td>
                                                     <td><?php echo $row->how_many; ?></td>
                                                     <td><?php echo $row->status; ?></td>

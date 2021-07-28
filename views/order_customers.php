@@ -38,6 +38,12 @@ if (isset($_POST['add_order'])) {
     $order_amount = $_POST['order_amount'];
     $status = 'Un Paid';
 
+    /* MAiling Varibles */
+    $customer_name = $_POST['customer_name'];
+    $customer_email = $_POST['customer_email'];
+    $bill = $order_amount * $meal_count;
+    $meal = $_POST['meal'];
+
     $sql = "SELECT * FROM  iResturant_Customer_Orders WHERE  (code='$code')  ";
     $res = mysqli_query($mysqli, $sql);
     if (mysqli_num_rows($res) > 0) {
@@ -50,10 +56,13 @@ if (isset($_POST['add_order'])) {
         $stmt = $mysqli->prepare($query);
         $rc = $stmt->bind_param('ssssssss', $id, $code, $customer_id, $meal_menu_id, $meal_count, $speacial_request, $order_amount, $status);
         $stmt->execute();
-        if ($stmt) {
+        /* Load Mailer */
+        require_once('../config/meal_order_mailer.php');
+
+        if ($mail->send() && $stmt) {
             $success = "$code - Order Submitted";
         } else {
-            $info = "Please Try Again Or Try Later";
+            $info = "Please Connnect To The Internet And  Try Again ";
         }
     }
 }
@@ -103,6 +112,9 @@ if (isset($_POST['pay_order'])) {
     $type = 'Resturant Sales';
     $status = 'Paid';
 
+    /* Mailing Details */
+    $client_email = $_POST['client_email'];
+    $client_name = $_POST['client_name'];
 
     $query = "INSERT INTO iResturant_Payments (id, code, order_code, means, amount, type) VALUES(?,?,?,?,?,?)";
     $order_qry = "UPDATE iResturant_Customer_Orders SET status = ? WHERE code = ?";
@@ -116,7 +128,10 @@ if (isset($_POST['pay_order'])) {
     $stmt->execute();
     $order_stmt->execute();
 
-    if ($stmt  && $order_stmt) {
+    /* Load Mailer */
+    require_once('../config/order_payment_mailer.php');
+    
+    if ($mail->send() && $stmt  && $order_stmt) {
         $success = "Order $order_code Paid";
     } else {
         $info = "Please Try Again Or Try Later";
@@ -163,7 +178,7 @@ require_once('../partials/head.php');
 
                 <div class="row">
                     <div class="col-lg-12 col-sm-12">
-                        <div class="text-center">
+                        <div class="d-flex justify-content-end">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_modal">Add Order</button>
                         </div>
 
@@ -215,7 +230,7 @@ require_once('../partials/head.php');
                                                         </td>
                                                         <td>
                                                             Meal : <?php echo $orders->meal_name; ?><br>
-                                                            Count : <?php echo $orders->meal_count; ?><br>
+                                                            Quantity : <?php echo $orders->meal_count; ?><br>
                                                             Order Bill : <?php echo $currency->code . " " . $order_bill; ?><br>
                                                             Date Ordered: <?php echo date('d-M-Y', strtotime($orders->created_at)); ?>
                                                         </td>
@@ -253,6 +268,10 @@ require_once('../partials/head.php');
                                                                                             <div class="form-group col-md-4">
                                                                                                 <label for="">Order Code</label>
                                                                                                 <input type="text" readonly required name="order_code" value="<?php echo $orders->code; ?>" class="form-control">
+                                                                                                <!-- Hidden -->
+                                                                                                <input type="hidden" readonly required name="client_email" value="<?php echo $orders->email; ?>" class="form-control">
+                                                                                                <input type="hidden" readonly required name="client_name" value="<?php echo $orders->name; ?>" class="form-control">
+
                                                                                             </div>
                                                                                             <div class="form-group col-md-4">
                                                                                                 <label for="">Payment Method</label>
@@ -267,7 +286,7 @@ require_once('../partials/head.php');
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="text-center">
+                                                                                    <div class="d-flex justify-content-end">
                                                                                         <button type="submit" name="pay_order" class="btn btn-primary">Submit</button>
                                                                                     </div>
                                                                                 </form>
@@ -306,7 +325,7 @@ require_once('../partials/head.php');
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="text-center">
+                                                                                    <div class="d-flex justify-content-end">
                                                                                         <button type="submit" name="update_order" class="btn btn-primary">Submit</button>
                                                                                     </div>
                                                                                 </form>
@@ -362,7 +381,7 @@ require_once('../partials/head.php');
                                                     <div class="row">
                                                         <div class="form-group col-md-6">
                                                             <label for="">Customer Name</label>
-                                                            <select name="customer_id" class="select form-control">
+                                                            <select name="customer_id" id="CustomerID" onchange="getCustomerDetails(this.value)" class="select form-control">
                                                                 <option>Select Customer Name</option>
                                                                 <?php
                                                                 $ret = "SELECT * FROM  iResturant_Customer ";
@@ -375,6 +394,10 @@ require_once('../partials/head.php');
                                                                 <?php
                                                                 } ?>
                                                             </select>
+                                                            <!-- Hidden -->
+                                                            <input type="hidden" required name="customer_email" id="CustomerEmail" class="form-control">
+                                                            <input type="hidden" required name="customer_name" id="CustomerName" class="form-control">
+                                                            <input type="hidden" required name="meal" id="MealName" class="form-control">
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="">Meal Name</label>
@@ -395,7 +418,7 @@ require_once('../partials/head.php');
                                                     </div>
                                                     <div class="row">
                                                         <div class="form-group col-md-6">
-                                                            <label for="">Meal Count </label>
+                                                            <label for="">Meal Quantity </label>
                                                             <input type="number" required name="meal_count" class="form-control">
                                                         </div>
                                                         <div class="form-group col-md-6">
@@ -408,7 +431,7 @@ require_once('../partials/head.php');
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="text-center">
+                                                <div class="d-flex justify-content-end">
                                                     <button type="submit" name="add_order" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </form>

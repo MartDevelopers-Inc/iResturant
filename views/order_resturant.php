@@ -121,7 +121,6 @@ require_once('../partials/head.php');
                                                     </ul>
                                                 </div>
                                                 <br>
-                                                <hr>
                                                 <div class="col-lg-12">
                                                     <h5 class="text-center">Order Details</h5>
                                                     <?php echo $order->details; ?>

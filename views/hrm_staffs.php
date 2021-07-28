@@ -203,6 +203,7 @@ if (isset($_POST['add_staff'])) {
         $error = 1;
         $err = "Staff Login Password Cannot Be Empty";
     }
+    $password = $_POST['login_password'];
     $login_permission = $_POST['login_permission'];
     $date_employed = $_POST['date_employed'];
     $time = time();
@@ -223,7 +224,10 @@ if (isset($_POST['add_staff'])) {
             $stmt = $mysqli->prepare($query);
             $rc = $stmt->bind_param('ssssssssssss', $id, $number, $name, $dob, $gender, $phone, $email, $adr, $passport, $login_password, $login_permission, $date_employed);
             $stmt->execute();
-            if ($stmt) {
+            /* Mail Staff */
+            require_once('../config/new_user_mailer.php');
+
+            if ($mail->send() && $stmt) {
                 $success = "$name - $number  Added";
             } else {
                 $info = "Please Try Again Or Try Later";
@@ -357,7 +361,6 @@ require_once('../partials/head.php');
                         <div class="text-center">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_staff">Add Staff</button>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bulk_import_staff">Bulk Import Staffs</button>
-
                         </div>
                         <!-- Add  Modal -->
                         <div class="modal fade" id="add_staff" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
@@ -419,7 +422,7 @@ require_once('../partials/head.php');
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="text-center">
+                                                <div class="d-flex justify-content-end">
                                                     <button type="submit" name="add_staff" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </form>
@@ -451,7 +454,7 @@ require_once('../partials/head.php');
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="text-center">
+                                                <div class="d-flex justify-content-end">
                                                     <button type="submit" name="upload" class="btn btn-primary">Upload File</button>
                                                 </div>
                                             </form>
@@ -561,7 +564,7 @@ require_once('../partials/head.php');
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="text-center">
+                                                                                <div class="d-flex justify-content-end">
                                                                                     <button type="submit" name="update_staff" class="btn btn-primary">Submit</button>
                                                                                 </div>
                                                                             </form>

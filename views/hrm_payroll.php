@@ -51,119 +51,119 @@ require_once('../partials/head.php');
             $stmt->execute(); //ok
             $res = $stmt->get_result();
             while ($currency = $res->fetch_object()) {
-                ?>
+        ?>
 
-            <!-- Top Bar End -->
-            <div class="page-content">
-                <div class="container-fluid">
-                    <!-- Page-Title -->
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="page-title-box">
-                                <div class="row">
-                                    <div class="col">
-                                        <h4 class="page-title"><?php echo $payroll->code; ?> Payroll </h4>
-                                        <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="dashboard">Dastone</a></li>
-                                            <li class="breadcrumb-item"><a href="hrm_staffs">HRM </a></li>
-                                            <li class="breadcrumb-item"><a href="hrm_staffs">Staffs Payrolls</a></li>
-                                            <li class="breadcrumb-item active">Payroll Details</li>
-                                        </ol>
+                <!-- Top Bar End -->
+                <div class="page-content">
+                    <div class="container-fluid">
+                        <!-- Page-Title -->
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="page-title-box">
+                                    <div class="row">
+                                        <div class="col">
+                                            <h4 class="page-title"><?php echo $payroll->code; ?> Payroll </h4>
+                                            <ol class="breadcrumb">
+                                                <li class="breadcrumb-item"><a href="dashboard">Dastone</a></li>
+                                                <li class="breadcrumb-item"><a href="hrm_staffs">HRM </a></li>
+                                                <li class="breadcrumb-item"><a href="hrm_staffs">Staffs Payrolls</a></li>
+                                                <li class="breadcrumb-item active">Payroll Details</li>
+                                            </ol>
+                                        </div>
                                     </div>
+                                    <!--end row-->
                                 </div>
-                                <!--end row-->
+                                <!--end page-title-box-->
                             </div>
-                            <!--end page-title-box-->
+                            <!--end col-->
                         </div>
-                        <!--end col-->
-                    </div>
-                    <!--end row-->
-                    <!-- end page title end breadcrumb -->
+                        <!--end row-->
+                        <!-- end page title end breadcrumb -->
 
-                    <div class="row">
-                        <div class="col-12" id="Print">
-                            <div class="card">
-                                <!--end card-body-->
-                                <div class="card-body">
-                                    <div class="dastone-profile">
-                                    <h5 class="text-bold text-center">Staff Details</h5>
-                                        <div class="row">
-                                            <div class="col-lg-4 align-self-center mb-3 mb-lg-0">
-                                                <div class="dastone-profile-main">
-                                                    <div class="dastone-profile-main-pic">
-                                                        <?php
-                                                        if ($payroll->passport == '') {
-                                                            $dir = '../public/uploads/user_images/no-profile.png';
-                                                        } else {
-                                                            $dir = "../public/uploads/user_images/$payroll->passport";
-                                                        } ?>
-                                                        <img src="<?php echo $dir; ?>" alt="" height="110" class="rounded-circle">
-                                                    </div>
-                                                    <div class="dastone-profile_user-detail">
-                                                        <h5 class="dastone-user-name"><?php echo $payroll->name; ?></h5>
-                                                        <p class="mb-0 dastone-user-name-post"><?php echo $payroll->number; ?></p>
+                        <div class="row">
+                            <div class="col-12" id="Print">
+                                <div class="card">
+                                    <!--end card-body-->
+                                    <div class="card-body">
+                                        <div class="dastone-profile">
+                                            <h5 class="text-bold text-center">Staff Details</h5>
+                                            <div class="row">
+                                                <div class="col-lg-4 align-self-center mb-3 mb-lg-0">
+                                                    <div class="dastone-profile-main">
+                                                        <div class="dastone-profile-main-pic">
+                                                            <?php
+                                                            if ($payroll->passport == '') {
+                                                                $dir = '../public/uploads/user_images/no-profile.png';
+                                                            } else {
+                                                                $dir = "../public/uploads/user_images/$payroll->passport";
+                                                            } ?>
+                                                            <img src="<?php echo $dir; ?>" alt="" height="110" class="rounded-circle">
+                                                        </div>
+                                                        <div class="dastone-profile_user-detail">
+                                                            <h5 class="dastone-user-name"><?php echo $payroll->name; ?></h5>
+                                                            <p class="mb-0 dastone-user-name-post"><?php echo $payroll->number; ?></p>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-lg-4 ms-auto align-self-center">
-                                                <ul class="list-unstyled personal-detail mb-0">
-                                                    <li class="mt-2"><i class="ti ti-mobile me-2 text-secondary font-16 align-middle"></i> <b> Phone </b> : <?php echo $payroll->phone; ?></li>
-                                                    <li class="mt-2"><i class="ti ti-email text-secondary font-16 align-middle me-2"></i> <b> Email </b> : <?php echo $payroll->email; ?></li>
-                                                    <li class="mt-2"><i class="ti ti-tag text-secondary font-16 align-middle me-2"></i> <b> Gender </b> : <?php echo $payroll->gender; ?>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-lg-4 ms-auto align-self-center">
-                                                <ul class="list-unstyled personal-detail mb-0">
-                                                    <li class="mt-2"><i class="ti ti-gift me-2 text-secondary font-16 align-middle"></i> <b> D.O.B </b> : <?php echo date('d M Y', strtotime($payroll->dob)); ?></li>
-                                                    <li class="mt-2"><i class="ti ti-email text-secondary font-16 align-middle me-2"></i> <b> Address </b> : <?php echo $payroll->adr; ?></li>
-                                                    <li class="mt-2"><i class="ti ti-calendar text-secondary font-16 align-middle me-2"></i> <b> Date Employed </b> : <?php echo date('d M Y', strtotime($payroll->date_employed)); ?>
-                                                    </li>
-                                                </ul>
+                                                <div class="col-lg-4 ms-auto align-self-center">
+                                                    <ul class="list-unstyled personal-detail mb-0">
+                                                        <li class="mt-2"><i class="ti ti-mobile me-2 text-secondary font-16 align-middle"></i> <b> Phone </b> : <?php echo $payroll->phone; ?></li>
+                                                        <li class="mt-2"><i class="ti ti-email text-secondary font-16 align-middle me-2"></i> <b> Email </b> : <?php echo $payroll->email; ?></li>
+                                                        <li class="mt-2"><i class="ti ti-tag text-secondary font-16 align-middle me-2"></i> <b> Gender </b> : <?php echo $payroll->gender; ?>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-lg-4 ms-auto align-self-center">
+                                                    <ul class="list-unstyled personal-detail mb-0">
+                                                        <li class="mt-2"><i class="ti ti-gift me-2 text-secondary font-16 align-middle"></i> <b> D.O.B </b> : <?php echo date('d M Y', strtotime($payroll->dob)); ?></li>
+                                                        <li class="mt-2"><i class="ti ti-email text-secondary font-16 align-middle me-2"></i> <b> Address </b> : <?php echo $payroll->adr; ?></li>
+                                                        <li class="mt-2"><i class="ti ti-calendar text-secondary font-16 align-middle me-2"></i> <b> Date Employed </b> : <?php echo date('d M Y', strtotime($payroll->date_employed)); ?>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card">
-                                <!--end card-body-->
-                                <div class="card-body">
-                                    <div class="dastone-profile">
-                                    <h5 class="text-bold text-center">Payroll Details</h5>
-                                        <div class="row">
-                                            <table class="body-wrap" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; background-color: transparent; margin: 0;" bgcolor="transparent">
-                                                <tr>
-                                                    <td valign="top"></td>
-                                                    <td class="container" width="600" style="display: block !important; max-width: 600px !important; clear: both !important;" valign="top">
-                                                        <div class="content" style="padding: 20px;">
-                                                            <table class="main" width="100%" cellpadding="0" cellspacing="0" style="border: 1px dashed #4d79f6;">
-                                                                <tr>
-                                                                    <td class="content-wrap aligncenter" style="padding: 20px; background-color: transparent;" align="center" valign="top">
-                                                                        <table id="PrintReceipt" width="100%" cellpadding="0" cellspacing="0">
-                                                                            <?php
-                                                                            /* Load System COnfigurations And Settings */
-                                                                            $ret = "SELECT * FROM `iResturant_System_Details`  ";
-                                                                            $stmt = $mysqli->prepare($ret);
-                                                                            $stmt->execute(); //ok
-                                                                            $res = $stmt->get_result();
-                                                                            while ($sys = $res->fetch_object()) {
-                                                                            ?>
-                                                                                <tr>
+                                <div class="card">
+                                    <!--end card-body-->
+                                    <div class="card-body">
+                                        <div class="dastone-profile">
+                                            <h5 class="text-bold text-center">Payroll Details</h5>
+                                            <div class="row">
+                                                <table class="body-wrap" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; width: 100%; background-color: transparent; margin: 0;" bgcolor="transparent">
+                                                    <tr>
+                                                        <td valign="top"></td>
+                                                        <td class="container" width="600" style="display: block !important; max-width: 600px !important; clear: both !important;" valign="top">
+                                                            <div class="content" style="padding: 20px;">
+                                                                <table class="main" width="100%" cellpadding="0" cellspacing="0" style="border: 1px dashed #4d79f6;">
+                                                                    <tr>
+                                                                        <td class="content-wrap aligncenter" style="padding: 20px; background-color: transparent;" align="center" valign="top">
+                                                                            <table id="PrintReceipt" width="100%" cellpadding="0" cellspacing="0">
+                                                                                <?php
+                                                                                /* Load System COnfigurations And Settings */
+                                                                                $ret = "SELECT * FROM `iResturant_System_Details`  ";
+                                                                                $stmt = $mysqli->prepare($ret);
+                                                                                $stmt->execute(); //ok
+                                                                                $res = $stmt->get_result();
+                                                                                while ($sys = $res->fetch_object()) {
+                                                                                ?>
+                                                                                    <tr>
 
-                                                                                    <td>
-                                                                                        <a href=""><img src="../public/uploads/sys_logo/<?php echo $sys->logo; ?>" alt="" style="height: 40px; margin-left: auto; margin-right: auto; display:block;"></a>
-                                                                                    </td>
+                                                                                        <td>
+                                                                                            <a href=""><img src="../public/uploads/sys_logo/<?php echo $sys->logo; ?>" alt="" style="height: 40px; margin-left: auto; margin-right: auto; display:block;"></a>
+                                                                                        </td>
 
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <td class="content-block" style="padding: 0 0 20px;" valign="top">
-                                                                                        <h2 class="aligncenter" style="font-family: 'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif;font-size: 24px; color:#50649c; line-height: 1.2em; font-weight: 600; text-align: center;" align="center"><span style="color: #4d79f6; font-weight: 700;"><?php echo $sys->name; ?></span>Payroll  #<?php echo $payroll->code;?></h2>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            <?php
-                                                                            }
-                                                                            ?>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td class="content-block" style="padding: 0 0 20px;" valign="top">
+                                                                                            <h2 class="aligncenter" style="font-family: 'Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif;font-size: 24px; color:#50649c; line-height: 1.2em; font-weight: 600; text-align: center;" align="center"><span style="color: #4d79f6; font-weight: 700;"><?php echo $sys->system_name; ?></span><br>Payroll #<?php echo $payroll->code; ?></h2>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                <?php
+                                                                                }
+                                                                                ?>
 
                                                                                 <tr>
                                                                                     <td class="content-block aligncenter" style="padding: 0 0 20px;" align="center" valign="top">
@@ -186,42 +186,42 @@ require_once('../partials/head.php');
                                                                                         </table>
                                                                                     </td>
                                                                                 </tr>
-                                                                            
-                                                                            <tr>
-                                                                                <td class="content-block aligncenter" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; vertical-align: top; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top">
-                                                                                    Thank You For Being Our Loyal Employee
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                        <!--end table-->
-                                                                    </td>
-                                                                </tr>
-                                                            </table>
-                                                            <!--end table-->
-                                                        </div>
-                                                        <!--end content-->
-                                                    </td>
-                                                    <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; vertical-align: top; margin: 0;" valign="top"></td>
-                                                </tr>
-                                            </table>
+
+                                                                                <tr>
+                                                                                    <td class="content-block aligncenter" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; vertical-align: top; text-align: center; margin: 0; padding: 0 0 20px;" align="center" valign="top">
+                                                                                        Thank You For Being Our Loyal Employee
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                            <!--end table-->
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                                <!--end table-->
+                                                            </div>
+                                                            <!--end content-->
+                                                        </td>
+                                                        <td style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; vertical-align: top; margin: 0;" valign="top"></td>
+                                                    </tr>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="text-center">
+                                <button id="print" onclick="printContent('Print');" type="button" class="btn btn-primary">
+                                    <i data-feather="printer" class="align-self-center icon-xs ms-1"></i>
+                                    Print
+                                </button>
+                            </div>
+                            <br>
                         </div>
-                        <div class="text-center">
-                            <button id="print" onclick="printContent('Print');" type="button" class="btn btn-primary">
-                                <i data-feather="printer" class="align-self-center icon-xs ms-1"></i>
-                                Print
-                            </button>
-                        </div>
-                        <br>
-                    </div>
-                </div><!-- container -->
+                    </div><!-- container -->
 
-                <?php require_once('../partials/footer.php'); ?>
-                <!--end footer-->
-            </div>
+                    <?php require_once('../partials/footer.php'); ?>
+                    <!--end footer-->
+                </div>
         <?php
             }
         } ?>
