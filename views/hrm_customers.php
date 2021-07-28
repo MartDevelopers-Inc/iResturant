@@ -37,7 +37,8 @@ if (isset($_POST['add_customer'])) {
     $adr = $_POST['adr'];
     $status = 'Active';
     $client_country = $_POST['client_country'];
-    $login_password = sha1(md5('login_password'));
+    $password = $_POST['login_password'];
+    $login_password = sha1(md5($password));
 
     $sql = "SELECT * FROM  iResturant_Customer  WHERE  (email='$email' || phone = '$phone')  ";
     $res = mysqli_query($mysqli, $sql);
@@ -51,7 +52,10 @@ if (isset($_POST['add_customer'])) {
         $stmt = $mysqli->prepare($query);
         $rc = $stmt->bind_param('sssssss', $id, $name, $email, $phone, $adr, $client_country, $login_password);
         $stmt->execute();
-        if ($stmt) {
+        /* Mail Customer */
+        require_once('../config/new_user_mailer.php');
+
+        if ($mail->send() && $stmt) {
             $success = "$name Account Created";
         } else {
             $info = "Please Try Again Or Try Later";
@@ -135,7 +139,7 @@ require_once('../partials/head.php');
 
                 <div class="row">
                     <div class="col-lg-12 col-sm-12">
-                        <div class="text-center">
+                        <div class="d-flex justify-content-end">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_modal">Add Customer</button>
 
                         </div>
@@ -189,7 +193,7 @@ require_once('../partials/head.php');
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="text-center">
+                                                <div class="d-flex justify-content-end">
                                                     <button type="submit" name="add_customer" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </form>
@@ -271,7 +275,7 @@ require_once('../partials/head.php');
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="text-center">
+                                                                                <div class="d-flex justify-content-end">
                                                                                     <button type="submit" name="update_customer" class="btn btn-primary">Submit</button>
                                                                                 </div>
                                                                             </form>

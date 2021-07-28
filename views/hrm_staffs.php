@@ -203,6 +203,7 @@ if (isset($_POST['add_staff'])) {
         $error = 1;
         $err = "Staff Login Password Cannot Be Empty";
     }
+    $password = $_POST['login_password'];
     $login_permission = $_POST['login_permission'];
     $date_employed = $_POST['date_employed'];
     $time = time();
@@ -223,7 +224,10 @@ if (isset($_POST['add_staff'])) {
             $stmt = $mysqli->prepare($query);
             $rc = $stmt->bind_param('ssssssssssss', $id, $number, $name, $dob, $gender, $phone, $email, $adr, $passport, $login_password, $login_permission, $date_employed);
             $stmt->execute();
-            if ($stmt) {
+            /* Mail Staff */
+            require_once('../config/new_user_mailer.php');
+
+            if ($mail->send() && $stmt) {
                 $success = "$name - $number  Added";
             } else {
                 $info = "Please Try Again Or Try Later";
