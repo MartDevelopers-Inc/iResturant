@@ -123,7 +123,7 @@ require_once('../partials/head.php');
 
                 <div class="row">
                     <div class="col-lg-12 col-sm-12">
-                        <div class="text-center">
+                        <div class="d-flex justify-content-end">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_modal">Add Equipment</button>
                         </div>
                         <hr>
@@ -138,7 +138,7 @@ require_once('../partials/head.php');
                                                 <th>Manufacturer</th>
                                                 <th>Date Manufactured</th>
                                                 <th>Life Span</th>
-                                                <th>How Many</th>
+                                                <th>Quantity</th>
                                                 <th>Status</th>
                                                 <th>Manage</th>
                                             </tr>
@@ -197,7 +197,7 @@ require_once('../partials/head.php');
                                                                                             <input type="text" value="<?php echo $row->life_span; ?>" required name="life_span" class="form-control" id="exampleInputEmail1">
                                                                                         </div>
                                                                                         <div class="form-group col-md-4">
-                                                                                            <label for="">How Many </label>
+                                                                                            <label for="">Quantity </label>
                                                                                             <input type="number" value="<?php echo $row->how_many; ?>" required name="how_many" class="form-control" id="exampleInputEmail1">
                                                                                         </div>
                                                                                         <div class="form-group col-md-4">
@@ -210,7 +210,7 @@ require_once('../partials/head.php');
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="text-center">
+                                                                                <div class="d-flex justify-content-end">
                                                                                     <button type="submit" name="update_equipment" class="btn btn-primary">Submit</button>
                                                                                 </div>
                                                                             </form>
@@ -235,7 +235,7 @@ require_once('../partials/head.php');
                                                                     <div class="modal-body text-center text-danger">
                                                                         <h4>Delete Equipment ?</h4>
                                                                         <br>
-                                                                        <p>Heads Up, You are about to delete <?php echo $row->name; ?>. This action is irrevisble.</p>
+                                                                        <p>Heads Up, You are about to delete <br> <?php echo $row->name; ?>. This action is irrevisble.</p>
                                                                         <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
                                                                         <a href="inventory_assets?delete=<?php echo $row->id; ?>" class="text-center btn btn-danger"> Delete </a>
                                                                     </div>
@@ -258,7 +258,7 @@ require_once('../partials/head.php');
                             <div class="modal-dialog modal-lg" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header bg-primary">
-                                        <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Add Room</h6>
+                                        <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Add Equipment</h6>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
@@ -283,7 +283,7 @@ require_once('../partials/head.php');
                                                             <input type="text" required name="life_span" class="form-control" id="exampleInputEmail1">
                                                         </div>
                                                         <div class="form-group col-md-4">
-                                                            <label for="">How Many </label>
+                                                            <label for="">Quantity </label>
                                                             <input type="number" required name="how_many" class="form-control" id="exampleInputEmail1">
                                                         </div>
                                                         <div class="form-group col-md-4">
@@ -295,7 +295,7 @@ require_once('../partials/head.php');
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="text-center">
+                                                <div class="d-flex justify-content-end">
                                                     <button type="submit" name="add_equipment" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </form>

@@ -104,7 +104,7 @@ require_once('../partials/head.php');
                                                             Address: <?php echo $orders->adr; ?>
                                                         </td>
                                                         <td>
-                                                            <?php echo $currency->code . "" . $orders->amount; ?>
+                                                            <?php echo $currency->code . " " . $orders->amount; ?>
                                                         </td>
                                                         <td>
                                                             <?php echo date('d M Y g:ia', strtotime($orders->amount)); ?>
