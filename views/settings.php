@@ -143,7 +143,7 @@ require_once('../partials/head.php');
                                                     </div>
                                                 </div>
                                                 <div class="form-group text-right row">
-                                                    <div class="offset-sm-2 col-sm-10">
+                                                    <div class="d-flex justify-content-end">
                                                         <button type="submit" name="change_password" class="btn btn-primary">Update Profile</button>
                                                     </div>
                                                 </div>
