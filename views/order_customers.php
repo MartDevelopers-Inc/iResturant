@@ -112,6 +112,9 @@ if (isset($_POST['pay_order'])) {
     $type = 'Resturant Sales';
     $status = 'Paid';
 
+    /* Mailing Details */
+    $client_email = $_POST['client_email'];
+    $client_name = $_POST['client_name'];
 
     $query = "INSERT INTO iResturant_Payments (id, code, order_code, means, amount, type) VALUES(?,?,?,?,?,?)";
     $order_qry = "UPDATE iResturant_Customer_Orders SET status = ? WHERE code = ?";
@@ -125,7 +128,10 @@ if (isset($_POST['pay_order'])) {
     $stmt->execute();
     $order_stmt->execute();
 
-    if ($stmt  && $order_stmt) {
+    /* Load Mailer */
+    require_once('../config/order_payment_mailer.php');
+    
+    if ($mail->send() && $stmt  && $order_stmt) {
         $success = "Order $order_code Paid";
     } else {
         $info = "Please Try Again Or Try Later";
@@ -262,6 +268,10 @@ require_once('../partials/head.php');
                                                                                             <div class="form-group col-md-4">
                                                                                                 <label for="">Order Code</label>
                                                                                                 <input type="text" readonly required name="order_code" value="<?php echo $orders->code; ?>" class="form-control">
+                                                                                                <!-- Hidden -->
+                                                                                                <input type="hidden" readonly required name="client_email" value="<?php echo $orders->email; ?>" class="form-control">
+                                                                                                <input type="hidden" readonly required name="client_name" value="<?php echo $orders->name; ?>" class="form-control">
+
                                                                                             </div>
                                                                                             <div class="form-group col-md-4">
                                                                                                 <label for="">Payment Method</label>

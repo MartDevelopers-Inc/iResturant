@@ -88,15 +88,15 @@ while ($sys_mailer = $res->fetch_object()) {
                                                 style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
                                             <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
                                                 Hello ' . $client_name . ', <br>
-                                                Your reservation payment is received and confirmed.
+                                                Your meal order payment is confirmed.
                                             </p>
                                             <br>
                                             <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
-                                               These are your reservation payment details: <br>
-                                               <b>Reservation Code : ' . $reservation_code . '</b><br>
+                                               These are your  payment details: <br>
+                                               <b>Order Code : ' . $order_code . '</b><br>
                                                <b>Transaction Code: ' . $code . '</b><br>
-                                               <b>Reservation Cost: ' . $sys_mailer->code . ' ' . $amount . '</b><br>
-                                               <br>
+                                               <b>Order Bill: ' . $sys_mailer->code . ' ' . $amount . '</b><br>
+                                               <br><br>
                                                Kind Regards<br>
                                                <b>' . $sys_mailer->system_name . '</b> <br>
                                                <i>' . $sys_mailer->tagline . '</i>
