@@ -123,8 +123,9 @@ if (isset($_POST['add_room_reservation'])) {
             $rstmt->execute();
 
             /* Load Reservations Mailer */
-            require('../config/reservations_mailer.php');
-            if ($stmt && $rstmt && $mail->send()) {
+            require_once('../config/reservations_mailer.php');
+
+            if ($mail->send() && $stmt && $rstmt) {
                 $success = "Reservation Added";
             } else {
                 $info = "Please Connect To The Internet And Try Again";
@@ -358,6 +359,7 @@ require_once('../partials/head.php');
                                                             <a href="#pay-' . $reservations->code . '" data-bs-toggle="modal" data-bs-target="#pay-' . $reservations->code . '" class="btn btn-sm btn-outline-success">
                                                                 <i data-feather="dollar-sign" class="align-self-center icon-xs ms-1"></i> Pay
                                                             </a>
+                                                            
                                                             ';
                                                             }
                                                             if ($now > $checkout) {
@@ -366,6 +368,8 @@ require_once('../partials/head.php');
                                                                 <a href="#vacate-' . $reservations->code . '" data-bs-toggle="modal" data-bs-target="#vacate-' . $reservations->code . '" class="btn btn-sm btn-outline-danger">
                                                                     <i data-feather="airplay" class="align-self-center icon-xs ms-1"></i> Vacate Room
                                                                 </a>
+                                                                <br>
+                                                                <h4></h4>                                                                
                                                                 ';
                                                             }
                                                             ?>
@@ -479,7 +483,7 @@ require_once('../partials/head.php');
                                                                         <div class="modal-body text-center text-danger">
                                                                             <h4>Delete <?php echo $reservations->code; ?> ?</h4>
                                                                             <br>
-                                                                            <p>Heads Up, You are about to delete <?php echo $reservations->code; ?>. This action is irrevisble.</p>
+                                                                            <p>Heads Up, You are about to delete <?php echo $reservations->code; ?>. <br> This action is irrevisble.</p>
                                                                             <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
                                                                             <a href="reservations_manage?delete=<?php echo $reservations->code; ?>&number=<?php echo $reservations->number; ?>" class="text-center btn btn-danger"> Delete </a>
                                                                         </div>
@@ -500,7 +504,7 @@ require_once('../partials/head.php');
                                                                         <div class="modal-body text-center text-danger">
                                                                             <h4>Vacate Room Number <?php echo $reservations->number; ?> ?</h4>
                                                                             <br>
-                                                                            <p>Heads Up, You are about vacate customer in room number: <?php echo $reservations->number; ?>.</p>
+                                                                            <p>Heads Up, You are about vacate customer <br> in room number: <?php echo $reservations->number; ?>.</p>
                                                                             <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
                                                                             <a href="reservations_manage?vacate=<?php echo $reservations->number; ?>" class="text-center btn btn-danger"> Vacate </a>
                                                                         </div>

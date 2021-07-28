@@ -29,7 +29,7 @@ $mail = new PHPMailer\PHPMailer\PHPMailer();
 $ret = "SELECT * FROM iResturant_Mailer_Settings 
 JOIN iResturant_System_Details
 JOIN iResturant_Currencies c 
-WHERE c.status = 'Active';  ";
+WHERE c.status = 'Active'";
 $stmt = $mysqli->prepare($ret);
 $stmt->execute(); //ok
 $res = $stmt->get_result();
@@ -83,13 +83,14 @@ while ($sys_mailer = $res->fetch_object()) {
                                     </tr>
                                     <tr>
                                         <td style="padding:0 35px;">
-                                            <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:"Rubik",sans-serif;">Password Reset</h1>
+                                            <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:"Rubik",sans-serif;">Reservation Confirmed</h1>
                                             <span
                                                 style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
                                             <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
                                                 Hello ' . $client_name . ', <br>
                                                 Your reservation is confirmed.
                                             </p>
+                                            <br>
                                             <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
                                                These are your reservation details: <br>
                                                <b>Reservation Code : ' . $code . '</b><br>
@@ -100,7 +101,7 @@ while ($sys_mailer = $res->fetch_object()) {
                                                <b>Reservation Purpose: ' . $purpose . '</b><br>
                                                <br>
                                                Kind Regards<br>
-                                               <b>' . $sys_mailer->name . '</b> <br>
+                                               <b>' . $sys_mailer->system_name . '</b> <br>
                                                <i>' . $sys_mailer->tagline . '</i>
                                             </p>
                                         </td>

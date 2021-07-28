@@ -33,9 +33,9 @@ while ($sys = $res->fetch_object()) {
 
     <head>
         <meta charset="utf-8" />
-        <title><?php echo $sys->name . " - " . $sys->tagline; ?></title>
+        <title><?php echo $sys->system_name . " - " . $sys->tagline; ?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta content="<?php echo $sys->name . "-" . $sys->tagline; ?>" name="description" />
+        <meta content="<?php echo $sys->system_name . "-" . $sys->tagline; ?>" name="description" />
         <meta content="MartDevelopers Inc" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 

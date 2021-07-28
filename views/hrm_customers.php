@@ -68,12 +68,13 @@ if (isset($_POST['update_customer'])) {
     $phone = $_POST['phone'];
     $adr = $_POST['adr'];
     $status = 'Active';
+
     $query = "UPDATE  iResturant_Customer SET  name =?, email =?, phone =?, adr =? WHERE id = ?";
     $stmt = $mysqli->prepare($query);
     $rc = $stmt->bind_param('sssss', $name, $email, $phone, $adr, $id);
     $stmt->execute();
     if ($stmt) {
-        $success = "$name Account Created";
+        $success = "$name Account Updated";
     } else {
         $info = "Please Try Again Or Try Later";
     }
@@ -253,12 +254,12 @@ require_once('../partials/head.php');
                                                                                     <div class="row">
                                                                                         <div class="form-group col-md-12">
                                                                                             <label for="">Full Name </label>
-                                                                                            <input type="hidden" required name="id" value="<?php echo $client->email; ?>" class="form-control">
+                                                                                            <input type="hidden" required name="id" value="<?php echo $client->id; ?>" class="form-control">
                                                                                             <input type="text" required name="name" value="<?php echo $client->name; ?>" class="form-control" id="exampleInputEmail1">
                                                                                         </div>
                                                                                         <div class="form-group col-md-6">
                                                                                             <label for="">Phone Number </label>
-                                                                                            <input type="text" required name="phone" class="form-control" value="<?php echo $client->email; ?>" id="exampleInputEmail1">
+                                                                                            <input type="text" required name="phone" class="form-control" value="<?php echo $client->phone; ?>" id="exampleInputEmail1">
                                                                                         </div>
                                                                                         <div class="form-group col-md-6">
                                                                                             <label for="">Email Address </label>

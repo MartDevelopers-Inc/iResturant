@@ -26,6 +26,6 @@ $res = $stmt->get_result();
 while ($sys = $res->fetch_object()) {
 ?>
     <footer class="footer text-center text-sm-start">
-        &copy; 2021 - <?php echo date('Y') . " " . $sys->name; ?> <span class="text-muted d-none d-sm-inline-block float-end">Crafted With <i class="mdi mdi-heart text-danger"></i> By <a href='https://martdev.info/'>MartDevelopers Inc</a></span>
+        &copy; 2021 - <?php echo date('Y') . " " . $sys->system_name; ?> <span class="text-muted d-none d-sm-inline-block float-end">Crafted With <i class="mdi mdi-heart text-danger"></i> By <a href='https://martdev.info/'>MartDevelopers Inc</a></span>
     </footer>
 <?php } ?>
