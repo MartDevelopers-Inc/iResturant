@@ -360,8 +360,8 @@ require_once('../partials/head.php');
                                                                     <textarea name="details" rows="5" class="form-control"><?php echo $room->details; ?></textarea>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group text-center row">
-                                                                <div class="col-lg-9 col-xl-8 offset-lg-3">
+                                                            <div class="form-group   row">
+                                                                <div class="d-flex justify-content-end">
                                                                     <button type="submit" name="Update_Room" class="btn btn-sm btn-outline-primary">Submit</button>
                                                                 </div>
                                                             </div>
@@ -386,7 +386,7 @@ require_once('../partials/head.php');
                                                                 </div>
                                                             </div>
                                                             <div class="form-group text-center row">
-                                                                <div class="col-lg-9 col-xl-8 offset-lg-3">
+                                                                <div class="d-flex justify-content-end">
                                                                     <button type="submit" name="Upload_Images" class="btn btn-sm btn-outline-primary">Submit</button>
                                                                 </div>
                                                             </div>

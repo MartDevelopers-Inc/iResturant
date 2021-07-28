@@ -44,7 +44,6 @@
 
 <!-- File Uploads  -->
 <script src="../public/js/bs-custom-file-input.min.js"></script>
-
 <script>
     $(document).ready(function() {
         bsCustomFileInput.init();
@@ -71,6 +70,7 @@
         $('body').html(restorepage);
     }
 </script>
+
 <!-- Izi Toast Js -->
 <script src="../public/plugins/iziToast/iziToast.min.js"></script>
 <!-- Init Izi Toast -->

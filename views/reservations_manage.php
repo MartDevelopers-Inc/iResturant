@@ -273,7 +273,7 @@ require_once('../partials/head.php');
 
                 <div class="row">
                     <div class="col-lg-12 col-sm-12">
-                        <div class="text-center">
+                        <div class="text-right">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_reservation">Add Reservation</button>
                         </div>
 
