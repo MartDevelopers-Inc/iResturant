@@ -160,7 +160,7 @@ require_once('../partials/head.php');
 
                 <div class="row">
                     <div class="col-lg-12 col-sm-12">
-                        <div class="text-center">
+                        <div class="d-flex justify-content-end">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_meal_category">Add Meal Category</button>
                         </div>
                         <!-- Add Room Category Modal -->
@@ -187,7 +187,7 @@ require_once('../partials/head.php');
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="text-center">
+                                                <div class="d-flex justify-content-end">
                                                     <button type="submit" name="add_meal_category" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </form>
@@ -222,7 +222,11 @@ require_once('../partials/head.php');
                                             ?>
                                                 <tr>
                                                     <td><?php echo $meal_categories->name; ?></td>
-                                                    <td><?php echo $meal_categories->details; ?></td>
+                                                    <td>
+                                                        <span class="text-wrap">
+                                                            <?php echo substr($meal_categories->details, 0, 100); ?>...
+                                                        </span>
+                                                    </td>
                                                     <td>
                                                         <a href="#edit-<?php echo $meal_categories->id; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $meal_categories->id; ?>" class="btn btn-sm btn-outline-warning">
                                                             <i data-feather="edit" class="align-self-center icon-xs ms-1"></i> Edit
@@ -250,11 +254,11 @@ require_once('../partials/head.php');
                                                                                         </div>
                                                                                         <div class="form-group col-md-12">
                                                                                             <label for="">Category Details</label>
-                                                                                            <textarea type="text" required name="details" class="form-control" id="exampleInputEmail1"><?php echo $meal_categories->details; ?></textarea>
+                                                                                            <textarea type="text" rows="5" required name="details" class="form-control" id="exampleInputEmail1"><?php echo $meal_categories->details; ?></textarea>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="text-center">
+                                                                                <div class="d-flex justify-content-end">
                                                                                     <button type="submit" name="update_meal_category" class="btn btn-primary">Submit</button>
                                                                                 </div>
                                                                             </form>
