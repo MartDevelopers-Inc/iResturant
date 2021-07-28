@@ -357,7 +357,6 @@ require_once('../partials/head.php');
                         <div class="text-center">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_staff">Add Staff</button>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#bulk_import_staff">Bulk Import Staffs</button>
-
                         </div>
                         <!-- Add  Modal -->
                         <div class="modal fade" id="add_staff" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
@@ -419,7 +418,7 @@ require_once('../partials/head.php');
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="text-center">
+                                                <div class="d-flex justify-content-end">
                                                     <button type="submit" name="add_staff" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </form>
@@ -451,7 +450,7 @@ require_once('../partials/head.php');
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="text-center">
+                                                <div class="d-flex justify-content-end">
                                                     <button type="submit" name="upload" class="btn btn-primary">Upload File</button>
                                                 </div>
                                             </form>
@@ -561,7 +560,7 @@ require_once('../partials/head.php');
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="text-center">
+                                                                                <div class="d-flex justify-content-end">
                                                                                     <button type="submit" name="update_staff" class="btn btn-primary">Submit</button>
                                                                                 </div>
                                                                             </form>
