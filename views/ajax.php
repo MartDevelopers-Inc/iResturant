@@ -41,6 +41,16 @@ if (!empty($_POST["RoomNumber"])) {
     }
 }
 
+/* Get Room Details - Room Cost */
+if (!empty($_POST["RoomID"])) {
+    $id = $_POST['RoomID'];
+    $stmt = $DB_con->prepare("SELECT * FROM iResturant_Room WHERE number = :id");
+    $stmt->execute(array(':id' => $id));
+    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        echo htmlentities($row['price']);
+    }
+}
+
 /* Get Client Details - */
 if (!empty($_POST["ClientPhone"])) {
     $id = $_POST['ClientPhone'];

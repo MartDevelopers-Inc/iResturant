@@ -88,6 +88,18 @@ if (isset($_POST['add_room_reservation'])) {
     $special_request = $_POST['special_request'];
     $reserved_on = date('d-M-Y');
     $room_status = 'Reserved';
+    /* For Mailing Purposes */
+    $client_email = $_POST['client_email'];
+    $client_name = $_POST['client_name'];
+    $room_number = $_POST['room_number'];
+
+    /* Reservation Cost */
+    $room_cost = $_POST['room_cost'];
+    $checkin = strtotime($_POST['arrival']);
+    $checkout = strtotime($_POST['departure']);
+    $secs = $checkout - $checkin;
+    $days_reserved = $secs / 86400;
+    $total_payable_amt = $days_reserved * $room_cost;
 
     if (!$error) {
         $sql = "SELECT * FROM  iResturant_Room_Reservation WHERE  (code='$code')  ";
@@ -110,10 +122,12 @@ if (isset($_POST['add_room_reservation'])) {
             $stmt->execute();
             $rstmt->execute();
 
-            if ($stmt && $rstmt) {
+            /* Load Reservations Mailer */
+            require('../config/reservations_mailer.php');
+            if ($stmt && $rstmt && $mail->send()) {
                 $success = "Reservation Added";
             } else {
-                $info = "Please Try Again Or Try Later";
+                $info = "Please Connect To The Internet And Try Again";
             }
         }
     }
@@ -273,10 +287,9 @@ require_once('../partials/head.php');
 
                 <div class="row">
                     <div class="col-lg-12 col-sm-12">
-                        <div class="text-right">
+                        <div class="d-flex justify-content-end">
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_reservation">Add Reservation</button>
                         </div>
-
 
                         <hr>
                         <div class="card">
@@ -392,7 +405,7 @@ require_once('../partials/head.php');
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="text-center">
+                                                                                    <div class="d-flex justify-content-end">
                                                                                         <button type="submit" name="add_payment" class="btn btn-primary">Submit</button>
                                                                                     </div>
                                                                                 </form>
@@ -441,7 +454,7 @@ require_once('../partials/head.php');
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="text-center">
+                                                                                    <div class="d-flex justify-content-end">
                                                                                         <button type="submit" name="update_room_reservation" class="btn btn-primary">Submit</button>
                                                                                     </div>
                                                                                 </form>
@@ -520,7 +533,7 @@ require_once('../partials/head.php');
                                                     <div class="row">
                                                         <div class="form-group col-md-6">
                                                             <label for="">Room Number</label>
-                                                            <select id="RoomNumber" class="form-control" onchange="GetRoomDetails(this.value);">
+                                                            <select id="RoomNumber" class="form-control" name="room_number" onchange="GetRoomDetails(this.value);">
                                                                 <option>Select Room Number</option>
                                                                 <?php
                                                                 $ret = "SELECT * FROM  iResturant_Room WHERE status = 'Vacant'";
@@ -534,7 +547,7 @@ require_once('../partials/head.php');
                                                                 } ?>
                                                             </select>
                                                             <input type="hidden" required name="room_id" id="RoomID" class="form-control">
-                                                            <input type="hidden" required name="id" value="<?php echo $sys_gen_id_alt_1; ?>" class="form-control">
+                                                            <input type="hidden" required name="room_cost" id="RoomCost" class="form-control"> <input type="hidden" required name="id" value="<?php echo $sys_gen_id_alt_1; ?>" class="form-control">
                                                             <input type="hidden" required name="code" value="<?php echo $a . $b; ?>" class="form-control">
                                                             <input type="hidden" required name="payment_status" value="UnPaid" class="form-control">
                                                         </div>
@@ -559,11 +572,11 @@ require_once('../partials/head.php');
 
                                                         <div class="form-group col-md-6">
                                                             <label for="">Customer Name</label>
-                                                            <input type="text" readonly required id="ClientName" class="form-control">
+                                                            <input type="text" readonly required id="ClientName" name="client_name" class="form-control">
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="">Customer Email</label>
-                                                            <input type="text" readonly required id="ClientEmail" class="form-control">
+                                                            <input type="text" readonly required id="ClientEmail" name="client_email" class="form-control">
                                                         </div>
                                                     </div>
 
@@ -590,7 +603,7 @@ require_once('../partials/head.php');
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="text-center">
+                                                <div class="d-flex justify-content-end">
                                                     <button type="submit" name="add_room_reservation" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </form>

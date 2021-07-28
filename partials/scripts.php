@@ -152,6 +152,15 @@
                 $('#RoomID').val(data);
             }
         });
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'RoomID=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#RoomCost').val(data);
+            }
+        });
 
     }
 
