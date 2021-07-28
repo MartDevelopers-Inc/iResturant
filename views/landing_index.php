@@ -527,273 +527,69 @@ while ($sys = $res->fetch_object()) {
                 </div><!-- end row -->
             </div><!-- end container -->
         </section><!-- end discount-area -->
-        <!-- ================================
-    END DISCOUNT AREA
-================================= -->
 
-        <!-- ================================
-       START TESTIMONIAL AREA
-================================= -->
         <section class="testimonial-area section-padding">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="section-heading text-center mb-0">
-                            <h2 class="sec__title line-height-50">What Our Customers <br> are Saying Us?</h2>
+                            <h2 class="sec__title line-height-50">What Our Customers <br> Are Saying Abou</h2>
                         </div><!-- end section-heading -->
                     </div><!-- end col-lg-12 -->
                 </div><!-- end row  -->
                 <div class="row padding-top-50px">
                     <div class="col-lg-12">
                         <div class="testimonial-carousel carousel-action">
-                            <div class="testimonial-card">
-                                <div class="testi-desc-box">
-                                    <p class="testi__desc">Excepteur sint occaecat cupidatat non proident sunt in culpa officia deserunt mollit anim laborum sint occaecat cupidatat non proident. Occaecat cupidatat non proident des.</p>
-                                </div>
-                                <div class="author-content d-flex align-items-center">
-                                    <div class="author-img">
-                                        <img src="images/team8.jpg" alt="testimonial image">
+                            <?php
+                            /* Load Testimonials */
+                            $ret = "SELECT * FROM iResturant_Testimonials t
+                            INNER JOIN iResturant_Customer c ON t.testimonial_customer_id = c.id
+                            ";
+                            $stmt = $mysqli->prepare($ret);
+                            $stmt->execute(); //ok
+                            $res = $stmt->get_result();
+                            while ($testimonials = $res->fetch_object()) {
+                                if ($testimonials->profile_pic == '') {
+                                    $dir = '../public/uploads/user_images/no-profile.png';
+                                } else {
+                                    $dir = "../public/uploads/user_images/$testimonials->profile_pic";
+                                }
+                            ?>
+                                <div class="testimonial-card">
+                                    <div class="testi-desc-box">
+                                        <p class="testi__desc">
+                                            <?php echo $testimonials->testimonial_details; ?>
+                                        </p>
                                     </div>
-                                    <div class="author-bio">
-                                        <h4 class="author__title">Leroy Bell</h4>
-                                        <span class="author__meta">United States</span>
-                                        <span class="ratings d-flex align-items-center">
-                                            <i class="la la-star"></i>
-                                            <i class="la la-star"></i>
-                                            <i class="la la-star"></i>
-                                            <i class="la la-star"></i>
-                                            <i class="la la-star"></i>
-                                        </span>
+                                    <div class="author-content d-flex align-items-center">
+                                        <div class="author-img">
+                                            <img src="<?php echo $dir; ?>" alt="testimonial image">
+                                        </div>
+                                        <div class="author-bio">
+                                            <h4 class="author__title"><?php echo $testimonials->name; ?></h4>
+                                            <span class="ratings d-flex align-items-center">
+                                                <i class="la la-star"></i>
+                                                <i class="la la-star"></i>
+                                                <i class="la la-star"></i>
+                                                <i class="la la-star"></i>
+                                                <i class="la la-star"></i>
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
-                            </div><!-- end testimonial-card -->
-                            <div class="testimonial-card">
-                                <div class="testi-desc-box">
-                                    <p class="testi__desc">Excepteur sint occaecat cupidatat non proident sunt in culpa officia deserunt mollit anim laborum sint occaecat cupidatat non proident. Occaecat cupidatat non proident des.</p>
-                                </div>
-                                <div class="author-content d-flex align-items-center">
-                                    <div class="author-img">
-                                        <img src="images/team9.jpg" alt="testimonial image">
-                                    </div>
-                                    <div class="author-bio">
-                                        <h4 class="author__title">Richard Pam</h4>
-                                        <span class="author__meta">Canada</span>
-                                        <span class="ratings d-flex align-items-center">
-                                            <i class="la la-star"></i>
-                                            <i class="la la-star"></i>
-                                            <i class="la la-star"></i>
-                                            <i class="la la-star"></i>
-                                            <i class="la la-star"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div><!-- end testimonial-card -->
-                            <div class="testimonial-card">
-                                <div class="testi-desc-box">
-                                    <p class="testi__desc">Excepteur sint occaecat cupidatat non proident sunt in culpa officia deserunt mollit anim laborum sint occaecat cupidatat non proident. Occaecat cupidatat non proident des.</p>
-                                </div>
-                                <div class="author-content d-flex align-items-center">
-                                    <div class="author-img">
-                                        <img src="images/team10.jpg" alt="testimonial image">
-                                    </div>
-                                    <div class="author-bio">
-                                        <h4 class="author__title">Luke Jacobs</h4>
-                                        <span class="author__meta">Australia</span>
-                                        <span class="ratings d-flex align-items-center">
-                                            <i class="la la-star"></i>
-                                            <i class="la la-star"></i>
-                                            <i class="la la-star"></i>
-                                            <i class="la la-star"></i>
-                                            <i class="la la-star"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div><!-- end testimonial-card -->
-                            <div class="testimonial-card">
-                                <div class="testi-desc-box">
-                                    <p class="testi__desc">Excepteur sint occaecat cupidatat non proident sunt in culpa officia deserunt mollit anim laborum sint occaecat cupidatat non proident. Occaecat cupidatat non proident des.</p>
-                                </div>
-                                <div class="author-content d-flex align-items-center">
-                                    <div class="author-img">
-                                        <img src="images/team8.jpg" alt="testimonial image">
-                                    </div>
-                                    <div class="author-bio">
-                                        <h4 class="author__title">Chulbul Panday</h4>
-                                        <span class="author__meta">Italy</span>
-                                        <span class="ratings d-flex align-items-center">
-                                            <i class="la la-star"></i>
-                                            <i class="la la-star"></i>
-                                            <i class="la la-star"></i>
-                                            <i class="la la-star"></i>
-                                            <i class="la la-star"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div><!-- end testimonial-card -->
+                                </div><!-- end testimonial-card -->
+                            <?php
+                            } ?>
+
                         </div><!-- end testimonial-carousel -->
                     </div><!-- end col-lg-12 -->
                 </div><!-- end row -->
             </div><!-- end container -->
         </section><!-- end testimonial-area -->
-        <!-- ================================
-       START TESTIMONIAL AREA
-================================= -->
+
 
         <div class="section-block"></div>
 
-        <!-- ================================
-       START BLOG AREA
-================================= -->
-        <section class="blog-area section--padding">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="section-heading text-center">
-                            <h2 class="sec__title">Recent Articles</h2>
-                        </div><!-- end section-heading -->
-                    </div><!-- end col-lg-12 -->
-                </div><!-- end row -->
-                <div class="row padding-top-50px">
-                    <div class="col-lg-4 responsive-column">
-                        <div class="card-item blog-card">
-                            <div class="card-img">
-                                <img src="images/img5.jpg" alt="blog-img">
-                                <div class="post-format icon-element">
-                                    <i class="la la-photo"></i>
-                                </div>
-                                <div class="card-body">
-                                    <div class="post-categories">
-                                        <a href="#" class="badge">Travel</a>
-                                        <a href="#" class="badge">lifestyle</a>
-                                    </div>
-                                    <h3 class="card-title line-height-26"><a href="blog-single.html">Best Scandinavian Accommodation – Treat Yourself</a></h3>
-                                    <p class="card-meta">
-                                        <span class="post__date"> 1 January, 2020</span>
-                                        <span class="post-dot"></span>
-                                        <span class="post__time">5 Mins read</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <div class="author-content d-flex align-items-center">
-                                    <div class="author-img">
-                                        <img src="images/small-team1.jpg" alt="testimonial image">
-                                    </div>
-                                    <div class="author-bio">
-                                        <a href="#" class="author__title">Leroy Bell</a>
-                                    </div>
-                                </div>
-                                <div class="post-share">
-                                    <ul>
-                                        <li>
-                                            <i class="la la-share icon-element"></i>
-                                            <ul class="post-share-dropdown d-flex align-items-center">
-                                                <li><a href="#"><i class="lab la-facebook-f"></i></a></li>
-                                                <li><a href="#"><i class="lab la-twitter"></i></a></li>
-                                                <li><a href="#"><i class="lab la-instagram"></i></a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div><!-- end card-item -->
-                    </div><!-- end col-lg-4 -->
-                    <div class="col-lg-4 responsive-column">
-                        <div class="card-item blog-card">
-                            <div class="card-img">
-                                <img src="images/img6.jpg" alt="blog-img">
-                                <div class="post-format icon-element">
-                                    <i class="la la-play"></i>
-                                </div>
-                                <div class="card-body">
-                                    <div class="post-categories">
-                                        <a href="#" class="badge">Video</a>
-                                    </div>
-                                    <h3 class="card-title line-height-26"><a href="blog-single.html">Amazing Places to Stay in Norway</a></h3>
-                                    <p class="card-meta">
-                                        <span class="post__date"> 1 February, 2020</span>
-                                        <span class="post-dot"></span>
-                                        <span class="post__time">4 Mins read</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <div class="author-content d-flex align-items-center">
-                                    <div class="author-img">
-                                        <img src="images/small-team2.jpg" alt="testimonial image">
-                                    </div>
-                                    <div class="author-bio">
-                                        <a href="#" class="author__title">Phillip Hunt</a>
-                                    </div>
-                                </div>
-                                <div class="post-share">
-                                    <ul>
-                                        <li>
-                                            <i class="la la-share icon-element"></i>
-                                            <ul class="post-share-dropdown d-flex align-items-center">
-                                                <li><a href="#"><i class="lab la-facebook-f"></i></a></li>
-                                                <li><a href="#"><i class="lab la-twitter"></i></a></li>
-                                                <li><a href="#"><i class="lab la-instagram"></i></a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div><!-- end card-item -->
-                    </div><!-- end col-lg-4 -->
-                    <div class="col-lg-4 responsive-column">
-                        <div class="card-item blog-card">
-                            <div class="card-img">
-                                <img src="images/img7.jpg" alt="blog-img">
-                                <div class="post-format icon-element">
-                                    <i class="la la-music"></i>
-                                </div>
-                                <div class="card-body">
-                                    <div class="post-categories">
-                                        <a href="#" class="badge">audio</a>
-                                    </div>
-                                    <h3 class="card-title line-height-26"><a href="blog-single.html">Feel Like Home on Your Business Trip</a></h3>
-                                    <p class="card-meta">
-                                        <span class="post__date"> 1 March, 2020</span>
-                                        <span class="post-dot"></span>
-                                        <span class="post__time">3 Mins read</span>
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="card-footer d-flex align-items-center justify-content-between">
-                                <div class="author-content d-flex align-items-center">
-                                    <div class="author-img">
-                                        <img src="images/small-team3.jpg" alt="testimonial image">
-                                    </div>
-                                    <div class="author-bio">
-                                        <a href="#" class="author__title">Luke Jacobs</a>
-                                    </div>
-                                </div>
-                                <div class="post-share">
-                                    <ul>
-                                        <li>
-                                            <i class="la la-share icon-element"></i>
-                                            <ul class="post-share-dropdown d-flex align-items-center">
-                                                <li><a href="#"><i class="lab la-facebook-f"></i></a></li>
-                                                <li><a href="#"><i class="lab la-twitter"></i></a></li>
-                                                <li><a href="#"><i class="lab la-instagram"></i></a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div><!-- end card-item -->
-                    </div><!-- end col-lg-4 -->
-                </div><!-- end row -->
-            </div><!-- end container -->
-        </section><!-- end blog-area -->
-        <!-- ================================
-       START BLOG AREA
-================================= -->
 
-        <!-- ================================
-    START CTA AREA
-================================= -->
         <section class="cta-area subscriber-area section-bg-2 padding-top-60px padding-bottom-60px">
             <div class="container">
                 <div class="row align-items-center">
