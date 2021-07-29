@@ -88,7 +88,6 @@ while ($sys = $res->fetch_object()) {
                     <div class="col-lg-6">
                         <div class="image-box about-img-box">
                             <img src="../public/images/img5.jpg" alt="about-img" class="img__item img__item-1">
-                            <img src="../public/images/tripadvisor.png" alt="about-img" class="img__item img__item-2">
                         </div>
                     </div><!-- end col-lg-6 -->
                 </div><!-- end row -->
