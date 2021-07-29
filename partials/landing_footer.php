@@ -40,7 +40,6 @@
                         <li><a href="landing_mission">Vision & Mission</a></li>
                         <li><a href="landing_values">Values</a></li>
                         <li><a href="landing_rooms">Rooms & Rates</a></li>
-                        <li><a href="landing_restutant">Resturant</a></li>
                         <li><a href="landing_contact">Contact Us</a></li>
                     </ul>
                 </div><!-- end footer-item -->
