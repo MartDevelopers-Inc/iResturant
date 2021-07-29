@@ -64,6 +64,8 @@ while ($sys = $res->fetch_object()) {
         <link href="../public/plugins/lightpick/lightpick.css" rel="stylesheet" />
         <!-- Light Box Css -->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" rel="stylesheet">
+        <!-- Summernote -->
+        <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
     </head>
 <?php
 } ?>

@@ -58,9 +58,6 @@
                                         <a href="landing_rooms">Rooms & Rates</a>
                                     </li>
                                     <li>
-                                        <a href="landing_restutant">Resturant</a>
-                                    </li>
-                                    <li>
                                         <a href="landing_contact">Contact Us</a>
                                     </li>
                                 </ul>

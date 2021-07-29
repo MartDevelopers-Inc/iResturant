@@ -30,7 +30,7 @@ while ($sys = $res->fetch_object()) {
         <div class="brand">
             <a href="dashboard" class="logo">
                 <span>
-                    <img src="../public/uploads/sys_logo/<?php echo $sys->logo; ?>" alt="logo-small" class="logo-sm">
+                    <img src="../public/uploads/sys_logo/<?php echo $sys->logo; ?>" height="65" width="150">
                 </span>
             </a>
         </div>
@@ -103,8 +103,15 @@ while ($sys = $res->fetch_object()) {
                     <a href="javascript: void(0);"> <i data-feather="settings" class="align-self-center menu-icon"></i><span>System Settings</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="nav-second-level" aria-expanded="false">
                         <li class="nav-item"><a class="nav-link" href="settings_currency"><i class="ti-control-record"></i>Currencies </a></li>
-                        <li class="nav-item"><a class="nav-link" href="settings_landing_pages"><i class="ti-control-record"></i>Landing Pages </a></li>
                         <li class="nav-item"><a class="nav-link" href="settings_mailer"><i class="ti-control-record"></i>Mailer Settings </a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);"> <i data-feather="airplay" class="align-self-center menu-icon"></i><span>Lite CMS</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+                    <ul class="nav-second-level" aria-expanded="false">
+                        <li class="nav-item"><a href="cms_system_settings"><i class="ti-control-record"></i>System Settings</a></li>
+                        <li class="nav-item"><a href="cms_home_page"><i class="ti-control-record"></i>Home Page</a></li>
+                        <li class="nav-item"><a href="cms_about_page"><i class="ti-control-record"></i>About Page</a></li>
                     </ul>
                 </li>
                 <li>

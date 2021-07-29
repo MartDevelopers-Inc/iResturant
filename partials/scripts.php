@@ -41,7 +41,8 @@
 <!-- Light Box -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js"></script>
 <!-- Init Js -->
-
+<!-- Summernote CSS -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 <!-- File Uploads  -->
 <script src="../public/js/bs-custom-file-input.min.js"></script>
 <script>
@@ -49,6 +50,12 @@
         bsCustomFileInput.init();
     });
 
+    /* Init Summernote */
+    $(document).ready(function() {
+        $('.summernote').summernote({
+            height: 120,
+        });
+    });
     $(document).ready(function() {
         $('.table').DataTable();
     });

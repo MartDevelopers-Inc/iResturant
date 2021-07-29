@@ -88,7 +88,6 @@ while ($sys = $res->fetch_object()) {
                     <div class="col-lg-6">
                         <div class="image-box about-img-box">
                             <img src="../public/images/img5.jpg" alt="about-img" class="img__item img__item-1">
-                            <img src="../public/images/tripadvisor.png" alt="about-img" class="img__item img__item-2">
                         </div>
                     </div><!-- end col-lg-6 -->
                 </div><!-- end row -->
@@ -116,7 +115,7 @@ while ($sys = $res->fetch_object()) {
                         <div class="col-lg-6">
                             <div class="room-type-content">
                                 <div class="image-box">
-                                    <a href="landing_room_category?view=<?php echo $cat->id; ?>" class="d-block">
+                                    <a href="landing_rooms" class="d-block">
                                         <img src="../public/images/room.svg" height="200" width="250" alt="room type img" class="img__item">
                                         <div class="room-type-link">
                                             <?php echo $cat->name; ?> <i class="la la-arrow-right ml-2"></i>

@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Sat Jul 24 2021
+ * Created on Thu Jul 29 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -19,6 +19,7 @@
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 require_once('../config/config.php');
 /* Load System COnfigurations And Settings */
 $ret = "SELECT * FROM `iResturant_System_Details`  ";
@@ -49,7 +50,7 @@ while ($sys = $res->fetch_object()) {
                         <div class="col-lg-12">
                             <div class="breadcrumb-content">
                                 <div class="section-heading">
-                                    <h2 class="sec__title line-height-50 text-white">About <br><?php echo $sys->system_name; ?></h2>
+                                    <h2 class="sec__title line-height-50 text-white"><?php echo $sys->system_name; ?><br>Mission & Vision</h2>
                                 </div>
                             </div><!-- end breadcrumb-content -->
                         </div><!-- end col-lg-12 -->
@@ -68,8 +69,24 @@ while ($sys = $res->fetch_object()) {
                     <div class="col-lg-12">
                         <div class="section-heading margin-bottom-40px">
                             <br>
+                            <h2 class="sec__title">Mission </h2>
                             <p class="sec__desc font-size-16">
-                                <?php echo $sys->about; ?>
+                                <?php echo $sys->mission; ?>
+                            </p>
+                        </div><!-- end section-heading -->
+                    </div><!-- end col-lg-6 -->
+                </div><!-- end row -->
+            </div><!-- end container -->
+        </section><!-- end about-area -->
+        <section class="about-area padding-bottom-90px overflow-hidden">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section-heading margin-bottom-40px">
+                            <br>
+                            <h2 class="sec__title">Vision</h2>
+                            <p class="sec__desc font-size-16">
+                                <?php echo $sys->vision; ?>
                             </p>
                         </div><!-- end section-heading -->
                     </div><!-- end col-lg-6 -->
@@ -110,6 +127,7 @@ while ($sys = $res->fetch_object()) {
                                 <div class="counter-content">
                                     <div>
                                         <span class="counter" data-from="0" data-to="<?php echo $sys->properties; ?>" data-refresh-interval="5">0</span>
+                                        <span class="count-symbol">k</span>
                                     </div>
                                     <p class="counter__title">Properties</p>
                                 </div><!-- end counter-content -->
