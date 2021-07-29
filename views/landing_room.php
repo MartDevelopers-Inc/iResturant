@@ -21,6 +21,8 @@
  */
 
 require_once('../config/config.php');
+require_once('../config/codeGen.php');
+
 /* Load System COnfigurations And Settings */
 $ret = "SELECT * FROM `iResturant_System_Details` JOIN iResturant_Currencies c 
 WHERE c.status = 'Active'  ";
@@ -123,102 +125,11 @@ while ($sys = $res->fetch_object()) {
                                             <div class="sidebar-widget-item">
                                                 <div class="contact-form-action">
                                                     <form action="#">
-                                                        <div class="input-box">
-                                                            <label class="label-text">Check-in</label>
-                                                            <div class="form-group">
-                                                                <span class="la la-calendar form-icon"></span>
-                                                                <input class="date-range form-control" type="text" name="daterange-single" readonly>
-                                                            </div>
-                                                        </div>
-                                                        <div class="input-box">
-                                                            <label class="label-text">Check-out</label>
-                                                            <div class="form-group">
-                                                                <span class="la la-calendar form-icon"></span>
-                                                                <input class="date-range form-control" type="text" name="daterange-single" readonly>
-                                                            </div>
-                                                        </div>
-                                                        <div class="input-box">
-                                                            <label class="label-text">Rooms</label>
-                                                            <div class="form-group">
-                                                                <div class="select-contain w-auto">
-                                                                    <select class="select-contain-select">
-                                                                        <option value="0">Select Room</option>
-                                                                        <option value="1" selected>1 Room</option>
-                                                                        <option value="2">2 Rooms</option>
-                                                                        <option value="3">3 Rooms</option>
-                                                                        <option value="4">4 Rooms</option>
-                                                                        <option value="5">5 Rooms</option>
-                                                                        <option value="6">6 Rooms</option>
-                                                                        <option value="7">7 Rooms</option>
-                                                                        <option value="8">8 Rooms</option>
-                                                                        <option value="9">9 Rooms</option>
-                                                                        <option value="10">10 Rooms</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        <a href="#" class="theme-btn theme-btn-small" data-toggle="modal" data-target="#loginPopupForm">Login To Reserve This Room</a>
                                                     </form>
                                                 </div>
-                                            </div><!-- end sidebar-widget-item -->
-                                            <div class="sidebar-widget-item">
-                                                <div class="qty-box mb-2 d-flex align-items-center justify-content-between">
-                                                    <label class="font-size-16">Adults <span>Age 18+</span></label>
-                                                    <div class="qtyBtn d-flex align-items-center">
-                                                        <div class="qtyDec"><i class="la la-minus"></i></div>
-                                                        <input type="text" name="qtyInput" value="0">
-                                                        <div class="qtyInc"><i class="la la-plus"></i></div>
-                                                    </div>
-                                                </div><!-- end qty-box -->
-                                                <div class="qty-box mb-2 d-flex align-items-center justify-content-between">
-                                                    <label class="font-size-16">Children <span>2-12 years old</span></label>
-                                                    <div class="qtyBtn d-flex align-items-center">
-                                                        <div class="qtyDec"><i class="la la-minus"></i></div>
-                                                        <input type="text" name="qtyInput" value="0">
-                                                        <div class="qtyInc"><i class="la la-plus"></i></div>
-                                                    </div>
-                                                </div><!-- end qty-box -->
-                                                <div class="qty-box mb-2 d-flex align-items-center justify-content-between">
-                                                    <label class="font-size-16">Infants <span>0-2 years old</span></label>
-                                                    <div class="qtyBtn d-flex align-items-center">
-                                                        <div class="qtyDec"><i class="la la-minus"></i></div>
-                                                        <input type="text" name="qtyInput" value="0">
-                                                        <div class="qtyInc"><i class="la la-plus"></i></div>
-                                                    </div>
-                                                </div><!-- end qty-box -->
-                                            </div><!-- end sidebar-widget-item -->
-                                            <div class="sidebar-widget-item py-4">
-                                                <h3 class="title stroke-shape">Extra Services</h3>
-                                                <div class="extra-service-wrap">
-                                                    <form action="#" method="post" class="extraServiceForm" id="extraServiceForm">
-                                                        <div id="checkboxContainPrice">
-                                                            <div class="custom-checkbox">
-                                                                <input type="checkbox" name="cleaning" id="cleaningChb" value="15.00" />
-                                                                <label for="cleaningChb" class="d-flex justify-content-between align-items-center">Cleaning Fee <span class="text-black font-weight-regular">$15</span></label>
-                                                            </div>
-                                                            <div class="custom-checkbox">
-                                                                <input type="checkbox" name="airport-pickup" id="airportPickupChb" value="20.00" />
-                                                                <label for="airportPickupChb" class="d-flex justify-content-between align-items-center">Airport pickup <span class="text-black font-weight-regular">$20</span></label>
-                                                            </div>
-                                                            <div class="custom-checkbox">
-                                                                <input type="checkbox" name="breakfast" id="breakfastChb" value="10.00" />
-                                                                <label for="breakfastChb" class="d-flex justify-content-between align-items-center">Breakfast <span class="text-black font-weight-regular">$10/ per person</span></label>
-                                                            </div>
-                                                            <div class="custom-checkbox">
-                                                                <input type="checkbox" name="parking" id="parkingChb" value="5.00" />
-                                                                <label for="parkingChb" class="d-flex justify-content-between align-items-center">Parking <span class="text-black font-weight-regular">$5/ per night</span></label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="total-price pt-3">
-                                                            <p class="text-black">Your Price</p>
-                                                            <p class="d-flex align-items-center"><span class="font-size-17 text-black">$</span> <input type="text" name="total" class="num" value="80.00" readonly="readonly" /><span>/ per room</span></p>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div><!-- end sidebar-widget-item -->
-                                            <div class="btn-box">
-                                                <a href="cart.html" class="theme-btn text-center w-100 mb-2">Book Now</a>
                                             </div>
-                                        </div><!-- end sidebar-widget -->
+                                        </div>
                                         <div class="sidebar-widget single-content-widget">
                                             <h3 class="title stroke-shape">Why Book With Us?</h3>
                                             <div class="sidebar-list">
