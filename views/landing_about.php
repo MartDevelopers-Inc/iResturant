@@ -110,7 +110,6 @@ while ($sys = $res->fetch_object()) {
                                 <div class="counter-content">
                                     <div>
                                         <span class="counter" data-from="0" data-to="<?php echo $sys->properties; ?>" data-refresh-interval="5">0</span>
-                                        <span class="count-symbol">k</span>
                                     </div>
                                     <p class="counter__title">Properties</p>
                                 </div><!-- end counter-content -->
