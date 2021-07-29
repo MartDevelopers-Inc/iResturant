@@ -115,7 +115,7 @@ while ($sys = $res->fetch_object()) {
                         <div class="col-lg-6">
                             <div class="room-type-content">
                                 <div class="image-box">
-                                    <a href="landing_room_category?view=<?php echo $cat->id; ?>" class="d-block">
+                                    <a href="landing_rooms" class="d-block">
                                         <img src="../public/images/room.svg" height="200" width="250" alt="room type img" class="img__item">
                                         <div class="room-type-link">
                                             <?php echo $cat->name; ?> <i class="la la-arrow-right ml-2"></i>
