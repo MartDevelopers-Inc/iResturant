@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Fri Jul 23 2021
+ * Created on Thu Jul 29 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -19,29 +19,26 @@
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 admin_check_login();
 
-/* Update Update STMT Settings */
-if (isset($_POST['update_mailer'])) {
-    $host = $_POST['host'];
-    $port = $_POST['port'];
-    $protocol  = $_POST['protocol'];
-    $username = $_POST['username'];
-    $mail_from_name = $_POST['mail_from_name'];
-    $password = $_POST['password'];
-    $mail_from = $_POST['mail_from'];
+/* Update System Settings */
+if (isset($_POST['update_system_settings'])) {
 
-    $query = "UPDATE iResturant_Mailer_Settings SET host =?, port = ?, protocol =?, username =?, mail_from_name=?, password=?, mail_from=? ";
+    $system_name = $_POST['system_name'];
+    $tagline = $_POST['tagline'];
+    $logo = time() . $_FILES['logo']['name'];
+    move_uploaded_file($_FILES["logo"]["tmp_name"], "../public/uploads/sys_logo/" . $logo);
+
+    $query = "UPDATE iResturant_System_Details SET  system_name=?, tagline = ?, logo =? ";
     $stmt = $mysqli->prepare($query);
-    $rc = $stmt->bind_param('sssssss', $host, $port, $protocol, $username, $mail_from_name, $password, $mail_from);
+    $rc = $stmt->bind_param('sss', $system_name, $tagline, $logo);
     $stmt->execute();
     if ($stmt) {
-        $success = "Mailer Settings Updated";
+        $success = "Core System Settings Updated";
     } else {
         $info = "Please Try Again Or Try Later";
     }
@@ -69,12 +66,12 @@ require_once('../partials/head.php');
                         <div class="page-title-box">
                             <div class="row">
                                 <div class="col">
-                                    <h4 class="page-title">Mailer Settings</h4>
+                                    <h4 class="page-title">System Settings</h4>
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
                                         <li class="breadcrumb-item"><a href="dashboard">Dashboard</a></li>
-                                        <li class="breadcrumb-item"><a href="dashboard">Settings</a></li>
-                                        <li class="breadcrumb-item active">Mailing Settings</li>
+                                        <li class="breadcrumb-item"><a href="dashboard">Lite CMS</a></li>
+                                        <li class="breadcrumb-item active">System Settings</li>
                                     </ol>
                                 </div>
                             </div>
@@ -90,55 +87,33 @@ require_once('../partials/head.php');
                             <!--end card-header-->
                             <div class="card-body table-responsive">
                                 <div class="">
-                                    <h3 class="text-center">STMP Mail Settings</h3>
+                                    <h3 class="text-center">Core System Settings</h3>
                                     <?php
-                                    $ret = "SELECT * FROM iResturant_Mailer_Settings";
+                                    $ret = "SELECT * FROM iResturant_System_Details";
                                     $stmt = $mysqli->prepare($ret);
                                     $stmt->execute(); //ok
                                     $res = $stmt->get_result();
-                                    while ($mailer = $res->fetch_object()) {
+                                    while ($system_settings = $res->fetch_object()) {
                                     ?>
                                         <form method="post" enctype="multipart/form-data" role="form">
                                             <div class="card-body">
                                                 <div class="row">
-                                                    <div class="form-group col-md-12">
-                                                        <label for="">Host</label>
-                                                        <input type="text" required name="host" value="<?php echo $mailer->host; ?>" class="form-control" id="exampleInputEmail1">
+                                                    <div class="form-group col-md-6">
+                                                        <label for="">Core System Name</label>
+                                                        <input type="text" required name="system_name" required value="<?php echo $system_settings->system_name; ?>" class="form-control" id="exampleInputEmail1">
                                                     </div>
                                                     <div class="form-group col-md-6">
-                                                        <label for="">Mailing Protocol</label>
-                                                        <select required name="protocol" class="form-control" id="exampleInputEmail1">
-                                                            <option value="ssl">SSL</option>
-                                                            <option value="tls">TLS</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label for="">Port</label>
-                                                        <select required name="port" class="form-control" id="exampleInputEmail1">
-                                                            <option>465</option>
-                                                            <option>587</option>
-                                                        </select>
+                                                        <label for="">Core System Logo</label>
+                                                        <input type="file" required name="logo" required class="form-control" id="exampleInputEmail1">
                                                     </div>
                                                     <div class="form-group col-md-12">
-                                                        <label for="">Mail From</label>
-                                                        <input type="text" required name="mail_from" value="<?php echo $mailer->mail_from; ?>" class="form-control" id="exampleInputEmail1">
-                                                    </div>
-                                                    <div class="form-group col-md-12">
-                                                        <label for="">Mail From Name</label>
-                                                        <input type="text" required name="mail_from_name" value="<?php echo $mailer->mail_from_name; ?>" class="form-control" id="exampleInputEmail1">
-                                                    </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label for="">Username</label>
-                                                        <input type="text" required name="username" value="<?php echo $mailer->username; ?>" class="form-control" id="exampleInputEmail1">
-                                                    </div>
-                                                    <div class="form-group col-md-6">
-                                                        <label for="">Password</label>
-                                                        <input type="text" required name="password" value="<?php echo $mailer->password; ?>" class="form-control" id="exampleInputEmail1">
+                                                        <label for="">Core System Taglinie</label>
+                                                        <textarea type="text" required name="tagline" class="summernote form-control" required><?php echo $system_settings->tagline; ?></textarea>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="d-flex justify-content-end">
-                                                <button type="submit" name="update_mailer" class="btn btn-primary">Submit</button>
+                                                <button type="submit" name="update_system_settings" class="btn btn-primary">Submit</button>
                                             </div>
                                         </form>
                                     <?php } ?>

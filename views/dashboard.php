@@ -351,7 +351,7 @@ require_once('../partials/head.php');
                                                 <div class="activity-info-text">
                                                     <div class="d-flex justify-content-between align-items-center">
                                                         <p class="text-muted mb-0 font-13 w-75"><span><?php echo $orders->name; ?><br></span>
-                                                            ordered <?php echo $orders->meal_count . " " . $orders->meal_name; ?>
+                                                            Ordered <?php echo $orders->meal_count . " " . $orders->meal_name; ?>
                                                         </p>
 
                                                         <small class="text-muted"><?php echo date('d M Y g:ia', strtotime($orders->created_at)); ?></small>
