@@ -25,4 +25,6 @@
     <link rel="stylesheet" href="../public/css/jquery-ui.css">
     <link rel="stylesheet" href="../public/css/flag-icon.min.css">
     <link rel="stylesheet" href="../public/css/style.css">
+    <!-- IziAlerts -->
+    <link href="../public/plugins/iziToast/iziToast.min.css" rel="stylesheet" type="text/css">
 </head>
