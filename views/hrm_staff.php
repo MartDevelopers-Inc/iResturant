@@ -155,15 +155,18 @@ require_once('../partials/head.php');
                                 <div class="card-body">
                                     <div class="dastone-profile">
                                         <div class="row">
-                                            <div class="col-lg-12 ms-auto align-self-center">
+                                            <div class="col-lg-6 ms-auto align-self-center">
                                                 <ul class="list-unstyled personal-detail mb-0">
+                                                    <li class="mt-2"><i class="ti ti-user me-2 text-secondary font-16 align-middle"></i> <b> Name </b> : <?php echo $staff->name; ?></li>
+                                                    <li class="mt-2"><i class="ti ti-tag me-2 text-secondary font-16 align-middle"></i> <b> Number </b> : <?php echo $staff->number; ?></li>
                                                     <li class="mt-2"><i class="ti ti-mobile me-2 text-secondary font-16 align-middle"></i> <b> Phone </b> : <?php echo $staff->phone; ?></li>
                                                     <li class="mt-2"><i class="ti ti-email text-secondary font-16 align-middle me-2"></i> <b> Email </b> : <?php echo $staff->email; ?></li>
-                                                    <li class="mt-2"><i class="ti ti-tag text-secondary font-16 align-middle me-2"></i> <b> Gender </b> : <?php echo $staff->gender; ?>
-                                                    </li>
                                                 </ul>
-
+                                            </div>
+                                            
+                                            <div class="col-lg-6 ms-auto align-self-center">
                                                 <ul class="list-unstyled personal-detail mb-0">
+                                                    <li class="mt-2"><i class="ti ti-tag text-secondary font-16 align-middle me-2"></i> <b> Gender </b> : <?php echo $staff->gender; ?>
                                                     <li class="mt-2"><i class="ti ti-gift me-2 text-secondary font-16 align-middle"></i> <b> D.O.B </b> : <?php echo date('d M Y', strtotime($staff->dob)); ?></li>
                                                     <li class="mt-2"><i class="ti ti-email text-secondary font-16 align-middle me-2"></i> <b> Address </b> : <?php echo $staff->adr; ?></li>
                                                     <li class="mt-2"><i class="ti ti-calendar text-secondary font-16 align-middle me-2"></i> <b> Date Employed </b> : <?php echo date('d M Y', strtotime($staff->date_employed)); ?>

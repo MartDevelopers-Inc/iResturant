@@ -44,8 +44,122 @@ if (isset($_POST['update_profile_pic'])) {
 }
 
 /* Update Profile */
+if (isset($_POST['update_staff'])) {
+    $error = 0;
+    if (isset($_POST['id']) && !empty($_POST['id'])) {
+        $id = mysqli_real_escape_string($mysqli, trim($_POST['id']));
+    } else {
+        $error = 1;
+        $err = "ID Cannot Be Empty";
+    }
+    if (isset($_POST['number']) && !empty($_POST['number'])) {
+        $number = mysqli_real_escape_string($mysqli, trim($_POST['number']));
+    } else {
+        $error = 1;
+        $err = "Staff Number Cannot Be Empty";
+    }
+    if (isset($_POST['name']) && !empty($_POST['name'])) {
+        $name = mysqli_real_escape_string($mysqli, trim($_POST['name']));
+    } else {
+        $error = 1;
+        $err = "Staff Name Cannot Be Empty";
+    }
+    if (isset($_POST['dob']) && !empty($_POST['dob'])) {
+        $dob = mysqli_real_escape_string($mysqli, trim($_POST['dob']));
+    } else {
+        $error = 1;
+        $err = "Staff DOB Cannot Be Empty";
+    }
+    if (isset($_POST['gender']) && !empty($_POST['gender'])) {
+        $gender = mysqli_real_escape_string($mysqli, trim($_POST['gender']));
+    } else {
+        $error = 1;
+        $err = "Staff Gender Cannot Be Empty";
+    }
+    if (isset($_POST['phone']) && !empty($_POST['phone'])) {
+        $phone = mysqli_real_escape_string($mysqli, trim($_POST['phone']));
+    } else {
+        $error = 1;
+        $err = "Staff Phone Number Cannot Be Empty";
+    }
+    if (isset($_POST['email']) && !empty($_POST['email'])) {
+        $email = mysqli_real_escape_string($mysqli, trim($_POST['email']));
+    } else {
+        $error = 1;
+        $err = "Staff Email Number Cannot Be Empty";
+    }
+    if (isset($_POST['adr']) && !empty($_POST['adr'])) {
+        $adr = mysqli_real_escape_string($mysqli, trim($_POST['adr']));
+    } else {
+        $error = 1;
+        $err = "Staff Address Cannot Be Empty";
+    }
+
+    $date_employed = $_POST['date_employed'];
+
+    if (!$error) {
+
+        $query = "UPDATE  iResturant_Staff SET name =?, dob =?, gender =?, phone =?, email =?, adr =?, date_employed =? WHERE id =?";
+        $stmt = $mysqli->prepare($query);
+        $rc = $stmt->bind_param('ssssssss', $name, $dob, $gender, $phone, $email, $adr, $date_employed, $id);
+        $stmt->execute();
+        if ($stmt) {
+            $success = "$name - $number  Account Updated";
+        } else {
+            $info = "Please Try Again Or Try Later";
+        }
+    }
+}
 
 /* Update Login Details */
+if (isset($_POST['update_staff_password'])) {
+
+    $error = 0;
+    if (isset($_POST['old_password']) && !empty($_POST['old_password'])) {
+        $old_password = mysqli_real_escape_string($mysqli, trim(sha1(md5($_POST['old_password']))));
+    } else {
+        $error = 1;
+        $err = "Old Password Cannot Be Empty";
+    }
+    if (isset($_POST['new_password']) && !empty($_POST['new_password'])) {
+        $new_password = mysqli_real_escape_string($mysqli, trim(sha1(md5($_POST['new_password']))));
+    } else {
+        $error = 1;
+        $err = "New Password Cannot Be Empty";
+    }
+    if (isset($_POST['confirm_password']) && !empty($_POST['confirm_password'])) {
+        $confirm_password = mysqli_real_escape_string($mysqli, trim(sha1(md5($_POST['confirm_password']))));
+    } else {
+        $error = 1;
+        $err = "Confirmation Password Cannot Be Empty";
+    }
+
+    if (!$error) {
+        $id = $_SESSION['id'];
+        $sql = "SELECT * FROM  iResturant_Staff  WHERE id = '$id'";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if ($old_password != $row['login_password']) {
+                $err =  "Please Enter Correct Old Password";
+            } elseif ($new_password != $confirm_password) {
+                $err = "Confirmation Password Does Not Match";
+            } else {
+                $id = $_SESSION['id'];
+                $new_password  = sha1(md5($_POST['new_password']));
+                $query = "UPDATE iResturant_Staff SET  login_password =? WHERE id =?";
+                $stmt = $mysqli->prepare($query);
+                $rc = $stmt->bind_param('ss', $new_password, $id);
+                $stmt->execute();
+                if ($stmt) {
+                    $success = "Profile Updated";
+                } else {
+                    $err = "Please Try Again Or Try Later";
+                }
+            }
+        }
+    }
+}
 
 require_once('../partials/head.php');
 ?>
@@ -176,6 +290,109 @@ require_once('../partials/head.php');
                                                 </ul>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pb-4">
+                                <ul class="nav-border nav nav-pills mb-0" id="pills-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="Profile_Project_tab" data-bs-toggle="pill" href="#Profile_Project">Update Profile Details</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link " id="Profile_Post_tab" data-bs-toggle="pill" href="#Profile_Post">Update Authentication Details</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--end card-body-->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="tab-content" id="pills-tabContent">
+                                        <!-- Distinct Room Features -->
+                                        <div class="tab-pane fade show active " id="Profile_Project" role="tabpanel" aria-labelledby="Profile_Project_tab">
+
+                                            <!--end row-->
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <form method="post" enctype="multipart/form-data" role="form">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="">Number </label>
+                                                                    <input type="text" readonly required name="number" value="<?php echo $staff->number; ?>" class="form-control" id="exampleInputEmail1">
+                                                                    <input type="hidden" required name="id" value="<?php echo $staff->id; ?>" class="form-control">
+                                                                </div>
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="">Full Name </label>
+                                                                    <input type="text" required name="name" value="<?php echo $staff->name; ?>" class="form-control" id="exampleInputEmail1">
+                                                                </div>
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="">Gender </label>
+                                                                    <select type="text" required name="gender" class="form-control">
+                                                                        <option>Male</option>
+                                                                        <option>Female</option>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="">D.O.B </label>
+                                                                    <input type="text" placeholder="DD/MM/YYYY" value="<?php echo $staff->dob; ?>" required name="dob" class="form-control" id="exampleInputEmail1">
+                                                                </div>
+                                                                <div class="form-group col-md-4">
+                                                                    <label for="">Phone Number </label>
+                                                                    <input type="text" required name="phone" value="<?php echo $staff->phone; ?>" class="form-control" id="exampleInputEmail1">
+                                                                </div>
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="">Email Address </label>
+                                                                    <input type="text" required value="<?php echo $staff->email; ?>" name="email" class="form-control" id="exampleInputEmail1">
+                                                                </div>
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="">Date Employed </label>
+                                                                    <input type="date" readonly required value="<?php echo $staff->date_employed; ?>" name="date_employed" class="form-control" id="exampleInputEmail1">
+                                                                </div>
+
+                                                                <div class="form-group col-md-12">
+                                                                    <label for="">Address</label>
+                                                                    <textarea type="text" required name="adr" class="form-control" rows="4" id="exampleInputEmail1"><?php echo $staff->adr; ?></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex justify-content-end">
+                                                            <button type="submit" name="update_staff" class="btn btn-primary">Submit</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Previous Room Reservations -->
+                                        <div class="tab-pane fade " id="Profile_Post" role="tabpanel" aria-labelledby="Profile_Post_tab">
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <form method="post" enctype="multipart/form-data" role="form">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="form-group col-md-12">
+                                                                    <label for="">Old Password </label>
+                                                                    <input type="password" required name="old_password" class="form-control" id="exampleInputEmail1">
+                                                                    <input type="hidden" required name="id" value="<?php echo $staff->id; ?>" class="form-control">
+                                                                </div>
+                                                                <div class="form-group col-md-12">
+                                                                    <label for="">New Password </label>
+                                                                    <input type="password" required name="new_password" class="form-control" id="exampleInputEmail1">
+                                                                </div>
+                                                                <div class="form-group col-md-12">
+                                                                    <label for="">Confirm Password</label>
+                                                                    <input type="password" required name="confirm_password" class="form-control" id="exampleInputEmail1">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex justify-content-end">
+                                                            <button type="submit" name="update_staff_password" class="btn btn-primary">Submit</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
