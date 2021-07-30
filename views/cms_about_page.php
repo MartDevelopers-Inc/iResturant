@@ -44,6 +44,41 @@ if (isset($_POST['update_system_settings'])) {
         $info = "Please Try Again Or Try Later";
     }
 }
+
+
+/* Update Mission And Vision */
+if (isset($_POST['update_mission_and_vision'])) {
+
+    $mission = $_POST['mission'];
+    $vision = $_POST['vision'];
+
+    $query = "UPDATE iResturant_System_Details SET  mission=?, vision = ?  ";
+    $stmt = $mysqli->prepare($query);
+    $rc = $stmt->bind_param('ss', $mission, $vision);
+    $stmt->execute();
+    if ($stmt) {
+        $success = "Mission & Vission Updated";
+    } else {
+        $info = "Please Try Again Or Try Later";
+    }
+}
+
+/* Update Values */
+if (isset($_POST['update_values'])) {
+
+    $sys_values = $_POST['sys_values'];
+
+    $query = "UPDATE iResturant_System_Details SET  sys_values=? ";
+    $stmt = $mysqli->prepare($query);
+    $rc = $stmt->bind_param('s', $sys_values);
+    $stmt->execute();
+    if ($stmt) {
+        $success = "System Values Updated";
+    } else {
+        $info = "Please Try Again Or Try Later";
+    }
+}
+
 require_once('../partials/head.php');
 ?>
 
