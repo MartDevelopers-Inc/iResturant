@@ -106,7 +106,7 @@ require_once('../partials/head.php');
                                                         } else {
                                                             $dir = "../public/uploads/user_images/$staff->passport";
                                                         } ?>
-                                                        <img src="<?php echo $dir; ?>" alt="" height="110" class="rounded-circle">
+                                                        <img src="<?php echo $dir; ?>" alt="" height="110" class="">
                                                         <a href="#profile" data-bs-toggle="modal" data-bs-target="#profile" class="dastone-profile_main-pic-change">
                                                             <i class="fas fa-camera"></i>
                                                         </a>
@@ -139,13 +139,8 @@ require_once('../partials/head.php');
                                                         </div>
                                                         <!-- End Modal -->
                                                     </div>
-                                                    <div class="dastone-profile_user-detail">
-                                                        <h5 class="dastone-user-name"><?php echo $staff->name; ?></h5>
-                                                        <p class="mb-0 dastone-user-name-post"><?php echo $staff->number; ?></p>
-                                                    </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
