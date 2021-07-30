@@ -29,9 +29,8 @@ require_once('../partials/head.php');
 
 <body class="">
     <!-- Left Sidenav -->
-    <?php require_once('../partials/aside.php'); ?>
+    <?php require_once('../partials/staff_sidebar.php'); ?>
     <!-- end left-sidenav-->
-
 
     <div class="page-wrapper">
         <!-- Top Bar Start -->
@@ -65,88 +64,6 @@ require_once('../partials/head.php');
                 <!-- end page title end breadcrumb -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="row justify-content-center">
-                            <!-- Revenues And Expenses -->
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card report-card">
-                                    <div class="card-body">
-                                        <div class="row d-flex justify-content-center">
-                                            <div class="col">
-                                                <p class="text-dark mb-0 fw-semibold">Rooms Revenue</p>
-                                                <h3 class="m-0"><?php echo $rr; ?> </h3>
-                                            </div>
-                                            <div class="col-auto align-self-center">
-                                                <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="dollar-sign" class="align-self-center text-muted icon-sm"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--end card-body-->
-                                </div>
-                                <!--end card-->
-                            </div>
-                            <!--end col-->
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card report-card">
-                                    <div class="card-body">
-                                        <div class="row d-flex justify-content-center">
-                                            <div class="col">
-                                                <p class="text-dark mb-0 fw-semibold">Hotel Sales Revenue</p>
-                                                <h3 class="m-0"><?php echo $hsr; ?></h3>
-                                            </div>
-                                            <div class="col-auto align-self-center">
-                                                <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="dollar-sign" class="align-self-center text-muted icon-sm"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--end card-body-->
-                                </div>
-                                <!--end card-->
-                            </div>
-                            <!--end col-->
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card report-card">
-                                    <div class="card-body">
-                                        <div class="row d-flex justify-content-center">
-                                            <div class="col">
-                                                <p class="text-dark mb-0 fw-semibold">Supplier Expenses</p>
-                                                <h3 class="m-0"><?php echo $se; ?></h3>
-                                            </div>
-                                            <div class="col-auto align-self-center">
-                                                <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="dollar-sign" class="align-self-center text-muted icon-sm"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--end card-body-->
-                                </div>
-                                <!--end card-->
-                            </div>
-                            <!--end col-->
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card report-card">
-                                    <div class="card-body">
-                                        <div class="row d-flex justify-content-center">
-                                            <div class="col">
-                                                <p class="text-dark mb-0 fw-semibold">Payrolls Expenses</p>
-                                                <h3 class="m-0"><?php echo $pe; ?></h3>
-                                            </div>
-                                            <div class="col-auto align-self-center">
-                                                <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="dollar-sign" class="align-self-center text-muted icon-sm"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--end card-body-->
-                                </div>
-                                <!--end card-->
-                            </div>
-                        </div>
 
                         <div class="row justify-content-center">
                             <!-- Rooms -->
@@ -319,7 +236,7 @@ require_once('../partials/head.php');
                 <!--end row-->
 
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <div class="card">
                             <div class="card-header">
                                 <div class="row align-items-center">
@@ -367,7 +284,7 @@ require_once('../partials/head.php');
                         </div>
                     </div>
 
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <div class="card">
                             <div class="card-header">
                                 <div class="row align-items-center">
@@ -416,130 +333,7 @@ require_once('../partials/head.php');
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="row align-items-center">
-                                    <div class="col">
-                                        <h4 class="card-title">Revenue Vs Expenses</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <div class="text-center">
-                                    <div id="ana_device" class="apex-charts"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                <?php
-                $ret = "SELECT * FROM `iResturant_Currencies` WHERE status = 'Active'  ";
-                $stmt = $mysqli->prepare($ret);
-                $stmt->execute(); //ok
-                $res = $stmt->get_result();
-                while ($currency = $res->fetch_object()) {
-
-                ?>
-                    <!--end row-->
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="row align-items-center">
-                                        <div class="col">
-                                            <h4 class="card-title">Recent Resturant Revenue</h4>
-                                        </div>
-                                        <!--end col-->
-                                    </div>
-                                    <!--end row-->
-                                </div>
-                                <!--end card-header-->
-                                <div class="card-body">
-                                    <div class="table-responsive browser_users">
-                                        <table class="table mb-0">
-                                            <thead class="table-light">
-                                                <tr>
-                                                    <th class="border-top-0">Payment Code</th>
-                                                    <th class="border-top-0">Payment Means</th>
-                                                    <th class="border-top-0">Amount Paid</th>
-                                                    <th class="border-top-0">Date</th>
-                                                </tr>
-                                                <!--end tr-->
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                $ret = "SELECT * FROM `iResturant_Payments` WHERE type = 'Resturant Sales'  ";
-                                                $stmt = $mysqli->prepare($ret);
-                                                $stmt->execute(); //ok
-                                                $res = $stmt->get_result();
-                                                while ($resturant_sales = $res->fetch_object()) {
-                                                ?>
-                                                    <tr>
-                                                        <td><?php echo $resturant_sales->code; ?></td>
-                                                        <td><?php echo $resturant_sales->means; ?></td>
-                                                        <td><?php echo $currency->code . " " . $resturant_sales->amount; ?></td>
-                                                        <td><?php echo date('d M Y g:ia', strtotime($resturant_sales->date_paid)); ?></td>
-                                                    </tr>
-                                                <?php
-                                                } ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <div class="row align-items-center">
-                                        <div class="col">
-                                            <h4 class="card-title">Recent Rooms Reservations Revenue</h4>
-                                        </div>
-                                        <!--end col-->
-                                    </div>
-                                    <!--end row-->
-                                </div>
-                                <!--end card-header-->
-                                <div class="card-body">
-                                    <div class="table-responsive browser_users">
-                                        <table class="table mb-0">
-                                            <thead class="table-light">
-                                                <tr>
-                                                    <th class="border-top-0">Payment Code</th>
-                                                    <th class="border-top-0">Payment Means</th>
-                                                    <th class="border-top-0">Amount Paid</th>
-                                                    <th class="border-top-0">Date</th>
-                                                </tr>
-                                                <!--end tr-->
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                $ret = "SELECT * FROM `iResturant_Payments` WHERE type = 'Reservations'  ";
-                                                $stmt = $mysqli->prepare($ret);
-                                                $stmt->execute(); //ok
-                                                $res = $stmt->get_result();
-                                                while ($reservations_payments = $res->fetch_object()) {
-                                                ?>
-                                                    <tr>
-                                                        <td><?php echo $reservations_payments->code; ?></td>
-                                                        <td><?php echo $reservations_payments->means; ?></td>
-                                                        <td><?php echo $currency->code . " " . $reservations_payments->amount; ?></td>
-                                                        <td><?php echo date('d M Y g:ia', strtotime($reservations_payments->date_paid)); ?></td>
-                                                    </tr>
-                                                <?php
-                                                } ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                <?php
-                } ?>
-
             </div><!-- container -->
 
             <?php require_once('../partials/footer.php'); ?>
