@@ -190,7 +190,7 @@ if (isset($_GET['vacate'])) {
     $stmt->execute();
     $stmt->close();
     if ($stmt) {
-        $success = 'Room Vacated' && header('refresh:1; url=reservations_manage');;
+        $success = 'Room Vacated' && header('refresh:1; url=staff_reservations_manage');;
     } else {
         $info = 'Please Try Again Or Try Later';
     }
@@ -212,7 +212,7 @@ if (isset($_GET['delete'])) {
     $stmt->close();
     $vacatestmt->close();
     if ($stmt && $vacatestmt) {
-        $success = 'Room Reservation Deleted' && header('refresh:1; url=reservations_manage');;
+        $success = 'Room Reservation Deleted' && header('refresh:1; url=staff_reservations_manage');;
     } else {
         $info = 'Please Try Again Or Try Later';
     }
@@ -339,7 +339,7 @@ require_once('../partials/head.php');
                                             ?>
                                                     <tr>
                                                         <td>
-                                                            <a class="text-primary" href="staff_eservation_details?view=<?php echo $reservations->code; ?>">
+                                                            <a class="text-primary" href="staff_reservation_details?view=<?php echo $reservations->code; ?>">
                                                                 <?php echo $reservations->code; ?>
                                                             </a>
                                                         </td>
