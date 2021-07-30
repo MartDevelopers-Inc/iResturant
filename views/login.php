@@ -62,7 +62,7 @@ while ($sys = $res->fetch_object()) {
                                             <img src="../public/uploads/sys_logo/<?php echo $sys->logo; ?>" height="50" alt="logo" class="auth-logo">
                                         </a>
                                         <h4 class="mt-3 mb-1 fw-semibold text-white font-18">Login</h4>
-                                        <p class="text-muted  mb-0">Sign in to continue to <?php echo $sys->name; ?> Administrator dashboard.</p>
+                                        <p class="text-muted  mb-0">Sign in to continue to <?php echo $sys->system_name; ?> Administrator dashboard.</p>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -81,10 +81,10 @@ while ($sys = $res->fetch_object()) {
                                         </div>
                                         <div class="form-group row my-3">
                                             <div class="col-sm-6">
-                                                <div class="custom-control custom-switch switch-success">
+                                                <!-- <div class="custom-control custom-switch switch-success">
                                                     <input type="checkbox" class="custom-control-input" id="customSwitchSuccess">
                                                     <label class="form-label text-muted" for="customSwitchSuccess">Remember me</label>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <div class="col-sm-6 text-end">
                                                 <a href="reset_password" class="text-muted font-13"><i class="dripicons-lock"></i> Forgot password?</a>

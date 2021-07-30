@@ -396,6 +396,7 @@ require_once('../partials/head.php');
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                         </div>

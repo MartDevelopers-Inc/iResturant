@@ -86,49 +86,112 @@ require_once('../partials/head.php');
                         </div>
                     </div>
                     <!-- end page title end breadcrumb -->
-
-
+                    <div class="pb-4">
+                        <ul class="nav-border nav nav-pills mb-0" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="Profile_Project_tab" data-bs-toggle="pill" href="#Profile_Project">About <?php echo $system_settings->system_name; ?> Content</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link " id="Profile_Post_tab" data-bs-toggle="pill" href="#Profile_Post"><?php echo $system_settings->system_name; ?> Mission & Vision</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="settings_detail_tab" data-bs-toggle="pill" href="#Profile_Settings"><?php echo $system_settings->system_name; ?> Values</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--end card-body-->
                     <div class="row">
-                        <div class="col-lg-12 col-sm-12">
-                            <div class="card">
-                                <!--end card-header-->
-                                <div class="card-body table-responsive">
-                                    <div class="">
-                                        <h3 class="text-center">About Page Content</h3>
+                        <div class="col-12">
+                            <div class="tab-content" id="pills-tabContent">
+                                <!-- Distinct Room Features -->
+                                <div class="tab-pane fade show active " id="Profile_Project" role="tabpanel" aria-labelledby="Profile_Project_tab">
 
-                                        <form method="post" enctype="multipart/form-data" role="form">
-                                            <div class="card-body">
-                                                <div class="row">
-                                                    <div class="form-group col-md-3">
-                                                        <label for="">Partners</label>
-                                                        <input type="text" required name="patners" required value="<?php echo $system_settings->patners; ?>" class="form-control" id="exampleInputEmail1">
-                                                    </div>
-                                                    <div class="form-group col-md-3">
-                                                        <label for="">Properties</label>
-                                                        <input type="text" required name="properties" required value="<?php echo $system_settings->properties; ?>" class="form-control" id="exampleInputEmail1">
-                                                    </div>
-                                                    <div class="form-group col-md-3">
-                                                        <label for="">Orders Made</label>
-                                                        <input type="text" required name="orders_made" required value="<?php echo $system_settings->orders_made; ?>" class="form-control" id="exampleInputEmail1">
-                                                    </div>
-                                                    <div class="form-group col-md-3">
-                                                        <label for="">Booking</label>
-                                                        <input type="text" required name="bookings" required value="<?php echo $system_settings->bookings; ?>" class="form-control" id="exampleInputEmail1">
-                                                    </div>
-                                                    <div class="form-group col-md-12">
-                                                        <label for=""><?php echo $system_settings->system_name; ?></label>
-                                                        <textarea type="text" required name="about" class="summernote form-control" required><?php echo $system_settings->about; ?></textarea>
+                                    <!--end row-->
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h3 class="text-center">About Page Content</h3>
+                                            <form method="post" enctype="multipart/form-data" role="form">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="form-group col-md-3">
+                                                            <label for="">Partners</label>
+                                                            <input type="text" required name="patners" required value="<?php echo $system_settings->patners; ?>" class="form-control" id="exampleInputEmail1">
+                                                        </div>
+                                                        <div class="form-group col-md-3">
+                                                            <label for="">Properties</label>
+                                                            <input type="text" required name="properties" required value="<?php echo $system_settings->properties; ?>" class="form-control" id="exampleInputEmail1">
+                                                        </div>
+                                                        <div class="form-group col-md-3">
+                                                            <label for="">Orders Made</label>
+                                                            <input type="text" required name="orders_made" required value="<?php echo $system_settings->orders_made; ?>" class="form-control" id="exampleInputEmail1">
+                                                        </div>
+                                                        <div class="form-group col-md-3">
+                                                            <label for="">Booking</label>
+                                                            <input type="text" required name="bookings" required value="<?php echo $system_settings->bookings; ?>" class="form-control" id="exampleInputEmail1">
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <label for="">About <?php echo $system_settings->system_name; ?></label>
+                                                            <textarea type="text" required name="about" class="summernote form-control" required><?php echo $system_settings->about; ?></textarea>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                                <div class="d-flex justify-content-end">
+                                                    <button type="submit" name="update_system_settings" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Previous Room Reservations -->
+                                <div class="tab-pane fade " id="Profile_Post" role="tabpanel" aria-labelledby="Profile_Post_tab">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <h3 class="text-center">Mission And Vision</h3>
+                                            <form method="post" enctype="multipart/form-data" role="form">
+                                                <div class="card-body">
+                                                    <div class="row">
+                                                        <div class="form-group col-md-12">
+                                                            <label for=""><?php echo $system_settings->system_name; ?> Mission</label>
+                                                            <textarea type="text" required name="mission" class="summernote form-control" required><?php echo $system_settings->mission; ?></textarea>
+                                                        </div>
+                                                        <div class="form-group col-md-12">
+                                                            <label for=""><?php echo $system_settings->system_name; ?> Vission</label>
+                                                            <textarea type="text" required name="vision" class="summernote form-control" required><?php echo $system_settings->vision; ?></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="d-flex justify-content-end">
+                                                    <button type="submit" name="update_mission_and_vision" class="btn btn-primary">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Room Settings -->
+                                <div class="tab-pane fade" id="Profile_Settings" role="tabpanel" aria-labelledby="settings_detail_tab">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="card">
+                                                <h3 class="text-center"><?php echo $system_settings->system_name; ?> Values</h3>
+                                                <form method="post" enctype="multipart/form-data" role="form">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="form-group col-md-12">
+                                                                <textarea type="text" required name="sys_values" class="summernote form-control" required><?php echo $system_settings->sys_values; ?></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-end">
+                                                        <button type="submit" name="update_values" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                </form>
                                             </div>
-                                            <div class="d-flex justify-content-end">
-                                                <button type="submit" name="update_system_settings" class="btn btn-primary">Submit</button>
-                                            </div>
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
