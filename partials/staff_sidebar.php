@@ -75,12 +75,12 @@ while ($sys = $res->fetch_object()) {
                         <li class="nav-item"><a class="nav-link" href="staff_order_customers"><i class="ti-control-record"></i>Customer Orders </a></li>
                     </ul>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="javascript: void(0);"> <i data-feather="check" class="align-self-center menu-icon"></i><span>Equipments</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="nav-second-level" aria-expanded="false">
                         <li class="nav-item"><a class="nav-link" href="staff_inventory_assets"><i class="ti-control-record"></i>Manage </a></li>
                     </ul>
-                </li>
+                </li> -->
                 <li>
                     <a href="logout"><i data-feather="log-out" class="align-self-center menu-icon"></i><span>End Session</span></a>
                 </li>
