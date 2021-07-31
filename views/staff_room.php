@@ -1,6 +1,6 @@
 <?php
 /*
- * Created on Thu Jul 15 2021
+ * Created on Fri Jul 30 2021
  *
  * The MIT License (MIT)
  * Copyright (c) 2021 MartDevelopers Inc
@@ -19,6 +19,7 @@
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+
 session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
@@ -107,13 +108,13 @@ require_once('../partials/head.php');
 
 <body>
     <!-- Left Sidenav -->
-    <?php require_once('../partials/aside.php'); ?>
+    <?php require_once('../partials/staff_sidebar.php'); ?>
     <!-- end left-sidenav-->
 
 
     <div class="page-wrapper">
         <!-- Top Bar Start -->
-        <?php require_once('../partials/header.php');
+        <?php require_once('../partials/staff_header.php');
         /* Load Room Details */
         $ret = "SELECT * FROM `iResturant_Currencies` WHERE status = 'Active'  ";
         $stmt = $mysqli->prepare($ret);

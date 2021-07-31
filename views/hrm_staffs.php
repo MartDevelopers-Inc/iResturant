@@ -104,7 +104,7 @@ if (isset($_POST["upload"])) {
 
             $login_password = "";
             if (isset($spreadSheetAry[$i][8])) {
-                $login_password = mysqli_real_escape_string($conn, $spreadSheetAry[$i][8]);
+                $login_password = sha1(md5(mysqli_real_escape_string($conn, $spreadSheetAry[$i][8])));
             }
 
             $date_employed = "";

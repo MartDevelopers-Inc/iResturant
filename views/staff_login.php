@@ -25,17 +25,17 @@ require_once('../partials/head.php');
 
 /* Login */
 if (isset($_POST['Login'])) {
-    $email = trim($_POST['email']);
+    $number = trim($_POST['number']);
     $password = sha1(md5($_POST['password']));
-    $stmt = $mysqli->prepare("SELECT email, password, id  FROM iResturant_Admin_Login  WHERE email =? AND password =?");
-    $stmt->bind_param('ss', $email, $password);
+    $stmt = $mysqli->prepare("SELECT number, login_password, id   FROM iResturant_Staff  WHERE number =? AND login_password =?");
+    $stmt->bind_param('ss', $number, $password);
     $stmt->execute();
-    $stmt->bind_result($email, $password, $id);
+    $stmt->bind_result($number, $password, $id);
     $rs = $stmt->fetch();
     $_SESSION['id'] = $id;
-    $_SESSION['email'] = $email;
+    $_SESSION['number'] = $number;
     if ($rs) {
-        header("location:dashboard");
+        header("location:staff_dashboard");
     } else {
         $err = "Access Denied Please Check Your Credentials";
     }
@@ -62,15 +62,15 @@ while ($sys = $res->fetch_object()) {
                                             <img src="../public/uploads/sys_logo/<?php echo $sys->logo; ?>" height="50" alt="logo" class="auth-logo">
                                         </a>
                                         <h4 class="mt-3 mb-1 fw-semibold text-white font-18">Login</h4>
-                                        <p class="text-muted  mb-0">Sign In To Continue To <?php echo $sys->system_name; ?>, Administrator Dashboard.</p>
+                                        <p class="text-muted  mb-0">Sign In To Continue To <?php echo $sys->system_name; ?>, Staff Dashboard.</p>
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <form class="form-horizontal auth-form" method="POST">
                                         <div class="form-group mb-2">
-                                            <label class="form-label" for="username">Email</label>
+                                            <label class="form-label" for="username">Staff Number</label>
                                             <div class="input-group">
-                                                <input required type="text" name="email" id="username" class="form-control">
+                                                <input required type="text" name="number" id="username" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-group mb-2">
@@ -83,7 +83,7 @@ while ($sys = $res->fetch_object()) {
                                             <div class="col-sm-4">
                                             </div>
                                             <div class="col-sm-8 text-end">
-                                                <a href="staff_login" class="text-muted font-13"><i class="dripicons-user"></i> Staff Login Panel</a>
+                                                <a href="../" class="text-muted font-13"><i class="dripicons-home"></i> Home</a>
                                                 <a href="reset_password" class="text-muted font-13"><i class="dripicons-lock"></i> Forgot Password?</a>
                                             </div>
                                         </div>
