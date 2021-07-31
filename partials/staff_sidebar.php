@@ -73,7 +73,6 @@ while ($sys = $res->fetch_object()) {
                     <a href="javascript: void(0);"> <i data-feather="file-plus" class="align-self-center menu-icon"></i><span>Orders Engine</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="nav-second-level" aria-expanded="false">
                         <li class="nav-item"><a class="nav-link" href="staff_order_customers"><i class="ti-control-record"></i>Customer Orders </a></li>
-                        <li class="nav-item"><a class="nav-link" href="staff_order_resturants"><i class="ti-control-record"></i>Resturant Orders </a></li>
                     </ul>
                 </li>
                 <li>
