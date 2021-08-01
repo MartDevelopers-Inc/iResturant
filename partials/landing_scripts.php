@@ -1,3 +1,64 @@
+ <?php
+    /*
+ * Created on Mon Aug 02 2021
+ *
+ * The MIT License (MIT)
+ * Copyright (c) 2021 MartDevelopers Inc
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial
+ * portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+ * TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+    require_once('../config/codeGen.php');
+
+    /* Sign Up  */
+    if (isset($_POST['Sign_Up'])) {
+        $id = $sys_gen_id;
+        $name = $_POST['name'];
+        $email = $_POST['email'];
+        $phone = $_POST['phone'];
+        $adr = $_POST['adr'];
+        $status = 'Active';
+        $client_country = $_POST['client_country'];
+        $password = $_POST['login_password'];
+        $login_password = sha1(md5($password));
+
+        $sql = "SELECT * FROM  iResturant_Customer  WHERE  (email='$email' || phone = '$phone')  ";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if ($email == $row['email'] || $phone == $row['phone']) {
+                $err =  "A Client Account With This Email Or Phone Number Already Exists";
+            }
+        } else {
+            $query = "INSERT INTO iResturant_Customer (id, name, email, phone, adr, client_country, login_password) VALUES(?,?,?,?,?,?,?)";
+            $stmt = $mysqli->prepare($query);
+            $rc = $stmt->bind_param('sssssss', $id, $name, $email, $phone, $adr, $client_country, $login_password);
+            $stmt->execute();
+            /* Mail Customer */
+            require_once('../config/welcome_mailer.php');
+
+            if ($mail->send() && $stmt) {
+                $success = "$name Account Created Proceed To Login";
+            } else {
+                $info = "Please Try Again Or Try Later";
+            }
+        }
+    }
+
+    /* Sign In */
+
+    ?>
  <!-- end modal-shared -->
  <div class="modal-popup">
      <div class="modal fade" id="signupPopupForm" tabindex="-1" role="dialog" aria-hidden="true">
@@ -34,6 +95,23 @@
                                  <div class="form-group">
                                      <span class="la la-envelope form-icon"></span>
                                      <input class="form-control" required type="text" name="email">
+                                 </div>
+                             </div><!-- end input-box -->
+                             <div class="input-box">
+                                 <label class="label-text">Country</label>
+                                 <div class="form-group">
+                                     <span class="la la-tags form-icon"></span>
+                                     <select class="form-control" required type="text" name="client_country">
+                                         <?php
+                                            $ret = "SELECT * FROM  iResturant_Country ";
+                                            $stmt = $mysqli->prepare($ret);
+                                            $stmt->execute(); //ok
+                                            $res = $stmt->get_result();
+                                            while ($country = $res->fetch_object()) {
+                                            ?>
+                                             <option value="<?php echo $country->id; ?>"><?php echo $country->name; ?></option>
+                                         <?php } ?>
+                                     </select>
                                  </div>
                              </div><!-- end input-box -->
                              <div class="input-box">
