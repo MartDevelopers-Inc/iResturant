@@ -29,33 +29,35 @@
         $email = $_POST['email'];
         $phone = $_POST['phone'];
         $adr = $_POST['adr'];
-        $status = 'Active';
         $client_country = $_POST['client_country'];
-        $password = $_POST['login_password'];
-        $login_password = sha1(md5($password));
-
-        $sql = "SELECT * FROM  iResturant_Customer  WHERE  (email='$email' || phone = '$phone')  ";
-        $res = mysqli_query($mysqli, $sql);
-        if (mysqli_num_rows($res) > 0) {
-            $row = mysqli_fetch_assoc($res);
-            if ($email == $row['email'] || $phone == $row['phone']) {
-                $err =  "A Client Account With This Email Or Phone Number Already Exists";
-            }
+        /* Check If Passwords Match */
+        if ($new_password = sha1(md5($_POST['new_password'])) != $confirm_password = sha1(md5($_POST['confirm_password']))) {
+            $err  = "Passwords Do Not Match";
         } else {
-            $query = "INSERT INTO iResturant_Customer (id, name, email, phone, adr, client_country, login_password) VALUES(?,?,?,?,?,?,?)";
-            $stmt = $mysqli->prepare($query);
-            $rc = $stmt->bind_param('sssssss', $id, $name, $email, $phone, $adr, $client_country, $login_password);
-            $stmt->execute();
-            /* Mail Customer */
-            require_once('../config/welcome_mailer.php');
-
-            if ($mail->send() && $stmt) {
-                $success = "$name Account Created Proceed To Login";
+            $sql = "SELECT * FROM  iResturant_Customer  WHERE  (email='$email' || phone = '$phone')  ";
+            $res = mysqli_query($mysqli, $sql);
+            if (mysqli_num_rows($res) > 0) {
+                $row = mysqli_fetch_assoc($res);
+                if ($email == $row['email'] || $phone == $row['phone']) {
+                    $err =  "A Client Account With This Email Or Phone Number Already Exists";
+                }
             } else {
-                $info = "Please Try Again Or Try Later";
+                $query = "INSERT INTO iResturant_Customer (id, name, email, phone, adr, client_country, login_password) VALUES(?,?,?,?,?,?,?)";
+                $stmt = $mysqli->prepare($query);
+                $rc = $stmt->bind_param('sssssss', $id, $name, $email, $phone, $adr, $client_country, $confirm_password);
+                $stmt->execute();
+                /* Mail Customer */
+                require_once('../config/welcome_mailer.php');
+
+                if ($mail->send() && $stmt) {
+                    $success = "$name Account Created Proceed To Login";
+                } else {
+                    $info = "Please Try Again Or Try Later $mail->ErrorInfo";
+                }
             }
         }
     }
+
     /* Sign In */
     if (isset($_POST['Sign_In'])) {
         $email = trim($_POST['email']);
@@ -141,14 +143,14 @@
                                  <label class="label-text">Password</label>
                                  <div class="form-group">
                                      <span class="la la-lock form-icon"></span>
-                                     <input class="form-control" required type="password" name="password">
+                                     <input class="form-control" required type="password" name="new_password">
                                  </div>
                              </div><!-- end input-box -->
                              <div class="input-box">
                                  <label class="label-text">Confirm Password</label>
                                  <div class="form-group">
                                      <span class="la la-lock form-icon"></span>
-                                     <input class="form-control" required type="password" name="password">
+                                     <input class="form-control" required type="password" name="confirm_password">
                                  </div>
                              </div><!-- end input-box -->
                              <div class="btn-box pt-3 pb-4">
