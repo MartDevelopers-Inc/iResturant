@@ -19,6 +19,7 @@
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
+    session_start();
     require_once('../config/codeGen.php');
 
     /* Sign Up  */
@@ -55,8 +56,23 @@
             }
         }
     }
-
     /* Sign In */
+    if (isset($_POST['Sign_In'])) {
+        $email = trim($_POST['email']);
+        $login_password = sha1(md5($_POST['login_password']));
+        $stmt = $mysqli->prepare("SELECT email, login_password, id   FROM iResturant_Customer  WHERE email =? AND login_password =?");
+        $stmt->bind_param('ss', $email, $login_password);
+        $stmt->execute();
+        $stmt->bind_result($email, $login_password, $id);
+        $rs = $stmt->fetch();
+        $_SESSION['id'] = $id;
+        $_SESSION['email'] = $email;
+        if ($rs) {
+            header("location:my_dashboard");
+        } else {
+            $err = "Access Denied Please Check Your Credentials";
+        }
+    }
 
     ?>
  <!-- end modal-shared -->
@@ -167,7 +183,7 @@
                                  <label class="label-text">Email Addrsss</label>
                                  <div class="form-group">
                                      <span class="la la-user form-icon"></span>
-                                     <input class="form-control" type="text" required name="email">
+                                     <input class="form-control" type="email" required name="email">
                                  </div>
                              </div><!-- end input-box -->
                              <div class="input-box">
