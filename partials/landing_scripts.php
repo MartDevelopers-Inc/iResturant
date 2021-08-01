@@ -89,21 +89,21 @@
                                  <label class="label-text">Email Addrsss</label>
                                  <div class="form-group">
                                      <span class="la la-user form-icon"></span>
-                                     <input class="form-control" type="text" name="email">
+                                     <input class="form-control" type="text" required name="email">
                                  </div>
                              </div><!-- end input-box -->
                              <div class="input-box">
                                  <label class="label-text">Password</label>
                                  <div class="form-group mb-2">
                                      <span class="la la-lock form-icon"></span>
-                                     <input class="form-control" type="text" name="login_password">
+                                     <input class="form-control" type="password" required name="login_password">
                                  </div>
                                  <div class="d-flex align-items-center justify-content-between">
                                      <div class="custom-checkbox mb-0">
 
                                      </div>
                                      <p class="forgot-password">
-                                         <a href="reset_password">Forgot Password?</a>
+                                         <a href="landing_reset_password">Forgot Password?</a>
                                      </p>
                                  </div>
                              </div><!-- end input-box -->
