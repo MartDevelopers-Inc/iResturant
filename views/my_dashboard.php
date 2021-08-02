@@ -127,239 +127,81 @@ require_once('../partials/my_head.php');
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-lg-6 responsive-column--m">
-                                <div class="form-box">
+                                <div class="form-box dashboard-card">
                                     <div class="form-title-wrap">
-                                        <h3 class="title">Statics Results</h3>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h3 class="title">My Reservations History</h3>
+                                        </div>
                                     </div>
-                                    <div class="form-content">
-                                        <canvas id="bar-chart"></canvas>
+                                    <div class="form-content p-0">
+                                        <div class="list-group drop-reveal-list">
+                                            <?php
+                                            $ret = "SELECT * FROM iResturant_Customer c
+                                            INNER JOIN iResturant_Room_Reservation r ON c.id = r.client_id
+                                            INNER JOIN iResturant_Room rm
+                                            ON r.room_id = rm.id WHERE c.id = '$id'
+                                            ORDER BY r.reserved_on ASC LIMIT 10                                                 
+                                            ";
+                                            $stmt = $mysqli->prepare($ret);
+                                            $stmt->execute(); //ok
+                                            $res = $stmt->get_result();
+                                            while ($reservations = $res->fetch_object()) {
+                                            ?>
+                                                <a href="my_reservation?view=<?php echo $reservations->code; ?>" class="list-group-item list-group-item-action border-top-0">
+                                                    <div class="msg-body d-flex align-items-center">
+                                                        <div class="icon-element flex-shrink-0 mr-3 ml-0"><i class="la la-calendar-check"></i></div>
+                                                        <div class="msg-content w-100">
+                                                            <h3 class="title pb-1"> <?php echo $reservations->code; ?></h3>
+                                                            <p class="msg-text">
+                                                                You have reserved room number : <?php echo $reservations->number; ?> Your check in time is
+                                                                <?php echo date('d M Y', strtotime($reservations->arrival)); ?>.
+                                                                Your check out time is <?php echo date('d M Y', strtotime($reservations->departure)); ?>
+                                                            </p>
+                                                        </div>
+                                                    </div><!-- end msg-body -->
+                                                </a>
+                                            <?php
+                                            }
+                                            ?>
+                                        </div>
                                     </div>
                                 </div><!-- end form-box -->
                             </div><!-- end col-lg-6 -->
+
                             <div class="col-lg-6 responsive-column--m">
                                 <div class="form-box dashboard-card">
                                     <div class="form-title-wrap">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <h3 class="title">Notifications</h3>
-                                            <button type="button" class="icon-element mark-as-read-btn ml-auto mr-0" data-toggle="tooltip" data-placement="left" title="Mark all as read">
-                                                <i class="la la-check-square"></i>
-                                            </button>
+                                            <h3 class="title">My Orders History</h3>
                                         </div>
                                     </div>
                                     <div class="form-content p-0">
                                         <div class="list-group drop-reveal-list">
-                                            <a href="#" class="list-group-item list-group-item-action border-top-0">
-                                                <div class="msg-body d-flex align-items-center">
-                                                    <div class="icon-element flex-shrink-0 mr-3 ml-0"><i class="la la-bell"></i></div>
-                                                    <div class="msg-content w-100">
-                                                        <h3 class="title pb-1">Group Trip - Available</h3>
-                                                        <p class="msg-text">2 min ago</p>
-                                                    </div>
-                                                    <span class="icon-element mark-as-read-btn flex-shrink-0 ml-auto mr-0" data-toggle="tooltip" data-placement="left" title="Mark as read">
-                                                        <i class="la la-check-square"></i>
-                                                    </span>
-                                                </div><!-- end msg-body -->
-                                            </a>
-                                            <a href="#" class="list-group-item list-group-item-action">
-                                                <div class="msg-body d-flex align-items-center">
-                                                    <div class="icon-element bg-1 flex-shrink-0 mr-3 ml-0"><i class="la la-bell"></i></div>
-                                                    <div class="msg-content w-100">
-                                                        <h3 class="title pb-1">50% Discount Offer</h3>
-                                                        <p class="msg-text">2 min ago</p>
-                                                    </div>
-                                                    <span class="icon-element mark-as-read-btn flex-shrink-0 ml-auto mr-0" data-toggle="tooltip" data-placement="left" title="Mark as read">
-                                                        <i class="la la-check-square"></i>
-                                                    </span>
-                                                </div><!-- end msg-body -->
-                                            </a>
-                                            <a href="#" class="list-group-item list-group-item-action">
-                                                <div class="msg-body d-flex align-items-center">
-                                                    <div class="icon-element bg-2 flex-shrink-0 mr-3 ml-0"><i class="la la-check"></i></div>
-                                                    <div class="msg-content w-100">
-                                                        <h3 class="title pb-1">Your account has been created</h3>
-                                                        <p class="msg-text">1 day ago</p>
-                                                    </div>
-                                                    <span class="icon-element mark-as-read-btn flex-shrink-0 ml-auto mr-0" data-toggle="tooltip" data-placement="left" title="Mark as read">
-                                                        <i class="la la-check-square"></i>
-                                                    </span>
-                                                </div><!-- end msg-body -->
-                                            </a>
-                                            <a href="#" class="list-group-item list-group-item-action">
-                                                <div class="msg-body d-flex align-items-center">
-                                                    <div class="icon-element bg-3 flex-shrink-0 mr-3 ml-0"><i class="la la-user"></i></div>
-                                                    <div class="msg-content w-100">
-                                                        <h3 class="title pb-1">Your account updated</h3>
-                                                        <p class="msg-text">2 hrs ago</p>
-                                                    </div>
-                                                    <span class="icon-element mark-as-read-btn flex-shrink-0 ml-auto mr-0" data-toggle="tooltip" data-placement="left" title="Mark as read">
-                                                        <i class="la la-check-square"></i>
-                                                    </span>
-                                                </div><!-- end msg-body -->
-                                            </a>
-                                            <a href="#" class="list-group-item list-group-item-action">
-                                                <div class="msg-body d-flex align-items-center">
-                                                    <div class="icon-element bg-4 flex-shrink-0 mr-3 ml-0"><i class="la la-lock"></i></div>
-                                                    <div class="msg-content w-100">
-                                                        <h3 class="title pb-1">Your password changed</h3>
-                                                        <p class="msg-text">Yesterday</p>
-                                                    </div>
-                                                    <span class="icon-element mark-as-read-btn flex-shrink-0 ml-auto mr-0" data-toggle="tooltip" data-placement="left" title="Mark as read">
-                                                        <i class="la la-check-square"></i>
-                                                    </span>
-                                                </div><!-- end msg-body -->
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div><!-- end form-box -->
-                            </div><!-- end col-lg-6 -->
-                            <div class="col-lg-6 responsive-column--m">
-                                <div class="form-box dashboard-card">
-                                    <div class="form-title-wrap">
-                                        <h3 class="title">Tasks</h3>
-                                    </div>
-                                    <div class="form-content">
-                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                            <i class="la la-check mr-2"></i>Your booking <a href="#" class="alert-link">Shimla to Goa</a> has been done!
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                            <i class="la la-check mr-2"></i>Sent Email to <strong>dev@gmail.com</strong>
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                            <i class="la la-check mr-2"></i>Received Email from <strong>tripstar@yahoo.com</strong>
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                            <i class="la la-check mr-2"></i>your payment is pending for <a href="#" class="alert-link">Manali</a> Trip tour!
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                            <i class="la la-check mr-2"></i>Someone reply on your comment on <a href="#" class="alert-link">London Trip</a> Tour!
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                            <i class="la la-check mr-2"></i>You have canceled <a href="#" class="alert-link">Dubai to london Trip</a>
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                            <i class="la la-check mr-2"></i>You have give a review on <span class="badge badge-warning text-white">4.5</span> <a href="#" class="alert-link">EnVision Hotel Boston</a>
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div><!-- end form-box -->
-                            </div><!-- end col-lg-6 -->
-                            <div class="col-lg-6 responsive-column--m">
-                                <div class="form-box dashboard-card order-card border-0">
-                                    <div class="form-title-wrap">
-                                        <h3 class="title">Orders</h3>
-                                    </div>
-                                    <div class="form-content p-0">
-                                        <div class="list-group drop-reveal-list">
-                                            <div class="list-group-item list-group-item-action border-top-0">
-                                                <div class="msg-body d-flex align-items-center justify-content-between">
-                                                    <div class="msg-content">
-                                                        <h3 class="title pb-2">3 - Night Bahamas - Miami Round-Trip</h3>
-                                                        <ul class="list-items d-flex align-items-center">
-                                                            <li class="font-size-14 mr-2"><span class="badge badge-success py-1 px-2 font-size-13 font-weight-medium">Paid</span></li>
-                                                            <li class="font-size-14 mr-2">Order: #232</li>
-                                                            <li class="font-size-14">Date: 11/05/2019</li>
-                                                        </ul>
-                                                    </div>
-                                                    <a href="#" class="theme-btn theme-btn-small theme-btn-transparent font-size-13">
-                                                        View Invoice
-                                                    </a>
-                                                </div><!-- end msg-body -->
-                                            </div>
-                                            <div class="list-group-item list-group-item-action">
-                                                <div class="msg-body d-flex align-items-center justify-content-between">
-                                                    <div class="msg-content">
-                                                        <h3 class="title pb-2">California To Newyork</h3>
-                                                        <ul class="list-items d-flex align-items-center">
-                                                            <li class="font-size-14 mr-2"><span class="badge badge-danger py-1 px-2 font-size-13 font-weight-medium">UnPaid</span></li>
-                                                            <li class="font-size-14 mr-2">Order: #232</li>
-                                                            <li class="font-size-14">Date: 11/05/2019</li>
-                                                        </ul>
-                                                    </div>
-                                                    <a href="#" class="theme-btn theme-btn-small theme-btn-transparent font-size-13">
-                                                        Finish Payment
-                                                    </a>
-                                                </div><!-- end msg-body -->
-                                            </div>
-                                            <div class="list-group-item list-group-item-action">
-                                                <div class="msg-body d-flex align-items-center justify-content-between">
-                                                    <div class="msg-content">
-                                                        <h3 class="title pb-2">Two Hour Walking Tour of Manhattan</h3>
-                                                        <ul class="list-items d-flex align-items-center">
-                                                            <li class="font-size-14 mr-2"><span class="badge badge-success py-1 px-2 font-size-13 font-weight-medium">Paid</span></li>
-                                                            <li class="font-size-14 mr-2">Order: #232</li>
-                                                            <li class="font-size-14">Date: 11/05/2019</li>
-                                                        </ul>
-                                                    </div>
-                                                    <a href="#" class="theme-btn theme-btn-small theme-btn-transparent font-size-13">
-                                                        View Invoice
-                                                    </a>
-                                                </div><!-- end msg-body -->
-                                            </div>
-                                            <div class="list-group-item list-group-item-action">
-                                                <div class="msg-body d-flex align-items-center justify-content-between">
-                                                    <div class="msg-content">
-                                                        <h3 class="title pb-2">Dubai to Spain</h3>
-                                                        <ul class="list-items d-flex align-items-center">
-                                                            <li class="font-size-14 mr-2"><span class="badge badge-success py-1 px-2 font-size-13 font-weight-medium">Paid</span></li>
-                                                            <li class="font-size-14 mr-2">Order: #232</li>
-                                                            <li class="font-size-14">Date: 11/05/2019</li>
-                                                        </ul>
-                                                    </div>
-                                                    <a href="#" class="theme-btn theme-btn-small theme-btn-transparent font-size-13">
-                                                        View Invoice
-                                                    </a>
-                                                </div><!-- end msg-body -->
-                                            </div>
-                                            <div class="list-group-item list-group-item-action">
-                                                <div class="msg-body d-flex align-items-center justify-content-between">
-                                                    <div class="msg-content">
-                                                        <h3 class="title pb-2">Parian Holiday Villas</h3>
-                                                        <ul class="list-items d-flex align-items-center">
-                                                            <li class="font-size-14 mr-2"><span class="badge badge-success py-1 px-2 font-size-13 font-weight-medium">Paid</span></li>
-                                                            <li class="font-size-14 mr-2">Order: #232</li>
-                                                            <li class="font-size-14">Date: 11/05/2019</li>
-                                                        </ul>
-                                                    </div>
-                                                    <a href="#" class="theme-btn theme-btn-small theme-btn-transparent font-size-13">
-                                                        View Invoice
-                                                    </a>
-                                                </div><!-- end msg-body -->
-                                            </div>
-                                            <div class="list-group-item list-group-item-action">
-                                                <div class="msg-body d-flex align-items-center justify-content-between">
-                                                    <div class="msg-content">
-                                                        <h3 class="title pb-2">Lake Palace Hotel</h3>
-                                                        <ul class="list-items d-flex align-items-center">
-                                                            <li class="font-size-14 mr-2"><span class="badge badge-success py-1 px-2 font-size-13 font-weight-medium">Paid</span></li>
-                                                            <li class="font-size-14 mr-2">Order: #232</li>
-                                                            <li class="font-size-14">Date: 11/05/2019</li>
-                                                        </ul>
-                                                    </div>
-                                                    <a href="#" class="theme-btn theme-btn-small theme-btn-transparent font-size-13">
-                                                        View Invoice
-                                                    </a>
-                                                </div><!-- end msg-body -->
-                                            </div>
+                                            <?php
+                                            /* Load My Orders History Details */
+                                            $ret =
+                                                "SELECT * FROM iResturant_Customer c INNER JOIN iResturant_Customer_Orders cs ON cs.customer_id = c.id 
+                                            INNER JOIN iResturant_Menu rm
+                                            ON rm.meal_id = cs.meal_menu_id WHERE c.id = '$id' ORDER BY cs.created_at DESC LIMIT 10
+                                            /* INNER JOIN iResturant_Payments pa ON cs.code = pa.order_code  */";
+                                            $stmt = $mysqli->prepare($ret);
+                                            $stmt->execute(); //ok
+                                            $res = $stmt->get_result();
+                                            while ($orders = $res->fetch_object()) {
+                                            ?>
+                                                <a href="my_order?view=<?php echo $orders->code; ?>" class="list-group-item list-group-item-action border-top-0">
+                                                    <div class="msg-body d-flex align-items-center">
+                                                        <div class="icon-element flex-shrink-0 mr-3 ml-0"><i class="la la-list-alt"></i></div>
+                                                        <div class="msg-content w-100">
+                                                            <h3 class="title pb-1"> <?php echo $orders->name; ?></h3>
+                                                            <p class="msg-text"> Ordered <?php echo $orders->meal_count . " " . $orders->meal_name; ?></p>
+                                                            <p class="msg-text"><?php echo date('d M Y g:ia', strtotime($orders->created_at)); ?></p>
+                                                        </div>
+                                                    </div><!-- end msg-body -->
+                                                </a>
+                                            <?php
+                                            }
+                                            ?>
                                         </div>
                                     </div>
                                 </div><!-- end form-box -->
@@ -372,7 +214,6 @@ require_once('../partials/my_head.php');
             </div><!-- end dashboard-content-wrap -->
         </section>
     <?php } ?>
-
 
     <!-- start scroll top -->
     <div id="back-to-top">
