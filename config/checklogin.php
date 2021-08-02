@@ -45,3 +45,17 @@ function staff()
 		header("Location: http://$host$uri/$extra");
 	}
 }
+
+
+/* Client */
+function client()
+{
+	if ((strlen($_SESSION['id']) == 0) && (strlen($_SESSION['email']) == '0')) {
+		$host = $_SERVER['HTTP_HOST'];
+		$uri  = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
+		$extra = "../index";
+		$_SESSION["id"] = "";
+		$_SESSION["email"] = "";
+		header("Location: http://$host$uri/$extra");
+	}
+}
