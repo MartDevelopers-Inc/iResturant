@@ -21,57 +21,10 @@
  */
     require_once('../config/codeGen.php');
     /* Sign Up  */
-    if (isset($_POST['Sign_Up'])) {
-        $id = $sys_gen_id;
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
-        $adr = $_POST['adr'];
-        /* Check If Passwords Match */
-        if ($new_password = sha1(md5($_POST['new_password'])) != $confirm_password = sha1(md5($_POST['confirm_password']))) {
-            $err  = "Passwords Do Not Match";
-        } else {
-            $sql = "SELECT * FROM  iResturant_Customer  WHERE  (email='$email' || phone = '$phone')  ";
-            $res = mysqli_query($mysqli, $sql);
-            if (mysqli_num_rows($res) > 0) {
-                $row = mysqli_fetch_assoc($res);
-                if ($email == $row['email'] || $phone == $row['phone']) {
-                    $err =  "A Client Account With This Email Or Phone Number Already Exists";
-                }
-            } else {
-                $query = "INSERT INTO iResturant_Customer (id, name, email, phone, adr, login_password) VALUES(?,?,?,?,?,?)";
-                $stmt = $mysqli->prepare($query);
-                $rc = $stmt->bind_param('sssssss', $id, $name, $email, $phone, $adr, $confirm_password);
-                $stmt->execute();
-                /* Mail Customer */
-                require_once('../config/welcome_mailer.php');
-
-                if ($mail->send() && $stmt) {
-                    $success = "$name Account Created Proceed To Login";
-                } else {
-                    $info = "Please Try Again Or Try Later $mail->ErrorInfo";
-                }
-            }
-        }
-    }
+    
 
     /* Sign In */
-    if (isset($_POST['Sign_In'])) {
-        $email = trim($_POST['email']);
-        $login_password = sha1(md5($_POST['login_password']));
-        $stmt = $mysqli->prepare("SELECT email, login_password, id   FROM iResturant_Customer  WHERE email =? AND login_password =?");
-        $stmt->bind_param('ss', $email, $login_password);
-        $stmt->execute();
-        $stmt->bind_result($email, $login_password, $id);
-        $rs = $stmt->fetch();
-        $_SESSION['id'] = $id;
-        $_SESSION['email'] = $email;
-        if ($rs) {
-            header("location:my_dashboard");
-        } else {
-            $err = "Access Denied Please Check Your Credentials";
-        }
-    }
+    
 
     ?>
  <!-- end modal-shared -->
