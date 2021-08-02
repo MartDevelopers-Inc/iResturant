@@ -112,7 +112,7 @@
                                  <label class="label-text">Email Address</label>
                                  <div class="form-group">
                                      <span class="la la-envelope form-icon"></span>
-                                     <input class="form-control" required type="text" name="email">
+                                     <input class="form-control" required type="email" name="email">
                                  </div>
                              </div><!-- end input-box -->
                              <div class="input-box">
@@ -136,7 +136,7 @@
                                  <label class="label-text">Address</label>
                                  <div class="form-group">
                                      <span class="la la-map-pin form-icon"></span>
-                                     <input class="form-control" required type="text" name="email">
+                                     <input class="form-control" required type="text" name="adr">
                                  </div>
                              </div><!-- end input-box -->
                              <div class="input-box">

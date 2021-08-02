@@ -1,0 +1,16 @@
+<script src="../partials/js/jquery-3.4.1.min.js"></script>
+<script src="../partials/js/jquery-ui.js"></script>
+<script src="../partials/js/popper.min.js"></script>
+<script src="../partials/js/bootstrap.min.js"></script>
+<script src="../partials/js/bootstrap-select.min.js"></script>
+<script src="../partials/js/moment.min.js"></script>
+<script src="../partials/js/daterangepicker.js"></script>
+<script src="../partials/js/owl.carousel.min.js"></script>
+<script src="../partials/js/jquery.fancybox.min.js"></script>
+<script src="../partials/js/jquery.countTo.min.js"></script>
+<script src="../partials/js/animated-headline.js"></script>
+<script src="../partials/js/chart.js"></script>
+<script src="../partials/js/chart.extension.js"></script>
+<script src="../partials/js/bar-chart.js"></script>
+<script script src="../partials/js/jquery.ripples-min.js"></script>
+<script src="../partials/js/main.js"></script>
