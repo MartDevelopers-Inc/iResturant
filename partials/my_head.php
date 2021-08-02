@@ -58,5 +58,8 @@ while ($sys = $res->fetch_object()) {
         <link rel="stylesheet" href="../public/css/jquery-ui.css">
         <link rel="stylesheet" href="../public/css/flag-icon.min.css">
         <link rel="stylesheet" href="../public/css/style.css">
+        <!-- Data Table CDNS -->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.css" />
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css" />
     </head>
 <?php } ?>
