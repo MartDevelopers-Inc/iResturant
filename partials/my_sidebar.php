@@ -50,9 +50,11 @@ while ($sys = $res->fetch_object()) {
                 </li>
 
                 <li>
-                    <a href="javascript: void(0);"> <i data-feather="file-plus" class="align-self-center menu-icon"></i><span>Orders Engine</span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
+                    <a href="javascript: void(0);"> <i data-feather="file-plus" class="align-self-center menu-icon"></i><span>Orders </span><span class="menu-arrow"><i class="mdi mdi-chevron-right"></i></span></a>
                     <ul class="nav-second-level" aria-expanded="false">
-                        <li class="nav-item"><a class="nav-link" href="my_order_customers"><i class="ti-control-record"></i>Customer Orders </a></li>
+                        <li class="nav-item"><a class="nav-link" href="my_order_customers"><i class="ti-control-record"></i>My Orders </a></li>
+                        <li class="nav-item"><a class="nav-link" href="my_order_payments"><i class="ti-control-record"></i>Orders Payments </a></li>
+
                     </ul>
                 </li>
 
