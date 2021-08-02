@@ -34,7 +34,9 @@ require_once('../partials/head.php');
 
     <div class="page-wrapper">
         <!-- Top Bar Start -->
-        <?php require_once('../partials/my_header.php'); ?>
+        <?php require_once('../partials/my_header.php');
+        $id = $_SESSION['id'];
+        ?>
         <!-- Top Bar End -->
 
         <!-- Page Content-->
@@ -46,7 +48,7 @@ require_once('../partials/head.php');
                         <div class="page-title-box">
                             <div class="row">
                                 <div class="col">
-                                    <h4 class="page-title"><?php echo $_SESSION['number']; ?> Dashboard</h4>
+                                    <h4 class="page-title">My Dashboard</h4>
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="my_dashboard">Home</a></li>
                                         <li class="breadcrumb-item active">Dashboard</li>
@@ -64,20 +66,19 @@ require_once('../partials/head.php');
                 <!-- end page title end breadcrumb -->
                 <div class="row">
                     <div class="col-lg-12">
-
                         <div class="row justify-content-center">
-                            <!-- Rooms -->
+                            <!-- Revenues And Expenses -->
                             <div class="col-md-6 col-lg-3">
                                 <div class="card report-card">
                                     <div class="card-body">
                                         <div class="row d-flex justify-content-center">
                                             <div class="col">
-                                                <p class="text-dark mb-0 fw-semibold">Rooms</p>
-                                                <h3 class="m-0"><?php echo $tr; ?> </h3>
+                                                <p class="text-dark mb-0 fw-semibold">My Reservations</p>
+                                                <h3 class="m-0"><?php echo $reservations; ?> </h3>
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="airplay" class="align-self-center text-muted icon-sm"></i>
+                                                    <i data-feather="calendar" class="align-self-center text-muted icon-sm"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -92,12 +93,12 @@ require_once('../partials/head.php');
                                     <div class="card-body">
                                         <div class="row d-flex justify-content-center">
                                             <div class="col">
-                                                <p class="text-dark mb-0 fw-semibold">Reserved Rooms</p>
-                                                <h3 class="m-0"><?php echo $resr; ?></h3>
+                                                <p class="text-dark mb-0 fw-semibold">My Orders</p>
+                                                <h3 class="m-0"><?php echo $my_orders; ?></h3>
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="file-plus" class="align-self-center text-muted icon-sm"></i>
+                                                    <i data-feather="check" class="align-self-center text-muted icon-sm"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -112,12 +113,12 @@ require_once('../partials/head.php');
                                     <div class="card-body">
                                         <div class="row d-flex justify-content-center">
                                             <div class="col">
-                                                <p class="text-dark mb-0 fw-semibold">Vacant Rooms</p>
-                                                <h3 class="m-0"><?php echo $vr; ?></h3>
+                                                <p class="text-dark mb-0 fw-semibold">Reservations Debits</p>
+                                                <h3 class="m-0"><?php echo $reservations_payments; ?></h3>
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="file-minus" class="align-self-center text-muted icon-sm"></i>
+                                                    <i data-feather="dollar-sign" class="align-self-center text-muted icon-sm"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -132,12 +133,12 @@ require_once('../partials/head.php');
                                     <div class="card-body">
                                         <div class="row d-flex justify-content-center">
                                             <div class="col">
-                                                <p class="text-dark mb-0 fw-semibold">On Renovation Rooms</p>
-                                                <h3 class="m-0"><?php echo $urr; ?></h3>
+                                                <p class="text-dark mb-0 fw-semibold">Orders Debits</p>
+                                                <h3 class="m-0"><?php echo $orders_payment; ?></h3>
                                             </div>
                                             <div class="col-auto align-self-center">
                                                 <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="tool" class="align-self-center text-muted icon-sm"></i>
+                                                    <i data-feather="dollar-sign" class="align-self-center text-muted icon-sm"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -147,89 +148,6 @@ require_once('../partials/head.php');
                                 <!--end card-->
                             </div>
                         </div>
-                        <div class="row justify-content-center">
-                            <!-- Staffs And Others -->
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card report-card">
-                                    <div class="card-body">
-                                        <div class="row d-flex justify-content-center">
-                                            <div class="col">
-                                                <p class="text-dark mb-0 fw-semibold">Staffs</p>
-                                                <h3 class="m-0"><?php echo $sff; ?> </h3>
-                                            </div>
-                                            <div class="col-auto align-self-center">
-                                                <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="user-check" class="align-self-center text-muted icon-sm"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--end card-body-->
-                                </div>
-                                <!--end card-->
-                            </div>
-                            <!--end col-->
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card report-card">
-                                    <div class="card-body">
-                                        <div class="row d-flex justify-content-center">
-                                            <div class="col">
-                                                <p class="text-dark mb-0 fw-semibold">Customers</p>
-                                                <h3 class="m-0"><?php echo $cus; ?></h3>
-                                            </div>
-                                            <div class="col-auto align-self-center">
-                                                <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="users" class="align-self-center text-muted icon-sm"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--end card-body-->
-                                </div>
-                                <!--end card-->
-                            </div>
-                            <!--end col-->
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card report-card">
-                                    <div class="card-body">
-                                        <div class="row d-flex justify-content-center">
-                                            <div class="col">
-                                                <p class="text-dark mb-0 fw-semibold">Suppliers</p>
-                                                <h3 class="m-0"><?php echo $sp; ?></h3>
-                                            </div>
-                                            <div class="col-auto align-self-center">
-                                                <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="users" class="align-self-center text-muted icon-sm"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--end card-body-->
-                                </div>
-                                <!--end card-->
-                            </div>
-                            <!--end col-->
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card report-card">
-                                    <div class="card-body">
-                                        <div class="row d-flex justify-content-center">
-                                            <div class="col">
-                                                <p class="text-dark mb-0 fw-semibold">Corp. Equipments</p>
-                                                <h3 class="m-0"><?php echo $ce; ?></h3>
-                                            </div>
-                                            <div class="col-auto align-self-center">
-                                                <div class="report-main-icon bg-light-alt">
-                                                    <i data-feather="sliders" class="align-self-center text-muted icon-sm"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--end card-body-->
-                                </div>
-                                <!--end card-->
-                            </div>
-                        </div>
-
                         <!--end row-->
                     </div>
                 </div>
@@ -241,7 +159,7 @@ require_once('../partials/head.php');
                             <div class="card-header">
                                 <div class="row align-items-center">
                                     <div class="col">
-                                        <h4 class="card-title">Customer Resturant Order Activity</h4>
+                                        <h4 class="card-title">My Orders Activity</h4>
                                     </div>
                                 </div>
                                 <!--end row-->
@@ -252,9 +170,8 @@ require_once('../partials/head.php');
                                     <?php
                                     $ret =
                                         "SELECT * FROM iResturant_Customer c INNER JOIN iResturant_Customer_Orders cs ON cs.customer_id = c.id 
-                                        INNER JOIN iResturant_Menu rm
-                                        ON rm.meal_id = cs.meal_menu_id ORDER BY cs.created_at DESC LIMIT 10
-                                        /* INNER JOIN iResturant_Payments pa ON cs.code = pa.order_code  */";
+                                    INNER JOIN iResturant_Menu rm
+                                    ON rm.meal_id = cs.meal_menu_id WHERE c.id = '$id' ORDER BY cs.created_at DESC LIMIT 10";
                                     $stmt = $mysqli->prepare($ret);
                                     $stmt->execute(); //ok
                                     $res = $stmt->get_result();
@@ -277,7 +194,8 @@ require_once('../partials/head.php');
                                             </div>
                                         </div>
                                         <hr>
-                                    <?php } ?>
+                                    <?php
+                                    } ?>
 
                                 </div>
                             </div>
@@ -289,7 +207,7 @@ require_once('../partials/head.php');
                             <div class="card-header">
                                 <div class="row align-items-center">
                                     <div class="col">
-                                        <h4 class="card-title">Rooms Reservation Activity</h4>
+                                        <h4 class="card-title">My Reservation Activity</h4>
                                     </div>
                                 </div>
                                 <!--end row-->
@@ -303,7 +221,7 @@ require_once('../partials/head.php');
                                         $ret = "SELECT * FROM iResturant_Customer c
                                             INNER JOIN iResturant_Room_Reservation r ON c.id = r.client_id
                                             INNER JOIN iResturant_Room rm
-                                            ON r.room_id = rm.id ORDER BY r.reserved_on ASC LIMIT 10                                                 
+                                            ON r.room_id = rm.id WHERE c.id = '$id' ORDER BY r.reserved_on  ASC LIMIT 10                                                 
                                             ";
                                         $stmt = $mysqli->prepare($ret);
                                         $stmt->execute(); //ok
@@ -316,10 +234,11 @@ require_once('../partials/head.php');
                                                 </div>
                                                 <div class="activity-info-text">
                                                     <div class="d-flex justify-content-between align-items-center">
-                                                        <p class="text-muted mb-0 font-13 w-75"><span><?php echo $reservations->name . " <br> " . $reservations->email; ?></span>
-                                                            Reserved Room Number:<?php echo $reservations->number; ?>. Code: <a href="staff_reservation_details?view=<?php echo $reservations->code; ?>"><?php echo $reservations->code; ?>
+                                                        <p class="text-muted mb-0 font-13 w-75">You
+                                                            Reserved Room Number:<?php echo $reservations->number; ?>. Reservation Code: <a href="my_reservation_details?view=<?php echo $reservations->code; ?>"><?php echo $reservations->code; ?>
                                                             </a>
-                                                            On <?php echo date('d M Y', strtotime($reservations->reserved_on)); ?>
+                                                            On <?php echo date('d M Y', strtotime($reservations->reserved_on)); ?>. Your check in time is <?php echo date('d M Y', strtotime($reservations->arrival)); ?>
+                                                            and check out is <?php echo date('d M Y', strtotime($reservations->departure)); ?>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -339,6 +258,7 @@ require_once('../partials/head.php');
             <?php require_once('../partials/footer.php'); ?>
             <!--end footer-->
         </div>
+
         <!-- end page content -->
     </div>
     <!-- end page-wrapper -->

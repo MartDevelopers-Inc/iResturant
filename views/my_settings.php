@@ -24,7 +24,8 @@ session_start();
 require_once('../config/config.php');
 require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
-staff();
+client();
+
 /* Update User Profile */
 if (isset($_POST['update_profile_pic'])) {
     $id = $_POST['id'];
@@ -43,143 +44,27 @@ if (isset($_POST['update_profile_pic'])) {
     }
 }
 
-/* Update Profile */
-if (isset($_POST['update_staff'])) {
-    $error = 0;
-    if (isset($_POST['id']) && !empty($_POST['id'])) {
-        $id = mysqli_real_escape_string($mysqli, trim($_POST['id']));
-    } else {
-        $error = 1;
-        $err = "ID Cannot Be Empty";
-    }
-    if (isset($_POST['number']) && !empty($_POST['number'])) {
-        $number = mysqli_real_escape_string($mysqli, trim($_POST['number']));
-    } else {
-        $error = 1;
-        $err = "Staff Number Cannot Be Empty";
-    }
-    if (isset($_POST['name']) && !empty($_POST['name'])) {
-        $name = mysqli_real_escape_string($mysqli, trim($_POST['name']));
-    } else {
-        $error = 1;
-        $err = "Staff Name Cannot Be Empty";
-    }
-    if (isset($_POST['dob']) && !empty($_POST['dob'])) {
-        $dob = mysqli_real_escape_string($mysqli, trim($_POST['dob']));
-    } else {
-        $error = 1;
-        $err = "Staff DOB Cannot Be Empty";
-    }
-    if (isset($_POST['gender']) && !empty($_POST['gender'])) {
-        $gender = mysqli_real_escape_string($mysqli, trim($_POST['gender']));
-    } else {
-        $error = 1;
-        $err = "Staff Gender Cannot Be Empty";
-    }
-    if (isset($_POST['phone']) && !empty($_POST['phone'])) {
-        $phone = mysqli_real_escape_string($mysqli, trim($_POST['phone']));
-    } else {
-        $error = 1;
-        $err = "Staff Phone Number Cannot Be Empty";
-    }
-    if (isset($_POST['email']) && !empty($_POST['email'])) {
-        $email = mysqli_real_escape_string($mysqli, trim($_POST['email']));
-    } else {
-        $error = 1;
-        $err = "Staff Email Number Cannot Be Empty";
-    }
-    if (isset($_POST['adr']) && !empty($_POST['adr'])) {
-        $adr = mysqli_real_escape_string($mysqli, trim($_POST['adr']));
-    } else {
-        $error = 1;
-        $err = "Staff Address Cannot Be Empty";
-    }
 
-    $date_employed = $_POST['date_employed'];
-
-    if (!$error) {
-
-        $query = "UPDATE  iResturant_Staff SET name =?, dob =?, gender =?, phone =?, email =?, adr =?, date_employed =? WHERE id =?";
-        $stmt = $mysqli->prepare($query);
-        $rc = $stmt->bind_param('ssssssss', $name, $dob, $gender, $phone, $email, $adr, $date_employed, $id);
-        $stmt->execute();
-        if ($stmt) {
-            $success = "$name - $number  Account Updated";
-        } else {
-            $info = "Please Try Again Or Try Later";
-        }
-    }
-}
-
-/* Update Login Details */
-if (isset($_POST['update_staff_password'])) {
-
-    $error = 0;
-    if (isset($_POST['old_password']) && !empty($_POST['old_password'])) {
-        $old_password = mysqli_real_escape_string($mysqli, trim(sha1(md5($_POST['old_password']))));
-    } else {
-        $error = 1;
-        $err = "Old Password Cannot Be Empty";
-    }
-    if (isset($_POST['new_password']) && !empty($_POST['new_password'])) {
-        $new_password = mysqli_real_escape_string($mysqli, trim(sha1(md5($_POST['new_password']))));
-    } else {
-        $error = 1;
-        $err = "New Password Cannot Be Empty";
-    }
-    if (isset($_POST['confirm_password']) && !empty($_POST['confirm_password'])) {
-        $confirm_password = mysqli_real_escape_string($mysqli, trim(sha1(md5($_POST['confirm_password']))));
-    } else {
-        $error = 1;
-        $err = "Confirmation Password Cannot Be Empty";
-    }
-
-    if (!$error) {
-        $id = $_SESSION['id'];
-        $sql = "SELECT * FROM  iResturant_Staff  WHERE id = '$id'";
-        $res = mysqli_query($mysqli, $sql);
-        if (mysqli_num_rows($res) > 0) {
-            $row = mysqli_fetch_assoc($res);
-            if ($old_password != $row['login_password']) {
-                $err =  "Please Enter Correct Old Password";
-            } elseif ($new_password != $confirm_password) {
-                $err = "Confirmation Password Does Not Match";
-            } else {
-                $id = $_SESSION['id'];
-                $new_password  = sha1(md5($_POST['new_password']));
-                $query = "UPDATE iResturant_Staff SET  login_password =? WHERE id =?";
-                $stmt = $mysqli->prepare($query);
-                $rc = $stmt->bind_param('ss', $new_password, $id);
-                $stmt->execute();
-                if ($stmt) {
-                    $success = "Profile Updated";
-                } else {
-                    $err = "Please Try Again Or Try Later";
-                }
-            }
-        }
-    }
-}
 
 require_once('../partials/head.php');
 ?>
 
 <body>
     <!-- Left Sidenav -->
-    <?php require_once('../partials/staff_sidebar.php'); ?>
+    <?php require_once('../partials/my_sidebar.php'); ?>
 
     <!-- end left-sidenav-->
 
 
     <div class="page-wrapper">
         <!-- Top Bar Start -->
-        <?php require_once('../partials/staff_header.php');
-        $number = $_SESSION['number'];
-        $ret = "SELECT * FROM  iResturant_Staff WHERE number = '$number' ";
+        <?php require_once('../partials/my_header.php');
+        $id = $_SESSION['id'];
+        $ret = "SELECT * FROM  iResturant_Customer WHERE id = '$id' ";
         $stmt = $mysqli->prepare($ret);
         $stmt->execute(); //ok
         $res = $stmt->get_result();
-        while ($staff = $res->fetch_object()) {
+        while ($customer = $res->fetch_object()) {
         ?>
 
             <!-- Top Bar End -->
@@ -191,9 +76,9 @@ require_once('../partials/head.php');
                             <div class="page-title-box">
                                 <div class="row">
                                     <div class="col">
-                                        <h4 class="page-title"><?php echo $staff->name; ?> Profile</h4>
+                                        <h4 class="page-title"><?php echo $customer->name; ?> Profile</h4>
                                         <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="staff_dashboard">Dastone</a></li>
+                                            <li class="breadcrumb-item"><a href="my_dashboard">Dastone</a></li>
                                             <li class="breadcrumb-item active">Profile</li>
                                         </ol>
                                     </div>
@@ -218,11 +103,12 @@ require_once('../partials/head.php');
                                                 <div class="dastone-profile-main">
                                                     <div class="dastone-profile-main-pic">
                                                         <?php
-                                                        if ($staff->passport == '') {
+                                                        if ($customer->profile_pic == '') {
                                                             $dir = '../public/uploads/user_images/no-profile.png';
                                                         } else {
-                                                            $dir = "../public/uploads/user_images/$staff->passport";
-                                                        } ?>
+                                                            $dir = "../public/uploads/user_images/$customer->profile_pic";
+                                                        }
+                                                        ?>
                                                         <img src="<?php echo $dir; ?>" alt="" height="110" class="rounded-circl">
                                                         <a href="#profile" data-bs-toggle="modal" data-bs-target="#profile" class="dastone-profile_main-pic-change">
                                                             <i class="fas fa-camera"></i>
@@ -242,7 +128,7 @@ require_once('../partials/head.php');
                                                                                     <div class="form-group col-md-12">
                                                                                         <label for="">Passport (Profile Picture) </label>
                                                                                         <input type="file" name="passport" required class="form-control">
-                                                                                        <input type="hidden" value="<?php echo $staff->id; ?>" name="id" class="form-control">
+                                                                                        <input type="hidden" value="<?php echo $customer->id; ?>" name="id" class="form-control">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -274,19 +160,25 @@ require_once('../partials/head.php');
                                         <div class="row">
                                             <div class="col-lg-6 ms-auto align-self-center">
                                                 <ul class="list-unstyled personal-detail mb-0">
-                                                    <li class="mt-2"><i class="ti ti-user me-2 text-secondary font-16 align-middle"></i> <b> Name </b> : <?php echo $staff->name; ?></li>
-                                                    <li class="mt-2"><i class="ti ti-tag me-2 text-secondary font-16 align-middle"></i> <b> Number </b> : <?php echo $staff->number; ?></li>
-                                                    <li class="mt-2"><i class="ti ti-mobile me-2 text-secondary font-16 align-middle"></i> <b> Phone </b> : <?php echo $staff->phone; ?></li>
-                                                    <li class="mt-2"><i class="ti ti-email text-secondary font-16 align-middle me-2"></i> <b> Email </b> : <?php echo $staff->email; ?></li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-lg-6 ms-auto align-self-center">
-                                                <ul class="list-unstyled personal-detail mb-0">
-                                                    <li class="mt-2"><i class="ti ti-tag text-secondary font-16 align-middle me-2"></i> <b> Gender </b> : <?php echo $staff->gender; ?>
-                                                    <li class="mt-2"><i class="ti ti-gift me-2 text-secondary font-16 align-middle"></i> <b> D.O.B </b> : <?php echo date('d M Y', strtotime($staff->dob)); ?></li>
-                                                    <li class="mt-2"><i class="ti ti-email text-secondary font-16 align-middle me-2"></i> <b> Address </b> : <?php echo $staff->adr; ?></li>
-                                                    <li class="mt-2"><i class="ti ti-calendar text-secondary font-16 align-middle me-2"></i> <b> Date Employed </b> : <?php echo date('d M Y', strtotime($staff->date_employed)); ?>
+                                                    <li class="mt-2"><i class="ti ti-mobile me-2 text-secondary font-16 align-middle"></i> <b> Phone </b> : <?php echo $customer->phone; ?></li>
+                                                    <li class="mt-2"><i class="ti ti-email text-secondary font-16 align-middle me-2"></i> <b> Email </b> : <?php echo $customer->email; ?></li>
+                                                    <li class="mt-2"><i class="ti ti-tag text-secondary font-16 align-middle me-2"></i> <b> Address </b> : <?php echo $customer->adr; ?>
+
                                                     </li>
+                                                </ul>
+
+                                                <ul class="list-unstyled personal-detail mb-0">
+                                                    <?php
+                                                    $country = $customer->client_country;
+                                                    $ret = "SELECT * FROM  iResturant_Country WHERE id = '$country' ";
+                                                    $stmt = $mysqli->prepare($ret);
+                                                    $stmt->execute(); //ok
+                                                    $res = $stmt->get_result();
+                                                    while ($country = $res->fetch_object()) {
+                                                    ?>
+                                                        <li class="mt-2"><i class="ti ti-gift me-2 text-secondary font-16 align-middle"></i> <b> Country Code </b> : <?php echo $country->code; ?></li>
+                                                        <li class="mt-2"><i class="ti ti-flag text-secondary font-16 align-middle me-2"></i> <b> Country Name </b> : <?php echo $country->name; ?></li>
+                                                    <?php } ?>
                                                 </ul>
                                             </div>
                                         </div>
@@ -316,47 +208,41 @@ require_once('../partials/head.php');
                                                     <form method="post" enctype="multipart/form-data" role="form">
                                                         <div class="card-body">
                                                             <div class="row">
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="">Number </label>
-                                                                    <input type="text" readonly required name="number" value="<?php echo $staff->number; ?>" class="form-control" id="exampleInputEmail1">
-                                                                    <input type="hidden" required name="id" value="<?php echo $staff->id; ?>" class="form-control">
-                                                                </div>
-                                                                <div class="form-group col-md-6">
+                                                                <div class="form-group col-md-12">
                                                                     <label for="">Full Name </label>
-                                                                    <input type="text" required name="name" value="<?php echo $staff->name; ?>" class="form-control" id="exampleInputEmail1">
+                                                                    <input type="hidden" required name="id" value="<?php echo $customer->id; ?>" class="form-control">
+                                                                    <input type="text" required name="name" class="form-control" value="<?php echo $customer->name; ?>" id="exampleInputEmail1">
                                                                 </div>
-                                                                <div class="form-group col-md-4">
-                                                                    <label for="">Gender </label>
-                                                                    <select type="text" required name="gender" class="form-control">
-                                                                        <option>Male</option>
-                                                                        <option>Female</option>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="form-group col-md-4">
-                                                                    <label for="">D.O.B </label>
-                                                                    <input type="text" placeholder="DD/MM/YYYY" value="<?php echo $staff->dob; ?>" required name="dob" class="form-control" id="exampleInputEmail1">
-                                                                </div>
-                                                                <div class="form-group col-md-4">
+                                                                <div class="form-group col-md-6">
                                                                     <label for="">Phone Number </label>
-                                                                    <input type="text" required name="phone" value="<?php echo $staff->phone; ?>" class="form-control" id="exampleInputEmail1">
+                                                                    <input type="text" required name="phone" value="<?php echo $customer->phone; ?>" class="form-control" id="exampleInputEmail1">
                                                                 </div>
                                                                 <div class="form-group col-md-6">
                                                                     <label for="">Email Address </label>
-                                                                    <input type="text" required value="<?php echo $staff->email; ?>" name="email" class="form-control" id="exampleInputEmail1">
+                                                                    <input type="text" required name="email" value="<?php echo $customer->email; ?>" class="form-control" id="exampleInputEmail1">
                                                                 </div>
                                                                 <div class="form-group col-md-6">
-                                                                    <label for="">Date Employed </label>
-                                                                    <input type="date" readonly required value="<?php echo $staff->date_employed; ?>" name="date_employed" class="form-control" id="exampleInputEmail1">
+                                                                    <label for="">Country </label>
+                                                                    <select name="client_country" value required class="form-control" id="exampleInputEmail1">
+                                                                        <?php
+                                                                        $ret = "SELECT * FROM  iResturant_Country ";
+                                                                        $stmt = $mysqli->prepare($ret);
+                                                                        $stmt->execute(); //ok
+                                                                        $res = $stmt->get_result();
+                                                                        while ($country = $res->fetch_object()) {
+                                                                        ?>
+                                                                            <option value="<?php echo $country->id; ?>"><?php echo $country->name; ?></option>
+                                                                        <?php } ?>
+                                                                    </select>
                                                                 </div>
-
                                                                 <div class="form-group col-md-12">
                                                                     <label for="">Address</label>
-                                                                    <textarea type="text" required name="adr" class="form-control" rows="4" id="exampleInputEmail1"><?php echo $staff->adr; ?></textarea>
+                                                                    <textarea type="text" required name="adr" class="form-control" rows="4" id="exampleInputEmail1"><?php echo $customer->adr; ?></textarea>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="d-flex justify-content-end">
-                                                            <button type="submit" name="update_staff" class="btn btn-primary">Submit</button>
+                                                            <button type="submit" name="update_customer" class="btn btn-primary">Submit</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -373,7 +259,7 @@ require_once('../partials/head.php');
                                                                 <div class="form-group col-md-12">
                                                                     <label for="">Old Password </label>
                                                                     <input type="password" required name="old_password" class="form-control" id="exampleInputEmail1">
-                                                                    <input type="hidden" required name="id" value="<?php echo $staff->id; ?>" class="form-control">
+                                                                    <input type="hidden" required name="id" value="<?php echo $customer->id; ?>" class="form-control">
                                                                 </div>
                                                                 <div class="form-group col-md-12">
                                                                     <label for="">New Password </label>
