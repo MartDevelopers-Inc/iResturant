@@ -44,7 +44,74 @@ if (isset($_POST['update_profile_pic'])) {
     }
 }
 
+/* Update Profile Details */
+if (isset($_POST['update_customer'])) {
+    $id = $_POST['id'];
+    $name = $_POST['name'];
+    $email = $_POST['email'];
+    $phone = $_POST['phone'];
+    $adr = $_POST['adr'];
+    $client_country = $_POST['client_country'];
+    $query = "UPDATE  iResturant_Customer  SET name =?, email =?, phone =?, adr =?, client_country =? WHERE id = ?";
+    $stmt = $mysqli->prepare($query);
+    $rc = $stmt->bind_param('ssssss', $name, $email, $phone, $adr, $client_country, $id);
+    $stmt->execute();
+    if ($stmt) {
+        $success = "Account Details Updated";
+    } else {
+        $info = "Please Try Again Or Try Later";
+    }
+}
 
+/* Update Password */
+if (isset($_POST['update_staff_password'])) {
+
+    $error = 0;
+    if (isset($_POST['old_password']) && !empty($_POST['old_password'])) {
+        $old_password = mysqli_real_escape_string($mysqli, trim(sha1(md5($_POST['old_password']))));
+    } else {
+        $error = 1;
+        $err = "Old Password Cannot Be Empty";
+    }
+    if (isset($_POST['new_password']) && !empty($_POST['new_password'])) {
+        $new_password = mysqli_real_escape_string($mysqli, trim(sha1(md5($_POST['new_password']))));
+    } else {
+        $error = 1;
+        $err = "New Password Cannot Be Empty";
+    }
+    if (isset($_POST['confirm_password']) && !empty($_POST['confirm_password'])) {
+        $confirm_password = mysqli_real_escape_string($mysqli, trim(sha1(md5($_POST['confirm_password']))));
+    } else {
+        $error = 1;
+        $err = "Confirmation Password Cannot Be Empty";
+    }
+
+    if (!$error) {
+        $id = $_SESSION['id'];
+        $sql = "SELECT * FROM  iResturant_Customer  WHERE id = '$id'";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if ($old_password != $row['login_password']) {
+                $err =  "Please Enter Correct Old Password";
+            } elseif ($new_password != $confirm_password) {
+                $err = "Confirmation Password Does Not Match";
+            } else {
+                $id = $_SESSION['id'];
+                $new_password  = sha1(md5($_POST['new_password']));
+                $query = "UPDATE iResturant_Customer SET  login_password =? WHERE id =?";
+                $stmt = $mysqli->prepare($query);
+                $rc = $stmt->bind_param('ss', $new_password, $id);
+                $stmt->execute();
+                if ($stmt) {
+                    $success = "Profile Password Updated";
+                } else {
+                    $err = "Please Try Again Or Try Later";
+                }
+            }
+        }
+    }
+}
 
 require_once('../partials/head.php');
 ?>
@@ -78,7 +145,7 @@ require_once('../partials/head.php');
                                     <div class="col">
                                         <h4 class="page-title"><?php echo $customer->name; ?> Profile</h4>
                                         <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="my_dashboard">Dastone</a></li>
+                                            <li class="breadcrumb-item"><a href="my_dashboard">Dashboard</a></li>
                                             <li class="breadcrumb-item active">Profile</li>
                                         </ol>
                                     </div>
@@ -163,10 +230,10 @@ require_once('../partials/head.php');
                                                     <li class="mt-2"><i class="ti ti-mobile me-2 text-secondary font-16 align-middle"></i> <b> Phone </b> : <?php echo $customer->phone; ?></li>
                                                     <li class="mt-2"><i class="ti ti-email text-secondary font-16 align-middle me-2"></i> <b> Email </b> : <?php echo $customer->email; ?></li>
                                                     <li class="mt-2"><i class="ti ti-tag text-secondary font-16 align-middle me-2"></i> <b> Address </b> : <?php echo $customer->adr; ?>
-
                                                     </li>
                                                 </ul>
-
+                                            </div>
+                                            <div class="col-lg-6 ms-auto align-self-center">
                                                 <ul class="list-unstyled personal-detail mb-0">
                                                     <?php
                                                     $country = $customer->client_country;
@@ -182,120 +249,122 @@ require_once('../partials/head.php');
                                                 </ul>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="pb-4">
-                                <ul class="nav-border nav nav-pills mb-0" id="pills-tab" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="Profile_Project_tab" data-bs-toggle="pill" href="#Profile_Project">Update Profile Details</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link " id="Profile_Post_tab" data-bs-toggle="pill" href="#Profile_Post">Update Authentication Details</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <!--end card-body-->
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="tab-content" id="pills-tabContent">
-                                        <!-- Distinct Room Features -->
-                                        <div class="tab-pane fade show active " id="Profile_Project" role="tabpanel" aria-labelledby="Profile_Project_tab">
-
-                                            <!--end row-->
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <form method="post" enctype="multipart/form-data" role="form">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="form-group col-md-12">
-                                                                    <label for="">Full Name </label>
-                                                                    <input type="hidden" required name="id" value="<?php echo $customer->id; ?>" class="form-control">
-                                                                    <input type="text" required name="name" class="form-control" value="<?php echo $customer->name; ?>" id="exampleInputEmail1">
-                                                                </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="">Phone Number </label>
-                                                                    <input type="text" required name="phone" value="<?php echo $customer->phone; ?>" class="form-control" id="exampleInputEmail1">
-                                                                </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="">Email Address </label>
-                                                                    <input type="text" required name="email" value="<?php echo $customer->email; ?>" class="form-control" id="exampleInputEmail1">
-                                                                </div>
-                                                                <div class="form-group col-md-6">
-                                                                    <label for="">Country </label>
-                                                                    <select name="client_country" value required class="form-control" id="exampleInputEmail1">
-                                                                        <?php
-                                                                        $ret = "SELECT * FROM  iResturant_Country ";
-                                                                        $stmt = $mysqli->prepare($ret);
-                                                                        $stmt->execute(); //ok
-                                                                        $res = $stmt->get_result();
-                                                                        while ($country = $res->fetch_object()) {
-                                                                        ?>
-                                                                            <option value="<?php echo $country->id; ?>"><?php echo $country->name; ?></option>
-                                                                        <?php } ?>
-                                                                    </select>
-                                                                </div>
-                                                                <div class="form-group col-md-12">
-                                                                    <label for="">Address</label>
-                                                                    <textarea type="text" required name="adr" class="form-control" rows="4" id="exampleInputEmail1"><?php echo $customer->adr; ?></textarea>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="d-flex justify-content-end">
-                                                            <button type="submit" name="update_customer" class="btn btn-primary">Submit</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!-- Previous Room Reservations -->
-                                        <div class="tab-pane fade " id="Profile_Post" role="tabpanel" aria-labelledby="Profile_Post_tab">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <form method="post" enctype="multipart/form-data" role="form">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="form-group col-md-12">
-                                                                    <label for="">Old Password </label>
-                                                                    <input type="password" required name="old_password" class="form-control" id="exampleInputEmail1">
-                                                                    <input type="hidden" required name="id" value="<?php echo $customer->id; ?>" class="form-control">
-                                                                </div>
-                                                                <div class="form-group col-md-12">
-                                                                    <label for="">New Password </label>
-                                                                    <input type="password" required name="new_password" class="form-control" id="exampleInputEmail1">
-                                                                </div>
-                                                                <div class="form-group col-md-12">
-                                                                    <label for="">Confirm Password</label>
-                                                                    <input type="password" required name="confirm_password" class="form-control" id="exampleInputEmail1">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="d-flex justify-content-end">
-                                                            <button type="submit" name="update_staff_password" class="btn btn-primary">Submit</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
 
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="pb-4">
+                            <ul class="nav-border nav nav-pills mb-0" id="pills-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="Profile_Project_tab" data-bs-toggle="pill" href="#Profile_Project">Update Profile Details</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " id="Profile_Post_tab" data-bs-toggle="pill" href="#Profile_Post">Update Authentication Details</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--end card-body-->
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="tab-content" id="pills-tabContent">
+                                    <!-- Distinct Room Features -->
+                                    <div class="tab-pane fade show active " id="Profile_Project" role="tabpanel" aria-labelledby="Profile_Project_tab">
+
+                                        <!--end row-->
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <form method="post" enctype="multipart/form-data" role="form">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="form-group col-md-12">
+                                                                <label for="">Full Name </label>
+                                                                <input type="hidden" required name="id" value="<?php echo $customer->id; ?>" class="form-control">
+                                                                <input type="text" required name="name" class="form-control" value="<?php echo $customer->name; ?>" id="exampleInputEmail1">
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="">Phone Number </label>
+                                                                <input type="text" required name="phone" value="<?php echo $customer->phone; ?>" class="form-control" id="exampleInputEmail1">
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="">Email Address </label>
+                                                                <input type="text" required name="email" value="<?php echo $customer->email; ?>" class="form-control" id="exampleInputEmail1">
+                                                            </div>
+                                                            <div class="form-group col-md-4">
+                                                                <label for="">Country </label>
+                                                                <select name="client_country" value required class="form-control" id="exampleInputEmail1">
+                                                                    <?php
+                                                                    $ret = "SELECT * FROM  iResturant_Country ";
+                                                                    $stmt = $mysqli->prepare($ret);
+                                                                    $stmt->execute(); //ok
+                                                                    $res = $stmt->get_result();
+                                                                    while ($country = $res->fetch_object()) {
+                                                                    ?>
+                                                                        <option value="<?php echo $country->id; ?>"><?php echo $country->name; ?></option>
+                                                                    <?php } ?>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group col-md-12">
+                                                                <label for="">Address</label>
+                                                                <textarea type="text" required name="adr" class="form-control" rows="4" id="exampleInputEmail1"><?php echo $customer->adr; ?></textarea>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-end">
+                                                        <button type="submit" name="update_customer" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Previous Room Reservations -->
+                                    <div class="tab-pane fade " id="Profile_Post" role="tabpanel" aria-labelledby="Profile_Post_tab">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <form method="post" enctype="multipart/form-data" role="form">
+                                                    <div class="card-body">
+                                                        <div class="row">
+                                                            <div class="form-group col-md-12">
+                                                                <label for="">Old Password </label>
+                                                                <input type="password" required name="old_password" class="form-control" id="exampleInputEmail1">
+                                                                <input type="hidden" required name="id" value="<?php echo $customer->id; ?>" class="form-control">
+                                                            </div>
+                                                            <div class="form-group col-md-12">
+                                                                <label for="">New Password </label>
+                                                                <input type="password" required name="new_password" class="form-control" id="exampleInputEmail1">
+                                                            </div>
+                                                            <div class="form-group col-md-12">
+                                                                <label for="">Confirm Password</label>
+                                                                <input type="password" required name="confirm_password" class="form-control" id="exampleInputEmail1">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex justify-content-end">
+                                                        <button type="submit" name="update_staff_password" class="btn btn-primary">Submit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div><!-- container -->
+                </div>
+            </div><!-- container -->
 
-                <?php require_once('../partials/footer.php'); ?>
-                <!--end footer-->
-            </div>
-        <?php
-        } ?>
-        <!-- end page content -->
+            <?php require_once('../partials/footer.php'); ?>
+            <!--end footer-->
     </div>
-    <!-- end page-wrapper -->
+<?php
+        } ?>
+<!-- end page content -->
+</div>
+<!-- end page-wrapper -->
 
-    <?php require_once('../partials/scripts.php'); ?>
+<?php require_once('../partials/scripts.php'); ?>
 
 </body>
 
