@@ -197,7 +197,7 @@ require_once('../partials/head.php');
                                                             Meal : <?php echo $orders->meal_name; ?><br>
                                                             Quantity : <?php echo $orders->meal_count; ?><br>
                                                             Order Bill : <?php echo $currency->code . " " . $order_bill; ?><br>
-                                                            Date Ordered: <?php echo date('d-M-Y', strtotime($orders->created_at)); ?>
+                                                            Date Ordered: <?php echo date('d-M-Y g:ia', strtotime($orders->created_at)); ?>
                                                         </td>
                                                         <td>
 
@@ -291,23 +291,21 @@ require_once('../partials/head.php');
                                             <form method="post" enctype="multipart/form-data" role="form">
                                                 <div class="card-body">
                                                     <div class="row">
-                                                        <div class="form-group col-md-6">
-                                                            <?php
-                                                            $ret = "SELECT * FROM  iResturant_Customer WHERE id = '$id'";
-                                                            $stmt = $mysqli->prepare($ret);
-                                                            $stmt->execute(); //ok
-                                                            $res = $stmt->get_result();
-                                                            while ($customer = $res->fetch_object()) {
-                                                            ?>
-                                                                <input type="hidden" required name="customer_email" id="<?php echo $customer->email; ?>" class="form-control">
-                                                                <input type="hidden" required name="customer_name" id="<?php echo $customer->name; ?>" class="form-control">
-                                                            <?php
-                                                            } ?>
-                                                            </select>
-                                                            <!-- Hidden -->
+                                                        <?php
+                                                        $ret = "SELECT * FROM  iResturant_Customer WHERE id = '$id'";
+                                                        $stmt = $mysqli->prepare($ret);
+                                                        $stmt->execute(); //ok
+                                                        $res = $stmt->get_result();
+                                                        while ($customer = $res->fetch_object()) {
+                                                        ?>
+                                                            <input type="hidden" required name="customer_email" value="<?php echo $customer->email; ?>" class="form-control">
+                                                            <input type="hidden" required name="customer_name" value="<?php echo $customer->name; ?>" class="form-control">
+                                                        <?php
+                                                        } ?>
+                                                        </select>
+                                                        <!-- Hidden -->
 
-                                                        </div>
-                                                        <div class="form-group col-md-6">
+                                                        <div class="form-group col-md-12">
                                                             <label for="">Meal Name</label>
                                                             <select class="select form-control" name="meal_menu_id" onchange="getMenuDetails(this.value);" id="MealID">
                                                                 <option>Select Meal Name</option>
