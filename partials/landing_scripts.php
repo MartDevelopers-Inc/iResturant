@@ -27,7 +27,6 @@
         $email = $_POST['email'];
         $phone = $_POST['phone'];
         $adr = $_POST['adr'];
-        $client_country = $_POST['client_country'];
         /* Check If Passwords Match */
         if ($new_password = sha1(md5($_POST['new_password'])) != $confirm_password = sha1(md5($_POST['confirm_password']))) {
             $err  = "Passwords Do Not Match";
@@ -40,9 +39,9 @@
                     $err =  "A Client Account With This Email Or Phone Number Already Exists";
                 }
             } else {
-                $query = "INSERT INTO iResturant_Customer (id, name, email, phone, adr, client_country, login_password) VALUES(?,?,?,?,?,?,?)";
+                $query = "INSERT INTO iResturant_Customer (id, name, email, phone, adr, login_password) VALUES(?,?,?,?,?,?)";
                 $stmt = $mysqli->prepare($query);
-                $rc = $stmt->bind_param('sssssss', $id, $name, $email, $phone, $adr, $client_country, $confirm_password);
+                $rc = $stmt->bind_param('sssssss', $id, $name, $email, $phone, $adr, $confirm_password);
                 $stmt->execute();
                 /* Mail Customer */
                 require_once('../config/welcome_mailer.php');
@@ -111,23 +110,6 @@
                                  <div class="form-group">
                                      <span class="la la-envelope form-icon"></span>
                                      <input class="form-control" required type="email" name="email">
-                                 </div>
-                             </div><!-- end input-box -->
-                             <div class="input-box">
-                                 <label class="label-text">Country</label>
-                                 <div class="form-group">
-                                     <span class="la la-tags form-icon"></span>
-                                     <select class="form-control" required type="text" name="client_country">
-                                         <?php
-                                            $ret = "SELECT * FROM  iResturant_Country ";
-                                            $stmt = $mysqli->prepare($ret);
-                                            $stmt->execute(); //ok
-                                            $res = $stmt->get_result();
-                                            while ($country = $res->fetch_object()) {
-                                            ?>
-                                             <option value="<?php echo $country->id; ?>"><?php echo $country->name; ?></option>
-                                         <?php } ?>
-                                     </select>
                                  </div>
                              </div><!-- end input-box -->
                              <div class="input-box">
