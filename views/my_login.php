@@ -75,14 +75,18 @@ while ($sys = $res->fetch_object()) {
                                         <div class="form-group mb-2">
                                             <label class="form-label" for="userpassword">Password</label>
                                             <div class="input-group">
-                                                <input required type="password" id="password" name="password" class="form-control">
+                                                <input required type="password" id="password" name="login_password" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-group row my-3">
                                             <div class="col-sm-4">
+                                                <a href="../" class="text-muted font-13"><i class="dripicons-home"></i> Home</a>
                                             </div>
                                             <div class="col-sm-8 text-end">
                                                 <a href="reset_password" class="text-muted font-13"><i class="dripicons-lock"></i> Forgot Password?</a>
+                                                <br>
+                                                <a href="my_signup" class="text-muted font-13"><i class="dripicons-user"></i> Sign Up</a>
+
                                             </div>
                                         </div>
 
