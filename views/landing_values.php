@@ -20,6 +20,7 @@
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+session_start();
 require_once('../config/config.php');
 /* Load System COnfigurations And Settings */
 $ret = "SELECT * FROM `iResturant_System_Details`  ";

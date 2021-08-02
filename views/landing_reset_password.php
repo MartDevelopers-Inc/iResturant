@@ -22,8 +22,7 @@
 session_start();
 require_once('../config/config.php');
 /* Load System COnfigurations And Settings */
-$ret = "SELECT * FROM `iResturant_System_Details` JOIN iResturant_Currencies c 
-WHERE c.status = 'Active'  ";
+$ret = "SELECT * FROM `iResturant_System_Details`  ";
 $stmt = $mysqli->prepare($ret);
 $stmt->execute(); //ok
 $res = $stmt->get_result();
@@ -40,20 +39,29 @@ while ($sys = $res->fetch_object()) {
                 </svg>
             </div>
         </div>
+        <!-- end cssload-loader -->
 
         <?php require_once('../partials/landing_header.php'); ?>
 
-        <section class="breadcrumb-area bread-bg-10">
+        <section class="breadcrumb-area bread-bg-9">
             <div class="breadcrumb-wrap">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="breadcrumb-content text-center">
+                    <div class="row align-items-center">
+                        <div class="col-lg-6">
+                            <div class="breadcrumb-content">
                                 <div class="section-heading">
-                                    <h2 class="sec__title text-white"><?php echo $sys->system_name; ?> Rooms</h2>
+                                    <h2 class="sec__title text-white">Recover Password</h2>
                                 </div>
                             </div><!-- end breadcrumb-content -->
-                        </div><!-- end col-lg-12 -->
+                        </div><!-- end col-lg-6 -->
+                        <div class="col-lg-6">
+                            <div class="breadcrumb-list text-right">
+                                <ul class="list-items">
+                                    <li><a href="landing_index">Home</a></li>
+                                    <li>Recover Password</li>
+                                </ul>
+                            </div><!-- end breadcrumb-list -->
+                        </div><!-- end col-lg-6 -->
                     </div><!-- end row -->
                 </div><!-- end container -->
             </div><!-- end breadcrumb-wrap -->
@@ -64,64 +72,48 @@ while ($sys = $res->fetch_object()) {
             </div><!-- end bread-svg -->
         </section><!-- end breadcrumb-area -->
 
-        <section class="card-area section--padding">
+        <section class="contact-area padding-top-100px padding-bottom-70px">
             <div class="container">
                 <div class="row">
-                    <div class="col-lg-12">
-                    </div><!-- end col-lg-12 -->
-                </div><!-- end row -->
-                <div class="tab-content" id="may-tabContent4">
-                    <div class="tab-pane fade show active" id="all" role="tabpanel" aria-labelledby="all-tab">
-                        <div class="row">
-                            <?php
-                            /* Load All Rooms */
-                            $ret = "SELECT  * FROM iResturant_Room_Category rc
-                            INNER JOIN iResturant_Room r ON r.room_category_id = rc.id";
-                            $stmt = $mysqli->prepare($ret);
-                            $stmt->execute(); //ok
-                            $res = $stmt->get_result();
-                            while ($rooms = $res->fetch_object()) {
-                            ?>
-                                <div class="col-lg-12">
-                                    <div class="card-item card-item-list room-card">
-                                        <div class="card-body">
-                                            <div class="card-price pb-2">
-                                                <p>
-                                                    <span class="price__from">Rates</span>
-                                                    <span class="price__num"><?php echo $sys->code . " " . $rooms->price; ?></span>
-                                                </p>
-                                            </div>
-                                            <h3 class="card-title font-size-26"><a href="landing_room?view=<?php echo $rooms->number; ?>"><?php echo $rooms->name; ?></a></h3>
-                                            <p class="card-text pt-2">
-                                                <?php echo $rooms->details; ?>
-                                            </p>
-                                            <br>
-                                            <div class="card-btn d-flex justify-content-end">
-                                                <a href="landing_room?view=<?php echo $rooms->number; ?>" class="theme-btn theme-btn-transparent">Book Now</a>
+                    <div class="col-lg-7 mx-auto">
+                        <div class="form-box">
+                            <div class="form-title-wrap">
+                                <h3 class="title">Recover Password</h3>
+                                <p class="font-size-15 pt-2">Enter the email of your account to reset password. Then you will receive a link to email to reset the password.If you have any issue about reset password
+                                    <a href="landing_contact" class="text-color">contact us</a>
+                                </p>
+                            </div><!-- form-title-wrap -->
+                            <div class="form-content ">
+                                <div class="contact-form-action">
+                                    <form method="post">
+                                        <div class="input-box">
+                                            <label class="label-text">Your Email</label>
+                                            <div class="form-group">
+                                                <span class="la la-envelope-o form-icon"></span>
+                                                <input class="form-control" type="email" name="email" placeholder="Enter email address">
                                             </div>
                                         </div>
-                                    </div><!-- end card-item -->
-                                </div><!-- end col-lg-12 -->
-                            <?php
-                            } ?>
-                        </div><!-- end row -->
-                    </div>
-
-                </div>
-
+                                        <div class="btn-box">
+                                            <button type="submit" name="Reset_Password" class="theme-btn">Reset Password</button>
+                                        </div>
+                                    </form>
+                                </div><!-- end contact-form-action -->
+                            </div><!-- end form-content -->
+                        </div><!-- end form-box -->
+                    </div><!-- end col-lg-8 -->
+                </div><!-- end row -->
             </div><!-- end container -->
-        </section><!-- end card-area -->
-       
+        </section><!-- end contact-area -->
         <?php require_once('../partials/landing_footer.php'); ?>
         <!-- start back-to-top -->
         <div id="back-to-top">
             <i class="la la-angle-up" title="Go top"></i>
         </div>
+        <!-- end back-to-top -->
 
         <?php require_once('../partials/landing_scripts.php'); ?>
     </body>
 
 
     </html>
-<?php
-} ?>
+<?php } ?>

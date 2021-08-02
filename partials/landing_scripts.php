@@ -1,3 +1,32 @@
+ <?php
+    /*
+ * Created on Mon Aug 02 2021
+ *
+ * The MIT License (MIT)
+ * Copyright (c) 2021 MartDevelopers Inc
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+ * and associated documentation files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+ * subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all copies or substantial
+ * portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+ * TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+ * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+    require_once('../config/codeGen.php');
+    /* Sign Up  */
+    
+
+    /* Sign In */
+    
+
+    ?>
  <!-- end modal-shared -->
  <div class="modal-popup">
      <div class="modal fade" id="signupPopupForm" tabindex="-1" role="dialog" aria-hidden="true">
@@ -16,44 +45,49 @@
                      <div class="contact-form-action">
                          <form method="post">
                              <div class="input-box">
-                                 <label class="label-text">Username</label>
+                                 <label class="label-text">First Name & Last Name</label>
                                  <div class="form-group">
                                      <span class="la la-user form-icon"></span>
-                                     <input class="form-control" type="text" name="text" placeholder="Type your username">
+                                     <input class="form-control" required type="text" name="name">
+                                 </div>
+                             </div><!-- end input-box -->
+                             <div class="input-box">
+                                 <label class="label-text">Phone Number</label>
+                                 <div class="form-group">
+                                     <span class="la la-phone form-icon"></span>
+                                     <input class="form-control" required type="number" name="phone">
                                  </div>
                              </div><!-- end input-box -->
                              <div class="input-box">
                                  <label class="label-text">Email Address</label>
                                  <div class="form-group">
                                      <span class="la la-envelope form-icon"></span>
-                                     <input class="form-control" type="text" name="text" placeholder="Type your email">
+                                     <input class="form-control" required type="email" name="email">
+                                 </div>
+                             </div><!-- end input-box -->
+                             <div class="input-box">
+                                 <label class="label-text">Address</label>
+                                 <div class="form-group">
+                                     <span class="la la-map-pin form-icon"></span>
+                                     <input class="form-control" required type="text" name="adr">
                                  </div>
                              </div><!-- end input-box -->
                              <div class="input-box">
                                  <label class="label-text">Password</label>
                                  <div class="form-group">
                                      <span class="la la-lock form-icon"></span>
-                                     <input class="form-control" type="text" name="text" placeholder="Type password">
+                                     <input class="form-control" required type="password" name="new_password">
                                  </div>
                              </div><!-- end input-box -->
                              <div class="input-box">
-                                 <label class="label-text">Repeat Password</label>
+                                 <label class="label-text">Confirm Password</label>
                                  <div class="form-group">
                                      <span class="la la-lock form-icon"></span>
-                                     <input class="form-control" type="text" name="text" placeholder="Type again password">
+                                     <input class="form-control" required type="password" name="confirm_password">
                                  </div>
                              </div><!-- end input-box -->
                              <div class="btn-box pt-3 pb-4">
-                                 <button type="button" class="theme-btn w-100">Register Account</button>
-                             </div>
-                             <div class="action-box text-center">
-                                 <p class="font-size-14">Or Sign up Using</p>
-                                 <ul class="social-profile py-3">
-                                     <li><a href="#" class="bg-5 text-white"><i class="lab la-facebook-f"></i></a></li>
-                                     <li><a href="#" class="bg-6 text-white"><i class="lab la-twitter"></i></a></li>
-                                     <li><a href="#" class="bg-7 text-white"><i class="lab la-instagram"></i></a></li>
-                                     <li><a href="#" class="bg-5 text-white"><i class="lab la-linkedin-in"></i></a></li>
-                                 </ul>
+                                 <button type="submit" name="Sign_Up" class="theme-btn w-100">Register Account</button>
                              </div>
                          </form>
                      </div><!-- end contact-form-action -->
@@ -81,39 +115,29 @@
                      <div class="contact-form-action">
                          <form method="post">
                              <div class="input-box">
-                                 <label class="label-text">Username</label>
+                                 <label class="label-text">Email Addrsss</label>
                                  <div class="form-group">
                                      <span class="la la-user form-icon"></span>
-                                     <input class="form-control" type="text" name="text" placeholder="Type your username">
+                                     <input class="form-control" type="email" required name="email">
                                  </div>
                              </div><!-- end input-box -->
                              <div class="input-box">
                                  <label class="label-text">Password</label>
                                  <div class="form-group mb-2">
                                      <span class="la la-lock form-icon"></span>
-                                     <input class="form-control" type="text" name="text" placeholder="Type your password">
+                                     <input class="form-control" type="password" required name="login_password">
                                  </div>
                                  <div class="d-flex align-items-center justify-content-between">
                                      <div class="custom-checkbox mb-0">
-                                         <input type="checkbox" id="rememberchb">
-                                         <label for="rememberchb">Remember me</label>
+
                                      </div>
                                      <p class="forgot-password">
-                                         <a href="recover.html">Forgot Password?</a>
+                                         <a href="landing_reset_password">Forgot Password?</a>
                                      </p>
                                  </div>
                              </div><!-- end input-box -->
                              <div class="btn-box pt-3 pb-4">
-                                 <button type="button" class="theme-btn w-100">Login Account</button>
-                             </div>
-                             <div class="action-box text-center">
-                                 <p class="font-size-14">Or Login Using</p>
-                                 <ul class="social-profile py-3">
-                                     <li><a href="#" class="bg-5 text-white"><i class="lab la-facebook-f"></i></a></li>
-                                     <li><a href="#" class="bg-6 text-white"><i class="lab la-twitter"></i></a></li>
-                                     <li><a href="#" class="bg-7 text-white"><i class="lab la-instagram"></i></a></li>
-                                     <li><a href="#" class="bg-5 text-white"><i class="lab la-linkedin-in"></i></a></li>
-                                 </ul>
+                                 <button type="submit" name="Sign_In" class="theme-btn w-100">Login Account</button>
                              </div>
                          </form>
                      </div><!-- end contact-form-action -->

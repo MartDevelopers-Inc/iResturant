@@ -166,7 +166,7 @@ require_once('../partials/head.php');
 
 <body>
     <!-- Left Sidenav -->
-    <?php require_once('../partials/aside.php'); ?>
+    <?php require_once('../partials/staff_sidebar.php'); ?>
 
     <!-- end left-sidenav-->
 
@@ -193,7 +193,7 @@ require_once('../partials/head.php');
                                     <div class="col">
                                         <h4 class="page-title"><?php echo $staff->name; ?> Profile</h4>
                                         <ol class="breadcrumb">
-                                            <li class="breadcrumb-item"><a href="staff_dashboard">Dastone</a></li>
+                                            <li class="breadcrumb-item"><a href="staff_dashboard">Dashboard</a></li>
                                             <li class="breadcrumb-item active">Profile</li>
                                         </ol>
                                     </div>

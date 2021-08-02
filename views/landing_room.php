@@ -19,7 +19,7 @@
  * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
  * TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-
+session_start();
 require_once('../config/config.php');
 require_once('../config/codeGen.php');
 
@@ -125,7 +125,7 @@ while ($sys = $res->fetch_object()) {
                                             <div class="sidebar-widget-item">
                                                 <div class="contact-form-action">
                                                     <form action="#">
-                                                        <a href="#" class="theme-btn theme-btn-small" data-toggle="modal" data-target="#loginPopupForm">Login To Reserve This Room</a>
+                                                        <a href="my_login" class="theme-btn theme-btn-small">Login To Reserve This Room</a>
                                                     </form>
                                                 </div>
                                             </div>

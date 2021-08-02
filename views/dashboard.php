@@ -402,7 +402,7 @@ require_once('../partials/head.php');
                                                         <p class="text-muted mb-0 font-13 w-75"><span><?php echo $reservations->name . " " . $reservations->email; ?></span>
                                                             Reserved Room Number:<?php echo $reservations->number; ?>. Code: <a href="reservation_details?view=<?php echo $reservations->code; ?>"><?php echo $reservations->code; ?>
                                                             </a>
-                                                            On <?php echo date('dMY', strtotime($reservations->reserved_on)); ?>
+                                                            On <?php echo date('d M Y', strtotime($reservations->reserved_on)); ?>
                                                         </p>
                                                     </div>
                                                 </div>
