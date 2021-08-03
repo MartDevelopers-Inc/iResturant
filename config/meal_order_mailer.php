@@ -95,7 +95,7 @@ while ($sys_mailer = $res->fetch_object()) {
                                                <b>Quantity : ' . $meal_count . '</b><br>
                                                <b>Order Bill : ' . $sys_mailer->code . ' ' . $bill . ' </b>
                                                <br>
-                                               Please be patient as out team process and delivers your ordered meal
+                                               Please be patient as out team process and delivers your ordered meal and also proceed to pay for your order
                                                <br>
                                                <br>
                                                Kind Regards<br>

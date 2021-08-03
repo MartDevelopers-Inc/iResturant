@@ -139,10 +139,8 @@ while ($sys = $res->fetch_object()) {
                                             </div>
                                         </div>
                                         <div class="form-group row my-3">
-                                            <div class="col-sm-4">
-                                            </div>
-                                            <div class="col-sm-8 text-end">
-                                                <a href="my_login" class="text-muted font-13"><i class="dripicons-user"></i> Login</a>
+                                            <div class="col-sm-12 text-center">
+                                                Already Has Account ? <a href="my_login" class="text-muted font-13"><i class="fas fa-sign-in-alt"></i> Login</a>
                                             </div>
                                         </div>
                                         <div class="form-group mb-0 row">
