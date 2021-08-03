@@ -65,6 +65,13 @@ if (isset($_POST['add_payroll'])) {
         $err = "Amount Cannot Be Empty";
     }
 
+    /* Notify The Staff That Payroll Has Been Generated */
+    $icon = 'dollar-sign';
+    $title = "$month - $code Payroll Generated";
+    $details = 'Your Payroll For ' . $month . ' Has Been Generated. Navigate To Payrolls Under HRM To Manage Them';
+    $status = "Unread";
+
+
     if (!$error) {
         $sql = "SELECT * FROM  iResturant_Payroll WHERE  (code='$code')  ";
         $res = mysqli_query($mysqli, $sql);
@@ -75,10 +82,18 @@ if (isset($_POST['add_payroll'])) {
             }
         } else {
             $query = "INSERT INTO iResturant_Payroll (id, code, month, staff_id, amount) VALUES(?,?,?,?,?)";
+            $notify = "INSERT INTO iResturant_Notification(user_id, icon, title, details, status) VALUES(?,?,?,?)";
+
             $stmt = $mysqli->prepare($query);
+            $notify_stmt = $mysqli->prepare($notify);
+
             $rc = $stmt->bind_param('sssss', $id, $code, $month, $staff_id, $amount);
+            $rc = $notify_stmt->bind_param('sssss', $staff_id, $icon, $title, $details, $status);
+
             $stmt->execute();
-            if ($stmt) {
+            $notify_stmt->execute();
+
+            if ($stmt && $notify_stmt) {
                 $success = "Staff Payroll Added";
             } else {
                 $info = "Please Try Again Or Try Later";
