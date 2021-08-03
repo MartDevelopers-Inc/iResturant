@@ -26,6 +26,20 @@ require_once('../config/checklogin.php');
 require_once('../config/codeGen.php');
 staff();
 
+/* Clear My Notifications */
+if (isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+    $adn = 'DELETE FROM iResturant_Notification WHERE id=?';
+    $stmt = $mysqli->prepare($adn);
+    $stmt->bind_param('s', $id);
+    $stmt->execute();
+    $stmt->close();
+    if ($stmt) {
+        $success = 'Notification Cleared' && header('refresh:1; url=staff_notifications');
+    } else {
+        $info = 'Please Try Again Or Try Later';
+    }
+}
 require_once('../partials/head.php');
 ?>
 
@@ -80,7 +94,6 @@ require_once('../partials/head.php');
                                         <tbody>
                                             <?php
                                             $number = $_SESSION['number'];
-
                                             $ret = "SELECT * FROM `iResturant_Staff` WHERE number = '$number'  ";
                                             $stmt = $mysqli->prepare($ret);
                                             $stmt->execute(); //ok
@@ -94,9 +107,9 @@ require_once('../partials/head.php');
                                             ?>
                                                     <tr>
                                                         <td>
-                                                            <a class="text-primary" href="">
+                                                            <span class="text-primary">
                                                                 <?php echo $notifiction->title; ?>
-                                                            </a>
+                                                            </span>
                                                         </td>
                                                         <td>
                                                             <?php echo $notifiction->details; ?><br>
