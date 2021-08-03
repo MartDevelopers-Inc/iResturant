@@ -92,10 +92,7 @@ while ($sys = $res->fetch_object()) {
                                                 <button name="Login" class="btn btn-primary w-100 waves-effect waves-light" type="submit">Log In <i class="fas fa-sign-in-alt ms-1"></i></button>
                                             </div>
                                         </div>
-                                        <div class="form-group mb-0 row">
-                                            <div class="col-12">
-                                            </div>
-                                        </div>
+
                                     </form>
                                 </div>
                                 <div class="card-body bg-light-alt text-center">

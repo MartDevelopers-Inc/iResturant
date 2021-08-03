@@ -26,13 +26,6 @@ $stmt = $mysqli->prepare($ret);
 $stmt->execute(); //ok
 $res = $stmt->get_result();
 while ($logged_in_user = $res->fetch_object()) {
-    /* Count Notifications */
-    $query = "SELECT COUNT(*)  FROM `iResturant_Notification`  WHERE user_id = '$id' && status = 'Unread'";
-    $stmt = $mysqli->prepare($query);
-    $stmt->execute();
-    $stmt->bind_result($notification_count);
-    $stmt->fetch();
-    $stmt->close();
 
     /* Load Default Profile Picture */
     if ($logged_in_user->profile_pic == '') {
@@ -46,67 +39,6 @@ while ($logged_in_user = $res->fetch_object()) {
         <!-- Navbar -->
         <nav class="navbar-custom">
             <ul class="list-unstyled topbar-nav float-end mb-0">
-                <li class="dropdown hide-phone">
-                    <a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                        <i data-feather="search" class="topbar-icon"></i>
-                    </a>
-
-                    <div class="dropdown-menu dropdown-menu-end dropdown-lg p-0">
-                        <!-- Top Search Bar -->
-                        <div class="app-search-topbar">
-                            <form action="#" method="get">
-                                <input type="search" name="search" class="from-control top-search mb-0" placeholder="Type text...">
-                                <button type="submit"><i class="ti-search"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="dropdown notification-list">
-                    <a class="nav-link dropdown-toggle arrow-none waves-light waves-effect" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                        <i data-feather="bell" class="align-self-center topbar-icon"></i>
-                        <span class="badge bg-danger rounded-pill noti-icon-badge"><?php echo $notification_count; ?></span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end dropdown-lg pt-0">
-
-                        <h6 class="dropdown-item-text font-15 m-0 py-3 border-bottom d-flex justify-content-between align-items-center">
-                            Notifications <span class="badge bg-primary rounded-pill"><?php echo $notification_count; ?></span>
-                        </h6>
-                        <div class="notification-menu" data-simplebar>
-                            <?php
-                            $ret = "SELECT * FROM `iResturant_Notification` WHERE user_id = '$id'";
-                            $stmt = $mysqli->prepare($ret);
-                            $stmt->execute(); //ok
-                            $res = $stmt->get_result();
-                            while ($notification = $res->fetch_object()) {
-                            ?>
-                                <!-- item-->
-                                <a href="staff_notifications" class="dropdown-item py-3">
-                                    <small class="float-end text-muted ps-2"><?php echo date('d-M-Y g:ia', strtotime($notification->created_at)); ?></small>
-                                    <div class="media">
-                                        <div class="avatar-md bg-soft-primary">
-                                            <i data-feather="<?php echo $notification->icon; ?>" class="align-self-center icon-xs"></i>
-                                        </div>
-                                        <div class="media-body align-self-center ms-2 text-truncate">
-                                            <h6 class="my-0 fw-normal text-dark"><?php echo $notification->title; ?></h6>
-                                            <small class="text-muted mb-0"><?php echo substr($notification->details, 0, 15); ?>...</small>
-                                        </div>
-                                        <!--end media-body-->
-                                    </div>
-                                    <!--end media-->
-                                </a>
-                            <?php
-                            } ?>
-                            <!--end-item-->
-
-                            <!--end-item-->
-                        </div>
-                        <!-- All-->
-                        <a href="my_notifications" class="dropdown-item text-center text-primary">
-                            View all <i class="fi-arrow-right"></i>
-                        </a>
-                    </div>
-                </li>
 
                 <li class="dropdown">
                     <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">

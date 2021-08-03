@@ -79,14 +79,10 @@ while ($sys = $res->fetch_object()) {
                                             </div>
                                         </div>
                                         <div class="form-group row my-3">
-                                            <div class="col-sm-4">
-                                                <a href="../" class="text-muted font-13"><i class="dripicons-home"></i> Home</a>
-                                            </div>
-                                            <div class="col-sm-8 text-end">
-                                                <a href="reset_password" class="text-muted font-13"><i class="dripicons-lock"></i> Forgot Password?</a>
-                                                <br>
-                                                <a href="my_signup" class="text-muted font-13"><i class="dripicons-user"></i> Sign Up</a>
-
+                                            <div class="col-sm-12 text-center">
+                                                <a href="../" class="text-muted font-13"><i class="fas fa-home"></i> Home</a>
+                                                <a href="my_signup" class="text-muted font-13"><i class="fas fa-user-plus"></i> Sign Up</a>
+                                                <a href="reset_password" class="text-muted font-13"><i class="fas fa-user-lock"></i> Forgot Password?</a>
                                             </div>
                                         </div>
 

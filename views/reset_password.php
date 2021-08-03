@@ -99,7 +99,7 @@ while ($sys = $res->fetch_object()) {
                                         <!--end form-group-->
                                     </form>
                                     <!--end form-->
-                                    <p class="text-muted mb-0 mt-3">Remember It ? <a href="login" class="text-primary ms-2">Sign in here</a></p>
+                                    <p class="text-muted mb-0 mt-3">Remembered Password? <a href="../" class="text-primary ms-2">Sign In</a></p>
                                 </div>
                                 <div class="card-body bg-light-alt text-center">
                                     <span class="text-muted d-none d-sm-inline-block">MartDevelopers Inc © <script>
