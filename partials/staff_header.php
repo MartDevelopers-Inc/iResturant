@@ -91,6 +91,7 @@ while ($logged_in_user = $res->fetch_object()) {
                                         <div class="media-body align-self-center ms-2 ">
                                             <h6 class="my-0 fw-normal text-dark "> <?php echo $notification->title; ?></h6>
                                             <small class="text-muted mb-0"> <?php echo substr($notification->details, 0, 35); ?>...</small>
+                                            <small class="float-end text-muted ps-2"><?php echo date('d-M-Y g:ia', strtotime($notification->created_at)); ?></small>
                                         </div>
                                         <!--end media-body-->
                                     </div>
