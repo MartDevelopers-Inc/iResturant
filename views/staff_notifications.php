@@ -27,8 +27,8 @@ require_once('../config/codeGen.php');
 staff();
 
 /* Clear My Notifications */
-if (isset($_GET['delete'])) {
-    $id = $_GET['delete'];
+if (isset($_GET['clear'])) {
+    $id = $_GET['clear'];
     $adn = 'DELETE FROM iResturant_Notification WHERE id=?';
     $stmt = $mysqli->prepare($adn);
     $stmt->bind_param('s', $id);
