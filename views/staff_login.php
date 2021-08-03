@@ -80,17 +80,20 @@ while ($sys = $res->fetch_object()) {
                                             </div>
                                         </div>
                                         <div class="form-group row my-3">
-                                            <div class="col-sm-4">
-                                            </div>
-                                            <div class="col-sm-8 text-end">
-                                                <a href="../" class="text-muted font-13"><i class="dripicons-home"></i> Home</a>
-                                                <a href="reset_password" class="text-muted font-13"><i class="dripicons-lock"></i> Forgot Password?</a>
+                                            <div class="col-sm-12 text-center">
+                                                <a href="../" class="text-muted font-13"><i class="fas fa-home"></i> Home</a>
+                                                <a href="login" class="text-muted font-13"><i class="fas fa-user-shield ms-1"></i> Admin Portal</a>
+                                                <a href="reset_password" class="text-muted font-13"><i class="fas fa-user-lock"></i> Forgot Password?</a>
                                             </div>
                                         </div>
 
                                         <div class="form-group mb-0 row">
                                             <div class="col-12">
                                                 <button name="Login" class="btn btn-primary w-100 waves-effect waves-light" type="submit">Log In <i class="fas fa-sign-in-alt ms-1"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group mb-0 row">
+                                            <div class="col-12">
                                             </div>
                                         </div>
                                     </form>

@@ -64,7 +64,7 @@
                             </nav>
                         </div><!-- end main-menu-content -->
                         <div class="nav-btn">
-                            <a href="login" class="theme-btn">Staff Portal</a>
+                            <a href="staff_login" class="theme-btn">Staff Portal</a>
                         </div><!-- end nav-btn -->
                     </div><!-- end menu-wrapper -->
                 </div><!-- end col-lg-12 -->
