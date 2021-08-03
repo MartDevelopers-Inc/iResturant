@@ -21,13 +21,15 @@
  */
 
 $id = $_SESSION['number'];
+
 $ret = "SELECT * FROM `iResturant_Staff` WHERE number = '$id'  ";
 $stmt = $mysqli->prepare($ret);
 $stmt->execute(); //ok
 $res = $stmt->get_result();
 while ($logged_in_user = $res->fetch_object()) {
+    $user_id = $logged_in_user->id;
     /* Count Notifications */
-    $query = "SELECT COUNT(*)  FROM `iResturant_Notification`  WHERE user_id = '$id' && status = 'UnRead'";
+    $query = "SELECT COUNT(*)  FROM `iResturant_Notification`  WHERE user_id = '$user_id' AND status = 'Unread'";
     $stmt = $mysqli->prepare($query);
     $stmt->execute();
     $stmt->bind_result($notification_count);
@@ -74,7 +76,7 @@ while ($logged_in_user = $res->fetch_object()) {
                         </h6>
                         <div class="notification-menu" data-simplebar>
                             <?php
-                            $ret = "SELECT * FROM `iResturant_Notification` WHERE user_id = '$id'";
+                            $ret = "SELECT * FROM `iResturant_Notification` WHERE user_id = '$user_id'";
                             $stmt = $mysqli->prepare($ret);
                             $stmt->execute(); //ok
                             $res = $stmt->get_result();
@@ -82,14 +84,13 @@ while ($logged_in_user = $res->fetch_object()) {
                             ?>
                                 <!-- item-->
                                 <a href="staff_notifications" class="dropdown-item py-3">
-                                    <small class="float-end text-muted ps-2"><?php echo date('d-M-Y g:ia', strtotime($notification->created_at)); ?></small>
                                     <div class="media">
                                         <div class="avatar-md bg-soft-primary">
                                             <i data-feather="<?php echo $notification->icon; ?>" class="align-self-center icon-xs"></i>
                                         </div>
-                                        <div class="media-body align-self-center ms-2 text-truncate">
-                                            <h6 class="my-0 fw-normal text-dark"><?php echo $notification->title; ?></h6>
-                                            <small class="text-muted mb-0"><?php echo substr($notification->details, 0, 15); ?>...</small>
+                                        <div class="media-body align-self-center ms-2 ">
+                                            <h6 class="my-0 fw-normal text-dark "> <?php echo $notification->title; ?></h6>
+                                            <small class="text-muted mb-0"> <?php echo substr($notification->details, 0, 35); ?>...</small>
                                         </div>
                                         <!--end media-body-->
                                     </div>

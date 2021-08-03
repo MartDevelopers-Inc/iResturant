@@ -82,7 +82,7 @@ if (isset($_POST['add_payroll'])) {
             }
         } else {
             $query = "INSERT INTO iResturant_Payroll (id, code, month, staff_id, amount) VALUES(?,?,?,?,?)";
-            $notify = "INSERT INTO iResturant_Notification(user_id, icon, title, details, status) VALUES(?,?,?,?)";
+            $notify = "INSERT INTO iResturant_Notification (user_id, icon, title, details, status) VALUES(?,?,?,?,?)";
 
             $stmt = $mysqli->prepare($query);
             $notify_stmt = $mysqli->prepare($notify);

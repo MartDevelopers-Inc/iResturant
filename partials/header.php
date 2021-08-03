@@ -26,7 +26,7 @@ $stmt->execute(); //ok
 $res = $stmt->get_result();
 while ($logged_in_user = $res->fetch_object()) {
     /* Count Notifications */
-    $query = "SELECT COUNT(*)  FROM `iResturant_Notification`  WHERE user_id = '$id' && status = 'UnRead'";
+    $query = "SELECT COUNT(*)  FROM `iResturant_Notification`  WHERE user_id = '$id' AND status = 'Unread'";
     $stmt = $mysqli->prepare($query);
     $stmt->execute();
     $stmt->bind_result($notification_count);
