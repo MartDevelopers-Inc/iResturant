@@ -57,6 +57,9 @@ while ($sys = $res->fetch_object()) {
 
                     </ul>
                 </li>
+                <li>
+                    <a href="my_reviews"><i data-feather="message-square" class="align-self-center menu-icon"></i><span>Reviews</span></a>
+                </li>
 
                 <li>
                     <a href="logout"><i data-feather="log-out" class="align-self-center menu-icon"></i><span>End Session</span></a>
