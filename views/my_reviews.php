@@ -45,7 +45,7 @@ if (isset($_POST['add_testimonial'])) {
 
 
 
-/* Udpate Review */
+/* Update Review */
 if (isset($_POST['update_testimonial'])) {
     $testimonial_id = $_POST['testimonial_id'];
     $testimonial_details = $_POST['testimonial_details'];
@@ -100,12 +100,11 @@ require_once('../partials/head.php');
                         <div class="page-title-box">
                             <div class="row">
                                 <div class="col">
-                                    <h4 class="page-title">Customer Orders</h4>
+                                    <h4 class="page-title">My Testimonials</h4>
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="my_dashboard">Home</a></li>
                                         <li class="breadcrumb-item"><a href="my_dashboard">Dashboard</a></li>
-                                        <li class="breadcrumb-item"><a href="my_order_customers">Orders</a></li>
-                                        <li class="breadcrumb-item active">Customer Orders</li>
+                                        <li class="breadcrumb-item active">Reviews</li>
                                     </ol>
                                 </div>
                             </div>
@@ -118,7 +117,7 @@ require_once('../partials/head.php');
                 <div class="row">
                     <div class="col-lg-12 col-sm-12">
                         <div class="d-flex justify-content-end">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_modal">Add Order</button>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add_modal">Add Review</button>
                         </div>
 
 
@@ -130,124 +129,88 @@ require_once('../partials/head.php');
                                     <table class="table dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                         <thead>
                                             <tr>
-                                                <th class="border-top-0">Order Code</th>
-                                                <th class="border-top-0">Customer Details</th>
-                                                <th class="border-top-0">Ordered Meal</th>
-                                                <th class="border-top-0">Manage Orders</th>
+                                                <th class="border-top-0">Review Details</th>
+                                                <th class="border-top-0">Manage </th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $id = $_SESSION['id'];
-                                            $ret = "SELECT * FROM `iResturant_Currencies` WHERE status = 'Active'  ";
+                                            $ret = "SELECT * FROM iResturant_Testimonials";
                                             $stmt = $mysqli->prepare($ret);
                                             $stmt->execute(); //ok
                                             $res = $stmt->get_result();
-                                            while ($currency = $res->fetch_object()) {
-                                                $ret =
-                                                    "SELECT * FROM iResturant_Customer c INNER JOIN iResturant_Customer_Orders cs ON cs.customer_id = c.id 
-                                                    INNER JOIN iResturant_Menu rm
-                                                    ON rm.meal_id = cs.meal_menu_id WHERE c.id = '$id'
-                                                    /* INNER JOIN iResturant_Payments pa ON cs.code = pa.order_code  */                                                                                                                 
-                                                            ";
-                                                $stmt = $mysqli->prepare($ret);
-                                                $stmt->execute(); //ok
-                                                $res = $stmt->get_result();
-                                                while ($orders = $res->fetch_object()) {
-                                                    /* Order Bill Amount */
-                                                    $order_bill = $orders->meal_count * $orders->order_amount;
+                                            while ($r = $res->fetch_object()) {
                                             ?>
-                                                    <tr>
-                                                        <td>
-                                                            <a class="text-primary" href="my_order_customer?view=<?php echo $orders->code; ?>">
-                                                                <?php echo $orders->code; ?>
-                                                            </a>
-                                                        </td>
-                                                        <td>
-                                                            Name:<?php echo $orders->name; ?><br>
-                                                            Phone:<?php echo $orders->phone; ?><br>
-                                                            Email:<?php echo $orders->email; ?>
-                                                        </td>
-                                                        <td>
-                                                            Meal : <?php echo $orders->meal_name; ?><br>
-                                                            Quantity : <?php echo $orders->meal_count; ?><br>
-                                                            Order Bill : <?php echo $currency->code . " " . $order_bill; ?><br>
-                                                            Date Ordered: <?php echo date('d-M-Y g:ia', strtotime($orders->created_at)); ?>
-                                                        </td>
-                                                        <td>
+                                                <tr>
+                                                    <td>
+                                                        <?php echo $r->testimonial_details; ?>
 
-                                                            <a href="#edit-<?php echo $orders->code; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $orders->code; ?>" class="btn btn-sm btn-outline-warning">
-                                                                <i data-feather="edit" class="align-self-center icon-xs ms-1"></i> Edit
-                                                            </a>
-                                                            <a href="#delete-<?php echo $orders->code; ?>" data-bs-toggle="modal" data-bs-target="#delete-<?php echo $orders->code; ?>" class="btn btn-sm btn-outline-danger">
-                                                                <i data-feather="trash" class="align-self-center icon-xs ms-1"></i> Delete
-                                                            </a>
+                                                    </td>
+
+                                                    <td>
+
+                                                        <a href="#edit-<?php echo $r->testimonial_id; ?>" data-bs-toggle="modal" data-bs-target="#edit-<?php echo $r->testimonial_id; ?>" class="btn btn-sm btn-outline-warning">
+                                                            <i data-feather="edit" class="align-self-center icon-xs ms-1"></i> Edit
+                                                        </a>
+                                                        <a href="#delete-<?php echo $r->testimonial_id; ?>" data-bs-toggle="modal" data-bs-target="#delete-<?php echo $r->testimonial_id; ?>" class="btn btn-sm btn-outline-danger">
+                                                            <i data-feather="trash" class="align-self-center icon-xs ms-1"></i> Delete
+                                                        </a>
 
 
-                                                            <!-- Edit  Modal -->
-                                                            <div class="modal fade" id="edit-<?php echo $orders->code; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
-                                                                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header bg-warning">
-                                                                            <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Update Customer Order</h6>
-                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                        </div>
-                                                                        <div class="modal-body">
-                                                                            <div class="row">
-                                                                                <form method="post" enctype="multipart/form-data" role="form">
-                                                                                    <div class="card-body">
-                                                                                        <div class="row">
-                                                                                            <div class="form-group col-md-6">
-                                                                                                <label for="">Meal Count </label>
-                                                                                                <input type="number" required name="meal_count" value="<?php echo $orders->meal_count; ?>" class="form-control">
-                                                                                                <input type="hidden" required name="code" value="<?php echo $orders->code; ?>" class="form-control">
-                                                                                            </div>
-                                                                                            <div class="form-group col-md-6">
-                                                                                                <label for="">Unit Meal Price </label>
-                                                                                                <input type="text" readonly value="<?php echo $orders->order_amount; ?>" required name="order_amount" class="form-control">
-                                                                                            </div>
-                                                                                            <div class="form-group col-md-12">
-                                                                                                <label for="">Special Requests</label>
-                                                                                                <textarea name="speacial_request" class="form-control" rows="5"><?php echo $orders->speacial_request; ?></textarea>
-                                                                                            </div>
+                                                        <!-- Edit  Modal -->
+                                                        <div class="modal fade" id="edit-<?php echo $r->testimonial_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalPrimary1" aria-hidden="true">
+                                                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header bg-warning">
+                                                                        <h6 class="modal-title m-0 text-white" id="exampleModalPrimary1">Update Customer Order</h6>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="row">
+                                                                            <form method="post" enctype="multipart/form-data" role="form">
+                                                                                <div class="card-body">
+                                                                                    <div class="row">
+                                                                                        <div class="form-group col-md-12">
+                                                                                            <label for="">Review</label>
+                                                                                            <input type="hidden" required name="testimonial_id" value="<?php echo $r->testimonial_id; ?>" class="form-control">
+                                                                                            <textarea name="testimonial_details" class="form-control" rows="5"><?php echo $r->testimonial_details; ?></textarea>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div class="d-flex justify-content-end">
-                                                                                        <button type="submit" name="update_order" class="btn btn-primary">Submit</button>
-                                                                                    </div>
-                                                                                </form>
-                                                                            </div>
+                                                                                </div>
+                                                                                <div class="d-flex justify-content-end">
+                                                                                    <button type="submit" name="update_testimonial" class="btn btn-primary">Submit</button>
+                                                                                </div>
+                                                                            </form>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <!-- End Edit Modal -->
+                                                        </div>
+                                                        <!-- End Edit Modal -->
 
-                                                            <!-- Delete Room Category Modal -->
-                                                            <div class="modal fade" id="delete-<?php echo $orders->code; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <h5 class="modal-title" id="exampleModalLabel">CONFIRM</h5>
-                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        <!-- Delete Room Category Modal -->
+                                                        <div class="modal fade" id="delete-<?php echo $r->testimonial_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="exampleModalLabel">CONFIRM</h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
-                                                                        </div>
-                                                                        <div class="modal-body text-center text-danger">
-                                                                            <h4>Delete Order ?</h4>
-                                                                            <br>
-                                                                            <p>Heads Up, You are about to delete customer order.<br> This action is irrevisble.</p>
-                                                                            <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
-                                                                            <a href="my_order_customers?delete_order=<?php echo $orders->code; ?>" class="text-center btn btn-danger"> Delete </a>
-                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-body text-center text-danger">
+                                                                        <h4>Delete Review ?</h4>
+                                                                        <button type="button" class="btn btn-soft-success" data-bs-dismiss="modal">No</button>
+                                                                        <a href="my_reviews?delete_testimonial=<?php echo $r->testimonial_id; ?>" class="text-center btn btn-danger"> Delete </a>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <!-- End Delete Modal -->
-                                                        </td>
-                                                    </tr>
+                                                        </div>
+                                                        <!-- End Delete Modal -->
+                                                    </td>
+                                                </tr>
                                             <?php
-                                                }
-                                            } ?>
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -266,55 +229,14 @@ require_once('../partials/head.php');
                                             <form method="post" enctype="multipart/form-data" role="form">
                                                 <div class="card-body">
                                                     <div class="row">
-                                                        <?php
-                                                        $ret = "SELECT * FROM  iResturant_Customer WHERE id = '$id'";
-                                                        $stmt = $mysqli->prepare($ret);
-                                                        $stmt->execute(); //ok
-                                                        $res = $stmt->get_result();
-                                                        while ($customer = $res->fetch_object()) {
-                                                        ?>
-                                                            <input type="hidden" required name="customer_email" value="<?php echo $customer->email; ?>" class="form-control">
-                                                            <input type="hidden" required name="customer_name" value="<?php echo $customer->name; ?>" class="form-control">
-                                                        <?php
-                                                        } ?>
-                                                        </select>
-                                                        <!-- Hidden -->
-
                                                         <div class="form-group col-md-12">
-                                                            <label for="">Meal Name</label>
-                                                            <select class="select form-control" name="meal_menu_id" onchange="getMenuDetails(this.value);" id="MealID">
-                                                                <option>Select Meal Name</option>
-                                                                <?php
-                                                                $ret = "SELECT * FROM  iResturant_Menu ";
-                                                                $stmt = $mysqli->prepare($ret);
-                                                                $stmt->execute(); //ok
-                                                                $res = $stmt->get_result();
-                                                                while ($menu = $res->fetch_object()) {
-                                                                ?>
-                                                                    <option value="<?php echo $menu->meal_id; ?>"><?php echo $menu->meal_name; ?></option>
-                                                                <?php
-                                                                } ?>
-                                                            </select>
-                                                            <input type="hidden" required name="meal" id="MealName" class="form-control">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="form-group col-md-6">
-                                                            <label for="">Meal Quantity </label>
-                                                            <input type="number" required name="meal_count" class="form-control">
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <label for="">Unit Meal Price </label>
-                                                            <input type="text" readonly id="MealPrice" required name="order_amount" class="form-control">
-                                                        </div>
-                                                        <div class="form-group col-md-12">
-                                                            <label for="">Special Requests</label>
-                                                            <textarea name="speacial_request" class="form-control" rows="5"></textarea>
+                                                            <label for="">Review</label>
+                                                            <textarea name="testimonial_details" class="form-control" rows="5"><?php echo $r->testimonial_details; ?></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="d-flex justify-content-end">
-                                                    <button type="submit" name="add_order" class="btn btn-primary">Submit</button>
+                                                    <button type="submit" name="add_testimonial" class="btn btn-primary">Submit</button>
                                                 </div>
                                             </form>
                                         </div>
