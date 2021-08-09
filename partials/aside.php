@@ -69,6 +69,8 @@ while ($sys = $res->fetch_object()) {
                         <li class="nav-item"><a class="nav-link" href="hrm_payrolls"><i class="ti-control-record"></i>Payrolls </a></li>
                         <li class="nav-item"><a class="nav-link" href="hrm_suppliers"><i class="ti-control-record"></i>Suppliers</a></li>
                         <li class="nav-item"><a class="nav-link" href="hrm_customers"><i class="ti-control-record"></i>Customers</a></li>
+                        <li class="nav-item"><a class="nav-link" href="hrm_customers_testimonials"><i class="ti-control-record"></i>Testimonials</a></li>
+
                     </ul>
                 </li>
                 <li>
