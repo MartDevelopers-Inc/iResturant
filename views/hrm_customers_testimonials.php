@@ -48,13 +48,13 @@ require_once('../partials/head.php');
 
 <body>
     <!-- Left Sidenav -->
-    <?php require_once('../partials/my_sidebar.php'); ?>
+    <?php require_once('../partials/aside.php'); ?>
     <!-- end left-sidenav-->
 
 
     <div class="page-wrapper">
         <!-- Top Bar Start -->
-        <?php require_once('../partials/my_header.php'); ?>
+        <?php require_once('../partials/header.php'); ?>
         <!-- Top Bar End -->
 
         <!-- Page Content-->
@@ -110,7 +110,7 @@ require_once('../partials/head.php');
                                                         Phone: <?php echo $r->phone; ?>
                                                     </td>
                                                     <td>
-                                                        <?php echo substr($r->testimonial_details, 0, 300); ?>...
+                                                        <?php echo substr($r->testimonial_details, 0, 100); ?>...
                                                     </td>
 
                                                     <td>
