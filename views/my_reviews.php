@@ -135,7 +135,8 @@ require_once('../partials/head.php');
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $ret = "SELECT * FROM iResturant_Testimonials";
+                                            $id = $_SESSION['id'];
+                                            $ret = "SELECT * FROM iResturant_Testimonials WHERE testimonial_customer_id = '$id'";
                                             $stmt = $mysqli->prepare($ret);
                                             $stmt->execute(); //ok
                                             $res = $stmt->get_result();
@@ -143,8 +144,7 @@ require_once('../partials/head.php');
                                             ?>
                                                 <tr>
                                                     <td>
-                                                        <?php echo $r->testimonial_details; ?>
-
+                                                        <?php echo substr($r->testimonial_details, 0, 100); ?>...
                                                     </td>
 
                                                     <td>
@@ -173,7 +173,7 @@ require_once('../partials/head.php');
                                                                                         <div class="form-group col-md-12">
                                                                                             <label for="">Review</label>
                                                                                             <input type="hidden" required name="testimonial_id" value="<?php echo $r->testimonial_id; ?>" class="form-control">
-                                                                                            <textarea name="testimonial_details" class="form-control" rows="5"><?php echo $r->testimonial_details; ?></textarea>
+                                                                                            <textarea name="testimonial_details" class="form-control summernote" rows="5"><?php echo $r->testimonial_details; ?></textarea>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -231,7 +231,7 @@ require_once('../partials/head.php');
                                                     <div class="row">
                                                         <div class="form-group col-md-12">
                                                             <label for="">Review</label>
-                                                            <textarea name="testimonial_details" class="form-control" rows="5"><?php echo $r->testimonial_details; ?></textarea>
+                                                            <textarea name="testimonial_details" class="summernote form-control" rows="5"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
