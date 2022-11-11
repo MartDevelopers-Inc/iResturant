@@ -94,12 +94,6 @@ while ($sys = $res->fetch_object()) {
                                         </div>
                                     </form>
                                 </div>
-                                <div class="card-body bg-light-alt text-center">
-                                    <span class="text-muted d-none d-sm-inline-block">MartDevelopers Inc © <script>
-                                            document.write(new Date().getFullYear())
-                                        </script>
-                                    </span>
-                                </div>
                             </div>
                         </div>
                     </div>
